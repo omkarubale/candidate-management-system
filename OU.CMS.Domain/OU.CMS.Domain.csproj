@@ -54,12 +54,19 @@
     <Compile Include="Entities\User\User.cs" />
     <Compile Include="Entities\_base\BaseEntity.cs" />
     <Compile Include="Lookups\UserType.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OU.CMS.Common\OU.CMS.Common.csproj">
+      <Project>{de1a0aab-ec3e-423a-8d00-3a243222dba8}</Project>
+      <Name>OU.CMS.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

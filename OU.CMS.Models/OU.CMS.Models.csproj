@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OU.CMS.Common\OU.CMS.Common.csproj">
+      <Project>{de1a0aab-ec3e-423a-8d00-3a243222dba8}</Project>
+      <Name>OU.CMS.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

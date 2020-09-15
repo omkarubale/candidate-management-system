@@ -246,6 +246,20 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OU.CMS.Common\OU.CMS.Common.csproj">
+      <Project>{de1a0aab-ec3e-423a-8d00-3a243222dba8}</Project>
+      <Name>OU.CMS.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OU.CMS.Domain\OU.CMS.Domain.csproj">
+      <Project>{f0be7740-83d2-4aa9-9030-936277f29853}</Project>
+      <Name>OU.CMS.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OU.CMS.Models\OU.CMS.Models.csproj">
+      <Project>{0a0e405d-639c-4e1d-9125-dc0e9ef5907e}</Project>
+      <Name>OU.CMS.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
