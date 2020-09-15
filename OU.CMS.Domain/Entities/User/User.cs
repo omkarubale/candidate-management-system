@@ -20,5 +20,7 @@ namespace OU.CMS.Domain.Entities
         public string Email { get; set; }
 
         public UserType UserType { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
     }
 }

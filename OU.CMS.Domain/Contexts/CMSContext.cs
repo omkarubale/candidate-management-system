@@ -10,7 +10,7 @@ namespace OU.CMS.Domain.Contexts
 {
     public class CMSContext : DbContext
     {
-        public CMSContext() : base()
+        public CMSContext() : base("name=CMSConnection")
         {
                 
         }

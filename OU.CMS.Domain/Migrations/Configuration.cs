@@ -4,15 +4,16 @@ namespace OU.CMS.Domain.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using OU.CMS.Domain.Contexts;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<OU.CMS.Domain.Contexts.CMSContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CMSContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(OU.CMS.Domain.Contexts.CMSContext context)
+        protected override void Seed(CMSContext context)
         {
             //  This method will be called after migrating to the latest version.
 

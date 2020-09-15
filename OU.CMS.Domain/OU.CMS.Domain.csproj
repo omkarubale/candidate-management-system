@@ -54,6 +54,10 @@
     <Compile Include="Entities\User\User.cs" />
     <Compile Include="Entities\_base\BaseEntity.cs" />
     <Compile Include="Lookups\UserType.cs" />
+    <Compile Include="Migrations\202009151913383_CreateUserTable.cs" />
+    <Compile Include="Migrations\202009151913383_CreateUserTable.Designer.cs">
+      <DependentUpon>202009151913383_CreateUserTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +71,11 @@
       <Project>{de1a0aab-ec3e-423a-8d00-3a243222dba8}</Project>
       <Name>OU.CMS.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202009151913383_CreateUserTable.resx">
+      <DependentUpon>202009151913383_CreateUserTable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
