@@ -15,6 +15,19 @@ namespace OU.CMS.Domain.Contexts
                 
         }
 
+        #region User
         public DbSet<User> Users { get; set; }
+        #endregion
+
+        #region Company
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<CompanyManagement> CompanyManagements { get; set; }
+        #endregion
+
+        #region Test
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<TestScore> TestScores { get; set; }
+        #endregion
+
     }
 }
