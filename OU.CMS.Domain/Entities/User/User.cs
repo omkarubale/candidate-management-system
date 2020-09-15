@@ -22,5 +22,8 @@ namespace OU.CMS.Domain.Entities
         public UserType UserType { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
+
+        public IList<Candidate> Candidates { get; set; }
+        public IList<CompanyManagement> CompanyManagements { get; set; }
     }
 }

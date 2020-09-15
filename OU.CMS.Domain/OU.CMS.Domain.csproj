@@ -51,12 +51,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\CMSContext.cs" />
+    <Compile Include="Entities\Candidate\Candidate.cs" />
     <Compile Include="Entities\Company\Company.cs" />
     <Compile Include="Entities\Company\CompanyManagement.cs" />
+    <Compile Include="Entities\JobOpening\JobOpening.cs" />
     <Compile Include="Entities\Test\Test.cs" />
     <Compile Include="Entities\Test\TestScore.cs" />
     <Compile Include="Entities\User\User.cs" />
     <Compile Include="Entities\_base\BaseEntity.cs" />
+    <Compile Include="EntityConfigurations\Candidate\CandidateConfiguration.cs" />
+    <Compile Include="EntityConfigurations\Company\CompanyConfiguration.cs" />
+    <Compile Include="EntityConfigurations\Company\CompanyManagementConfiguration.cs" />
+    <Compile Include="EntityConfigurations\JobOpening\JobOpeningConfiguration.cs" />
+    <Compile Include="EntityConfigurations\Test\TestConfiguration.cs" />
+    <Compile Include="EntityConfigurations\User\UserConfiguration.cs" />
     <Compile Include="Lookups\UserType.cs" />
     <Compile Include="Migrations\202009151913383_CreateUserTable.cs" />
     <Compile Include="Migrations\202009151913383_CreateUserTable.Designer.cs">
@@ -65,6 +73,10 @@
     <Compile Include="Migrations\202009151943422_AddCompanyAndTestTables.cs" />
     <Compile Include="Migrations\202009151943422_AddCompanyAndTestTables.Designer.cs">
       <DependentUpon>202009151943422_AddCompanyAndTestTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009152043565_AddCandidateAndJobOpeningTables.cs" />
+    <Compile Include="Migrations\202009152043565_AddCandidateAndJobOpeningTables.Designer.cs">
+      <DependentUpon>202009152043565_AddCandidateAndJobOpeningTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
@@ -87,9 +99,10 @@
     <EmbeddedResource Include="Migrations\202009151943422_AddCompanyAndTestTables.resx">
       <DependentUpon>202009151943422_AddCompanyAndTestTables.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009152043565_AddCandidateAndJobOpeningTables.resx">
+      <DependentUpon>202009152043565_AddCandidateAndJobOpeningTables.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\Candidate\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
