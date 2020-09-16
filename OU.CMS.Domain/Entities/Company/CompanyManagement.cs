@@ -19,6 +19,8 @@ namespace OU.CMS.Domain.Entities
         [ForeignKey(nameof(UserId))]
         public User User { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         //Created Log
         public DateTime CreatedOn { get; set; }
 

@@ -26,6 +26,15 @@ namespace OU.CMS.Domain.EntityConfigurations
                 .WithMany(e => e.Candidates)
                 .HasForeignKey(e => e.JobOpeningId)
                 .WillCascadeOnDelete(false);
+
+            HasMany(e => e.InterviewerUsers)
+                .WithMany(e => e.InterviewCandidates)
+                .Map(m =>
+                {
+                    m.ToTable("CandidateInterviewers");
+                    m.MapLeftKey("CandidateId");
+                    m.MapRightKey("InterviewerUserId");
+                });
         }
     }
 }

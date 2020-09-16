@@ -25,5 +25,6 @@ namespace OU.CMS.Domain.Entities
 
         public IList<Candidate> Candidates { get; set; }
         public IList<CompanyManagement> CompanyManagements { get; set; }
+        public IList<Candidate> InterviewCandidates { get; set; }
     }
 }

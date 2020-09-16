@@ -87,6 +87,10 @@
     <Compile Include="Migrations\202009160853137_AddCandidateTestAndCandidateTestScoreTables.Designer.cs">
       <DependentUpon>202009160853137_AddCandidateTestAndCandidateTestScoreTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009161211440_AddedCandidateInterviewerLogicAndCompanyAdminColumn.cs" />
+    <Compile Include="Migrations\202009161211440_AddedCandidateInterviewerLogicAndCompanyAdminColumn.Designer.cs">
+      <DependentUpon>202009161211440_AddedCandidateInterviewerLogicAndCompanyAdminColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -113,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009160853137_AddCandidateTestAndCandidateTestScoreTables.resx">
       <DependentUpon>202009160853137_AddCandidateTestAndCandidateTestScoreTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009161211440_AddedCandidateInterviewerLogicAndCompanyAdminColumn.resx">
+      <DependentUpon>202009161211440_AddedCandidateInterviewerLogicAndCompanyAdminColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
