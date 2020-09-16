@@ -16,8 +16,10 @@ namespace OU.CMS.Domain.Contexts
                 
         }
 
-        #region User
-        public DbSet<User> Users { get; set; }
+        #region Candidate
+        public DbSet<Candidate> Candidates { get; set; }
+        public DbSet<CandidateTest> CandidateTests { get; set; }
+        public DbSet<CandidateTestScore> CandidateTestScores { get; set; }
         #endregion
 
         #region Company
@@ -25,29 +27,34 @@ namespace OU.CMS.Domain.Contexts
         public DbSet<CompanyManagement> CompanyManagements { get; set; }
         #endregion
 
+        #region JobOpening
+        public DbSet<JobOpening> JobOpenings { get; set; }
+        #endregion
+
         #region Test
         public DbSet<Test> Tests { get; set; }
         public DbSet<TestScore> TestScores { get; set; }
         #endregion
 
-        #region Candidate
-        public DbSet<Candidate> Candidates { get; set; }
-        #endregion
-
-        #region JobOpening
-        public DbSet<JobOpening> JobOpenings { get; set; }
+        #region User
+        public DbSet<User> Users { get; set; }
         #endregion
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new UserConfiguration());
+            modelBuilder.Configurations.Add(new CandidateConfiguration());
+            modelBuilder.Configurations.Add(new CandidateTestConfiguration());
+            modelBuilder.Configurations.Add(new CandidateTestScoreConfiguration());
 
             modelBuilder.Configurations.Add(new CompanyConfiguration());
             modelBuilder.Configurations.Add(new CompanyManagementConfiguration());
 
-            modelBuilder.Configurations.Add(new TestConfiguration());
+            modelBuilder.Configurations.Add(new JobOpeningConfiguration());
 
-            modelBuilder.Configurations.Add(new CandidateConfiguration());
+            modelBuilder.Configurations.Add(new TestConfiguration());
+            modelBuilder.Configurations.Add(new TestScoreConfiguration());
+
+            modelBuilder.Configurations.Add(new UserConfiguration());
         }
     }
 }

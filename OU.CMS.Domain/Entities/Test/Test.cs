@@ -11,7 +11,9 @@ namespace OU.CMS.Domain.Entities
     {
         public string Title { get; set; }
 
-        public List<TestScore> TestScores { get; set; }
+        public IList<TestScore> TestScores { get; set; }
+
+        public IList<CandidateTest> CandidateTests { get; set; }
 
         //Created Log
         public DateTime CreatedOn { get; set; }

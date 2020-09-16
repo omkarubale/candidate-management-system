@@ -24,6 +24,8 @@ namespace OU.CMS.Domain.Entities
         [ForeignKey(nameof(JobOpeningId))]
         public JobOpening JobOpening { get; set; }
 
+        public IList<CandidateTest> CandidateTests { get; set; }
+
         //Created Log
         public DateTime CreatedOn { get; set; }
 

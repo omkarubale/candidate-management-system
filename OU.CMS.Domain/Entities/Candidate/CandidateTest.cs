@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace OU.CMS.Domain.Entities
 {
-    public class TestScore : BaseEntity<Guid>
+    public class CandidateTest : BaseEntity<Guid>
     {
-        public string Title { get; set; }
+        public Guid CandidateId { get; set; }
 
-        public bool IsMandatory { get; set; }
+        [ForeignKey(nameof(CandidateId))]
+        public Candidate Candidate { get; set; }
 
         public Guid TestId { get; set; }
 
