@@ -1,0 +1,25 @@
+<div>
+  <form #companyForm="ngForm" (ngSubmit)="save(companyForm.value)">
+	<div>
+  	<div>
+    	<h2>{{company.value ? 'Edit' : 'Add'}} Company</h2>
+  	</div>
+	</div>
+	<div>
+    	<input type="hidden" name="id" [(ngModel)]="company.id">
+  	<div>
+    	<input matInput placeholder="Company Name" [(ngModel)]="company.name" required name="name">
+  	</div>
+	</div>
+	<div>
+  	<button mat-raised-button color="primary" type="submit" [disabled]="!companyForm.form.valid">Save
+  	</button>
+  	<button mat-raised-button color="secondary" (click)="remove(company.id)" *ngIf="company.id" type="button">Delete
+  	</button>
+  	<a mat-button routerLink="/company-list">Cancel</a>
+	</div>
+	<div>
+
+	</div>
+  </form>
+</div>

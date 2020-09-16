@@ -7,31 +7,31 @@ using System.Web.Http;
 
 namespace OU.CMS.Web.API.Controllers
 {
-    public class CandidateController : ApiController
+    public class TestController : ApiController
     {
-        // GET: api/Candidate
+        // GET: api/Test
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Candidate/5
+        // GET: api/Test/5
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/Candidate
+        // POST: api/Test
         public void Post([FromBody]string value)
         {
         }
 
-        // PUT: api/Candidate/5
+        // PUT: api/Test/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE: api/Candidate/5
+        // DELETE: api/Test/5
         public void Delete(int id)
         {
         }
