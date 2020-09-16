@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OU.CMS.Domain", "OU.CMS.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OU.CMS.Web.API", "OU.CMS.Web.API\OU.CMS.Web.API.csproj", "{5D9DA956-8B98-4EB9-AB7E-34F6080B8F42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OU.CMS.Core", "OU.CMS.Core\OU.CMS.Core.csproj", "{6BAB6ACF-885F-4897-BD15-6C7B3DE0AE95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5D9DA956-8B98-4EB9-AB7E-34F6080B8F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D9DA956-8B98-4EB9-AB7E-34F6080B8F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D9DA956-8B98-4EB9-AB7E-34F6080B8F42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BAB6ACF-885F-4897-BD15-6C7B3DE0AE95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BAB6ACF-885F-4897-BD15-6C7B3DE0AE95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BAB6ACF-885F-4897-BD15-6C7B3DE0AE95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BAB6ACF-885F-4897-BD15-6C7B3DE0AE95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
