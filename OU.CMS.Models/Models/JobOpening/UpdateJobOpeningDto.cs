@@ -14,6 +14,8 @@ namespace OU.CMS.Models.Models.JobOpening
 
         public string Description { get; set; }
 
+        public DateTime Deadline { get; set; }
+
         public decimal Salary { get; set; }
     }
 }

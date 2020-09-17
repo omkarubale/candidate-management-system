@@ -26,31 +26,32 @@ namespace OU.CMS.Web.API.Controllers
             using (var db = new CMSContext())
             {
                 var jobOpenings = await (from jo in db.JobOpenings
-                                       join cmp in db.Companies on jo.CompanyId equals cmp.Id
-                                       join cnd in db.Candidates on jo.Id equals cnd.JobOpeningId
-                                       join usr in db.Users on jo.CreatedBy equals usr.Id
-                                       where cmp.Id == companyId
-                                         group cnd by new {jo.Id, jo.Title, jo.Description, jo.Salary, jo.CreatedOn, CompanyId = cmp.Id, cmp.Name, UserId = usr.Id, usr.FullName, usr.ShortName } into jo
-                                       select new GetJobOpeningCompanyDto
-                                       {
-                                           Id = jo.Key.Id,
-                                           Title = jo.Key.Title,
-                                           Description = jo.Key.Description,
-                                           Salary = jo.Key.Salary,
-                                           Company = new CompanySimpleDto
-                                           {
-                                               Id = jo.Key.UserId, 
-                                               Name = jo.Key.Name
-                                           },
-                                           CreatedDetails = new CreatedOnDto
-                                           {
-                                               UserId = jo.Key.CompanyId,
-                                               FullName = jo.Key.FullName,
-                                               ShortName = jo.Key.ShortName,
-                                               CreatedOn = jo.Key.CreatedOn
-                                           },
-                                           CandidateCount = jo.Count()
-                                       }).ToListAsync();
+                                         join cmp in db.Companies on jo.CompanyId equals cmp.Id
+                                         join cnd in db.Candidates on jo.Id equals cnd.JobOpeningId
+                                         join usr in db.Users on jo.CreatedBy equals usr.Id
+                                         where cmp.Id == companyId
+                                         group cnd by new { jo.Id, jo.Title, jo.Description, jo.Salary, jo.Deadline, jo.CreatedOn, CompanyId = cmp.Id, cmp.Name, UserId = usr.Id, usr.FullName, usr.ShortName } into jo
+                                         select new GetJobOpeningCompanyDto
+                                         {
+                                             Id = jo.Key.Id,
+                                             Title = jo.Key.Title,
+                                             Description = jo.Key.Description,
+                                             Salary = jo.Key.Salary,
+                                             Deadline = jo.Key.Deadline,
+                                             Company = new CompanySimpleDto
+                                             {
+                                                 Id = jo.Key.UserId,
+                                                 Name = jo.Key.Name
+                                             },
+                                             CreatedDetails = new CreatedOnDto
+                                             {
+                                                 UserId = jo.Key.CompanyId,
+                                                 FullName = jo.Key.FullName,
+                                                 ShortName = jo.Key.ShortName,
+                                                 CreatedOn = jo.Key.CreatedOn
+                                             },
+                                             CandidateCount = jo.Count()
+                                         }).ToListAsync();
 
                 return jobOpenings;
             }
@@ -71,6 +72,7 @@ namespace OU.CMS.Web.API.Controllers
                                              Title = jo.Title,
                                              Description = jo.Description,
                                              Salary = jo.Salary,
+                                             Deadline = jo.Deadline,
                                              Company = new CompanySimpleDto
                                              {
                                                  Id = cmp.Id,
@@ -96,13 +98,15 @@ namespace OU.CMS.Web.API.Controllers
                 var jobOpening = await (from jo in db.JobOpenings
                                         join cmp in db.Companies on jo.CompanyId equals cmp.Id
                                         join usr in db.Users on jo.CreatedBy equals usr.Id
-                                        where 
+                                        where
                                         jo.Id == id
                                         select new GetJobOpeningDto
                                         {
                                             Id = jo.Id,
                                             Title = jo.Title,
                                             Salary = jo.Salary,
+                                            Description = jo.Description,
+                                            Deadline = jo.Deadline,
                                             Company = new CompanySimpleDto
                                             {
                                                 Id = cmp.Id,
@@ -138,6 +142,7 @@ namespace OU.CMS.Web.API.Controllers
                     Title = dto.Title.Trim(),
                     Description = dto.Description.Trim(),
                     Salary = dto.Salary,
+                    Deadline = dto.Deadline,
                     CompanyId = dto.CompanyId,
                     CreatedBy = myUserId, //TODO: Change to identityUser.UserId
                     CreatedOn = DateTime.UtcNow
@@ -166,6 +171,7 @@ namespace OU.CMS.Web.API.Controllers
                 jobOpening.Title = dto.Title;
                 jobOpening.Description = dto.Description;
                 jobOpening.Salary = dto.Salary;
+                jobOpening.Deadline = dto.Deadline;
 
                 await db.SaveChangesAsync();
 
