@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using OU.CMS.Domain.Contexts;
 
 namespace OU.CMS.Web.API.Controllers
 {
@@ -16,8 +17,8 @@ namespace OU.CMS.Web.API.Controllers
         }
 
         // GET: api/Company/5
-        public string Get(int id)
-        {
+        public string GetCompany(Guid id)
+        { 
             return "value";
         }
 

@@ -91,6 +91,10 @@
     <Compile Include="Migrations\202009161211440_AddedCandidateInterviewerLogicAndCompanyAdminColumn.Designer.cs">
       <DependentUpon>202009161211440_AddedCandidateInterviewerLogicAndCompanyAdminColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009170804131_AddedPasswordColumnsToUserTable.cs" />
+    <Compile Include="Migrations\202009170804131_AddedPasswordColumnsToUserTable.Designer.cs">
+      <DependentUpon>202009170804131_AddedPasswordColumnsToUserTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009161211440_AddedCandidateInterviewerLogicAndCompanyAdminColumn.resx">
       <DependentUpon>202009161211440_AddedCandidateInterviewerLogicAndCompanyAdminColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009170804131_AddedPasswordColumnsToUserTable.resx">
+      <DependentUpon>202009170804131_AddedPasswordColumnsToUserTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

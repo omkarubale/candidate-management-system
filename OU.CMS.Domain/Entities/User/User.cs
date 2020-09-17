@@ -23,6 +23,12 @@ namespace OU.CMS.Domain.Entities
 
         public DateTime? DateOfBirth { get; set; }
 
+        public string PasswordTemp { get; set; }
+
+        public string PasswordHash { get; set; }
+
+        public string PasswordSalt { get; set; }
+
         public IList<Candidate> Candidates { get; set; }
         public IList<CompanyManagement> CompanyManagements { get; set; }
         public IList<Candidate> InterviewCandidates { get; set; }
