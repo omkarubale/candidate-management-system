@@ -101,6 +101,10 @@
     <Compile Include="Migrations\202009171329439_AddCompanyManagementInviteTable.Designer.cs">
       <DependentUpon>202009171329439_AddCompanyManagementInviteTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009171338305_AddedStringLimitsForAllTables.cs" />
+    <Compile Include="Migrations\202009171338305_AddedStringLimitsForAllTables.Designer.cs">
+      <DependentUpon>202009171338305_AddedStringLimitsForAllTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009171329439_AddCompanyManagementInviteTable.resx">
       <DependentUpon>202009171329439_AddCompanyManagementInviteTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009171338305_AddedStringLimitsForAllTables.resx">
+      <DependentUpon>202009171338305_AddedStringLimitsForAllTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

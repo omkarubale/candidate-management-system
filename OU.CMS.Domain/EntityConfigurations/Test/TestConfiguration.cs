@@ -12,7 +12,9 @@ namespace OU.CMS.Domain.EntityConfigurations
     {
         public TestConfiguration()
         {
-
+            Property(v => v.Title)
+                .IsRequired()
+                .HasMaxLength(100);
         }
     }
 }

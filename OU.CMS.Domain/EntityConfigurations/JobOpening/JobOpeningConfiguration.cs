@@ -12,6 +12,10 @@ namespace OU.CMS.Domain.EntityConfigurations
     {
         public JobOpeningConfiguration()
         {
+            Property(v => v.Title)
+                .IsRequired()
+                .HasMaxLength(100);
+
             HasRequired(e => e.Company)
                 .WithMany(e => e.JobOpenings)
                 .HasForeignKey(e => e.CompanyId)

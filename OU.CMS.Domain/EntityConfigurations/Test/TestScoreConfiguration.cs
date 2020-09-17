@@ -12,6 +12,10 @@ namespace OU.CMS.Domain.EntityConfigurations
     {
         public TestScoreConfiguration()
         {
+            Property(v => v.Title)
+                .IsRequired()
+                .HasMaxLength(100);
+
             HasRequired(e => e.Test)
                 .WithMany(e => e.TestScores)
                 .HasForeignKey(e => e.TestId)

@@ -12,7 +12,9 @@ namespace OU.CMS.Domain.EntityConfigurations
     {
         public CompanyConfiguration()
         {
-
+            Property(v => v.Name)
+                .IsRequired()
+                .HasMaxLength(100);
         }
     }
 }
