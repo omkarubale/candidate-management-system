@@ -48,11 +48,21 @@
     <Compile Include="Models\Candidate\CreateCandidateDto.cs" />
     <Compile Include="Models\Candidate\GetCandidateDto.cs" />
     <Compile Include="Models\Common\CreatedOnDto.cs" />
+    <Compile Include="Models\Company\AcceptCompanyManagementInviteDto.cs" />
     <Compile Include="Models\Company\CompanySimpleDto.cs" />
     <Compile Include="Models\Company\CreateCompanyDto.cs" />
+    <Compile Include="Models\Company\CreateCompanyManagementInviteDto.cs" />
+    <Compile Include="Models\Company\DeleteCompanyManagementDto.cs" />
     <Compile Include="Models\Company\GetCompanyDto.cs" />
+    <Compile Include="Models\Company\RevokeCompanyManagementInviteDto.cs" />
     <Compile Include="Models\Company\UpdateCompanyDto.cs" />
     <Compile Include="Models\JobOpening\JobOpeningSimpleDto.cs" />
+    <Compile Include="Models\Test\CreateTestDto.cs" />
+    <Compile Include="Models\Test\CreateTestScoreDto.cs" />
+    <Compile Include="Models\Test\GetTestDto.cs" />
+    <Compile Include="Models\Test\TestScoreDto.cs" />
+    <Compile Include="Models\Test\UpdateTestDto.cs" />
+    <Compile Include="Models\Test\UpdateTestScoreDto.cs" />
     <Compile Include="Models\User\UserSimpleDto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,8 +80,6 @@
       <Name>OU.CMS.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -19,45 +19,57 @@ namespace OU.CMS.Web.API.Controllers
     public class CandidateController : ApiController
     {
         private Guid myUserId = new Guid("1ff58b86-28a7-4324-bc40-518c29135f86");
-        public async Task<IEnumerable<GetCandidateDto>> GetAllCandidates()
+
+
+        private async Task<List<GetCandidateDto>> GetAllCandidates(Guid? candidateId = null, Guid? companyId = null, Guid? jobOpeningId = null, Guid? userId = null)
         {
             using (var db = new CMSContext())
             {
-                var candidates = await (from cnd in db.Candidates
-                                        join usr in db.Users on cnd.UserId equals usr.Id
-                                        join cmp in db.Companies on cnd.CompanyId equals cmp.Id
-                                        join jo in db.JobOpenings on cnd.JobOpeningId equals jo.Id
-                                        join lc in db.Users on cnd.CreatedBy equals lc.Id
-                                        select new GetCandidateDto
-                                        {
-                                            User = new UserSimpleDto
-                                            {
-                                                UserId = usr.Id,
-                                                FullName = usr.FullName,
-                                                ShortName = usr.ShortName,
-                                                Email = usr.Email
-                                            },
-                                            Company = new CompanySimpleDto
-                                            {
-                                                Id = cmp.Id,
-                                                Name = cmp.Name
-                                            },
-                                            JobOpening = new JobOpeningSimpleDto
-                                            {
-                                                Id = jo.Id,
-                                                Title = jo.Title,
-                                                Description = jo.Description,
-                                            },
-                                            CreatedDetails = new CreatedOnDto
-                                            {
-                                                UserId = lc.Id,
-                                                FullName = lc.FullName,
-                                                ShortName = lc.ShortName,
-                                                CreatedOn = cnd.CreatedOn
-                                            }
-                                        }).ToListAsync();
+                var isCandidateFilter = candidateId != null && candidateId != Guid.Empty;
+                var isCompanyFilter = companyId != null && companyId != Guid.Empty;
+                var isJobOpeningFilter = jobOpeningId != null && jobOpeningId != Guid.Empty;
+                var isUserFilter = userId != null && userId != Guid.Empty;
 
-                return candidates;
+                var candidates = (from cnd in db.Candidates
+                                  join usr in db.Users on cnd.UserId equals usr.Id
+                                  join cmp in db.Companies on cnd.CompanyId equals cmp.Id
+                                  join jo in db.JobOpenings on cnd.JobOpeningId equals jo.Id
+                                  join lc in db.Users on cnd.CreatedBy equals lc.Id
+                                  where
+                                  (!isCandidateFilter || cnd.Id == candidateId) &&
+                                  (!isCompanyFilter || cnd.CompanyId == companyId) &&
+                                  (!isJobOpeningFilter || cnd.JobOpeningId == jobOpeningId) &&
+                                  (!isUserFilter || cnd.UserId == userId) 
+                                  select new GetCandidateDto
+                                  {
+                                      User = new UserSimpleDto
+                                      {
+                                          UserId = usr.Id,
+                                          FullName = usr.FullName,
+                                          ShortName = usr.ShortName,
+                                          Email = usr.Email
+                                      },
+                                      Company = new CompanySimpleDto
+                                      {
+                                          Id = cmp.Id,
+                                          Name = cmp.Name
+                                      },
+                                      JobOpening = new JobOpeningSimpleDto
+                                      {
+                                          Id = jo.Id,
+                                          Title = jo.Title,
+                                          Description = jo.Description,
+                                      },
+                                      CreatedDetails = new CreatedOnDto
+                                      {
+                                          UserId = lc.Id,
+                                          FullName = lc.FullName,
+                                          ShortName = lc.ShortName,
+                                          CreatedOn = cnd.CreatedOn
+                                      }
+                                  });
+
+                return await candidates.ToListAsync();
             }
         }
 
@@ -65,45 +77,42 @@ namespace OU.CMS.Web.API.Controllers
         {
             using (var db = new CMSContext())
             {
-                var candidate = await (from cnd in db.Candidates
-                                       join usr in db.Users on cnd.UserId equals usr.Id
-                                       join cmp in db.Companies on cnd.CompanyId equals cmp.Id
-                                       join jo in db.JobOpenings on cnd.JobOpeningId equals jo.Id
-                                       join lc in db.Users on cnd.CreatedBy equals lc.Id
-                                       where cnd.Id == id
-                                       select new GetCandidateDto
-                                       {
-                                           User = new UserSimpleDto
-                                           {
-                                               UserId = usr.Id,
-                                               FullName = usr.FullName,
-                                               ShortName = usr.ShortName,
-                                               Email = usr.Email
-                                           },
-                                           Company = new CompanySimpleDto
-                                           {
-                                               Id = cmp.Id,
-                                               Name = cmp.Name
-                                           },
-                                           JobOpening = new JobOpeningSimpleDto
-                                           {
-                                               Id = jo.Id,
-                                               Title = jo.Title,
-                                               Description = jo.Description,
-                                           },
-                                           CreatedDetails = new CreatedOnDto
-                                           {
-                                               UserId = lc.Id,
-                                               FullName = lc.FullName,
-                                               ShortName = lc.ShortName,
-                                               CreatedOn = cnd.CreatedOn
-                                           }
-                                       }).SingleOrDefaultAsync();
+                var candidate = (await GetAllCandidates(candidateId: id)).SingleOrDefault();
 
                 if (candidate == null)
                     throw new Exception("Candidate does not exist!");
 
                 return candidate;
+            }
+        }
+
+        public async Task<List<GetCandidateDto>> GetCandidatesForCompany(Guid companyId)
+        {
+            using (var db = new CMSContext())
+            {
+                var candidates = await GetAllCandidates(companyId: companyId);
+
+                return candidates;
+            }
+        }
+
+        public async Task<List<GetCandidateDto>> GetCandidatesForJobOpening(Guid jobOpeningId)
+        {
+            using (var db = new CMSContext())
+            {
+                var candidates = await GetAllCandidates(jobOpeningId: jobOpeningId);
+
+                return candidates;
+            }
+        }
+
+        public async Task<List<GetCandidateDto>> GetCandidatesForUser(Guid userId)
+        {
+            using (var db = new CMSContext())
+            {
+                var candidates = await GetAllCandidates(userId: userId);
+
+                return candidates;
             }
         }
 

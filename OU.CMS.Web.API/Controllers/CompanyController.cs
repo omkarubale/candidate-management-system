@@ -16,31 +16,34 @@ namespace OU.CMS.Web.API.Controllers
     public class CompanyController : ApiController
     {
         private Guid myUserId = new Guid("1ff58b86-28a7-4324-bc40-518c29135f86");
+        private string myEmail = "oubale@gmail.com";
+
+        #region Company
         public async Task<IEnumerable<GetCompanyDto>> GetAllCompanies()
         {
             using (var db = new CMSContext())
             {
                 var companies = await (from cmp in db.Companies
-                                     join usr in db.Users on cmp.CreatedBy equals usr.Id
-                                     select new GetCompanyDto
-                                     {
-                                         Id = cmp.Id,
-                                         Name = cmp.Name,
-                                         CreatedDetails = new CreatedOnDto
-                                         {
-                                             UserId = usr.Id,
-                                             FullName = usr.FullName,
-                                             ShortName = usr.ShortName,
-                                             CreatedOn = cmp.CreatedOn
-                                         }
-                                     }).ToListAsync();
+                                       join usr in db.Users on cmp.CreatedBy equals usr.Id
+                                       select new GetCompanyDto
+                                       {
+                                           Id = cmp.Id,
+                                           Name = cmp.Name,
+                                           CreatedDetails = new CreatedOnDto
+                                           {
+                                               UserId = usr.Id,
+                                               FullName = usr.FullName,
+                                               ShortName = usr.ShortName,
+                                               CreatedOn = cmp.CreatedOn
+                                           }
+                                       }).ToListAsync();
 
                 return companies;
             }
         }
 
         public async Task<GetCompanyDto> GetCompany(Guid id)
-        { 
+        {
             using (var db = new CMSContext())
             {
                 var company = await (from cmp in db.Companies
@@ -106,10 +109,10 @@ namespace OU.CMS.Web.API.Controllers
             using (var db = new CMSContext())
             {
                 var company = await db.Companies.SingleOrDefaultAsync(c => c.Id == dto.Id);
-                if(company == null)
+                if (company == null)
                     throw new Exception("Company with Id not found!");
 
-                var checkExistingCompany = db.Companies.Any(c => c.Name == dto.Name.Trim());
+                var checkExistingCompany = db.Companies.Any(c => c.Name == dto.Name.Trim() && c.Id != dto.Id);
                 if (checkExistingCompany)
                     throw new Exception("Company with this name already exists!");
 
@@ -146,5 +149,106 @@ namespace OU.CMS.Web.API.Controllers
                 await db.SaveChangesAsync();
             }
         }
+        #endregion
+
+        #region CompanyManagement
+        public async Task DeleteCompanyManagement(DeleteCompanyManagementDto dto)
+        {
+            using (var db = new CMSContext())
+            {
+                var companyManagement = await db.CompanyManagements.SingleOrDefaultAsync(c => c.CompanyId == dto.CompanyId && c.UserId == dto.UserId);
+
+                if (companyManagement == null)
+                    throw new Exception("This User is not a part of this Company!");
+
+                db.CompanyManagements.Remove(companyManagement);
+
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async void CreateCompanyManagementInvite(CreateCompanyManagementInviteDto dto)
+        {
+            using (var db = new CMSContext())
+            {
+                var checkExistingInvite = await db.CompanyManagementInvites.AnyAsync(c => c.Email == dto.Email.Trim() && c.CompanyId == dto.CompanyId);
+                if (checkExistingInvite)
+                    throw new Exception("Company Management Invite for this Email already exists!");
+
+                var checkExistingManagement = await (from cm in db.CompanyManagements
+                                                     join usr in db.Users on cm.UserId equals usr.Id
+                                                     where
+                                                     cm.CompanyId == dto.CompanyId &&
+                                                     usr.Email == dto.Email.Trim()
+                                                     select cm).AnyAsync();
+                if (checkExistingManagement)
+                    throw new Exception("This User is already a part of this company!");
+
+                var companyManagementInvite = new CompanyManagementInvite
+                {
+                    Id = Guid.NewGuid(),
+                    CompanyId = dto.CompanyId,
+                    Email = dto.Email,
+                    IsInviteForAdmin = dto.IsInviteForAdmin,
+                    CreatedBy = myUserId, //TODO: Change to identityUser.UserId
+                    CreatedOn = DateTime.UtcNow
+                };
+
+                db.CompanyManagementInvites.Add(companyManagementInvite);
+
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async void AcceptCompanyManagementInvite(AcceptCompanyManagementInviteDto dto)
+        {
+            using (var db = new CMSContext())
+            {
+                //TODO: change to identityUser.Email
+                var companyManagementInvite = await db.CompanyManagementInvites.SingleOrDefaultAsync(c => c.Email == myEmail && c.CompanyId == dto.CompanyId);
+                if (companyManagementInvite == null)
+                    throw new Exception("Company Management Invite for this User doesn't exist!");
+
+                db.CompanyManagementInvites.Remove(companyManagementInvite);
+
+                var companyManagement = new CompanyManagement
+                {
+                    Id = Guid.NewGuid(),
+                    CompanyId = dto.CompanyId,
+                    UserId = myUserId, //TODO: Change to identityUser.UserId
+                    IsAdmin = companyManagementInvite.IsInviteForAdmin,
+                    CreatedBy = myUserId, //TODO: Change to identityUser.UserId
+                    CreatedOn = DateTime.UtcNow
+                };
+
+                db.CompanyManagements.Add(companyManagement);
+
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async void RevokeCompanyManagementInvite(RevokeCompanyManagementInviteDto dto)
+        {
+            using (var db = new CMSContext())
+            {
+                var companyManagementInvite = await db.CompanyManagementInvites.SingleAsync(c => c.Email == dto.Email.Trim() && c.CompanyId == dto.CompanyId);
+                if (companyManagementInvite == null)
+                    throw new Exception("Company Management Invite for this Email doesn't exist!");
+
+                var checkExistingManagement = await (from cm in db.CompanyManagements
+                                                     join usr in db.Users on cm.UserId equals usr.Id
+                                                     where
+                                                     cm.CompanyId == dto.CompanyId &&
+                                                     usr.Email == dto.Email.Trim()
+                                                     select cm).AnyAsync();
+                if (checkExistingManagement)
+                    throw new Exception("This User is already a part of this company!");
+
+                db.CompanyManagementInvites.Remove(companyManagementInvite);
+
+                await db.SaveChangesAsync();
+            }
+        }
+        #endregion
     }
 }
