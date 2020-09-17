@@ -56,7 +56,11 @@
     <Compile Include="Models\Company\GetCompanyDto.cs" />
     <Compile Include="Models\Company\RevokeCompanyManagementInviteDto.cs" />
     <Compile Include="Models\Company\UpdateCompanyDto.cs" />
+    <Compile Include="Models\JobOpening\CreateJobOpeningDto.cs" />
+    <Compile Include="Models\JobOpening\GetJobOpeningCompanyDto.cs" />
+    <Compile Include="Models\JobOpening\GetJobOpeningDto.cs" />
     <Compile Include="Models\JobOpening\JobOpeningSimpleDto.cs" />
+    <Compile Include="Models\JobOpening\UpdateJobOpeningDto.cs" />
     <Compile Include="Models\Test\CreateTestDto.cs" />
     <Compile Include="Models\Test\CreateTestScoreDto.cs" />
     <Compile Include="Models\Test\GetTestDto.cs" />
