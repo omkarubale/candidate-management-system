@@ -20,12 +20,15 @@ namespace OU.CMS.Domain.Entities
 
         public decimal Salary { get; set; }
 
+        public DateTime Deadline { get; set; }
+
+        public IList<Candidate> Candidates { get; set; }
+
         //Created Log
         public DateTime CreatedOn { get; set; }
 
         public Guid CreatedBy { get; set; }
 
-        public IList<Candidate> Candidates { get; set; }
 
     }
 }
