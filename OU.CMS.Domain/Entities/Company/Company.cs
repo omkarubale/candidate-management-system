@@ -17,6 +17,7 @@ namespace OU.CMS.Domain.Entities
         public Guid CreatedBy { get; set; }
 
         public IList<CompanyManagement> CompanyManagements { get; set; }
+        public IList<CompanyManagementInvite> CompanyManagementInvites { get; set; }
         public IList<Candidate> Candidates { get; set; }
         public IList<JobOpening> JobOpenings { get; set; }
     }

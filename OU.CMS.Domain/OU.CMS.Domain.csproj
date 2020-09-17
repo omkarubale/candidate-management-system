@@ -56,6 +56,7 @@
     <Compile Include="Entities\Candidate\CandidateTestScore.cs" />
     <Compile Include="Entities\Company\Company.cs" />
     <Compile Include="Entities\Company\CompanyManagement.cs" />
+    <Compile Include="Entities\Company\CompanyManagementInvite.cs" />
     <Compile Include="Entities\JobOpening\JobOpening.cs" />
     <Compile Include="Entities\Test\Test.cs" />
     <Compile Include="Entities\Test\TestScore.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="EntityConfigurations\Candidate\CandidateTestScoreConfiguration.cs" />
     <Compile Include="EntityConfigurations\Company\CompanyConfiguration.cs" />
     <Compile Include="EntityConfigurations\Company\CompanyManagementConfiguration.cs" />
+    <Compile Include="EntityConfigurations\Company\CompanyManagementInviteConfiguration.cs" />
     <Compile Include="EntityConfigurations\JobOpening\JobOpeningConfiguration.cs" />
     <Compile Include="EntityConfigurations\Test\TestConfiguration.cs" />
     <Compile Include="EntityConfigurations\Test\TestScoreConfiguration.cs" />
@@ -94,6 +96,10 @@
     <Compile Include="Migrations\202009170804131_AddedPasswordColumnsToUserTable.cs" />
     <Compile Include="Migrations\202009170804131_AddedPasswordColumnsToUserTable.Designer.cs">
       <DependentUpon>202009170804131_AddedPasswordColumnsToUserTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009171329439_AddCompanyManagementInviteTable.cs" />
+    <Compile Include="Migrations\202009171329439_AddCompanyManagementInviteTable.Designer.cs">
+      <DependentUpon>202009171329439_AddCompanyManagementInviteTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009170804131_AddedPasswordColumnsToUserTable.resx">
       <DependentUpon>202009170804131_AddedPasswordColumnsToUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009171329439_AddCompanyManagementInviteTable.resx">
+      <DependentUpon>202009171329439_AddCompanyManagementInviteTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -25,6 +25,7 @@ namespace OU.CMS.Domain.Contexts
         #region Company
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyManagement> CompanyManagements { get; set; }
+        public DbSet<CompanyManagementInvite> CompanyManagementInvites { get; set; }
         #endregion
 
         #region JobOpening
@@ -48,6 +49,7 @@ namespace OU.CMS.Domain.Contexts
 
             modelBuilder.Configurations.Add(new CompanyConfiguration());
             modelBuilder.Configurations.Add(new CompanyManagementConfiguration());
+            modelBuilder.Configurations.Add(new CompanyManagementInviteConfiguration());
 
             modelBuilder.Configurations.Add(new JobOpeningConfiguration());
 
