@@ -13,6 +13,7 @@ using OU.CMS.Domain.Entities;
 using OU.CMS.Models.Models.User;
 using OU.CMS.Models.Models.Company;
 using OU.CMS.Models.Models.JobOpening;
+using System.Security.Cryptography;
 
 namespace OU.CMS.Web.API.Controllers
 {
@@ -20,7 +21,7 @@ namespace OU.CMS.Web.API.Controllers
     {
         private Guid myUserId = new Guid("1ff58b86-28a7-4324-bc40-518c29135f86");
 
-
+        #region Candidate
         private async Task<List<GetCandidateDto>> GetAllCandidates(Guid? candidateId = null, Guid? companyId = null, Guid? jobOpeningId = null, Guid? userId = null)
         {
             using (var db = new CMSContext())
@@ -39,7 +40,7 @@ namespace OU.CMS.Web.API.Controllers
                                   (!isCandidateFilter || cnd.Id == candidateId) &&
                                   (!isCompanyFilter || cnd.CompanyId == companyId) &&
                                   (!isJobOpeningFilter || cnd.JobOpeningId == jobOpeningId) &&
-                                  (!isUserFilter || cnd.UserId == userId) 
+                                  (!isUserFilter || cnd.UserId == userId)
                                   select new GetCandidateDto
                                   {
                                       User = new UserSimpleDto
@@ -156,5 +157,109 @@ namespace OU.CMS.Web.API.Controllers
                 await db.SaveChangesAsync();
             }
         }
+        #endregion
+
+        #region CandidateTests
+        public async Task<CandidateTestDto> CreateCandidateTest(CreateCandidateTestDto dto)
+        {
+            using (var db = new CMSContext())
+            {
+                var checkExistingCandidate = db.CandidateTests.Any(c => c.CandidateId == dto.CandidateId && c.TestId == dto.TestId);
+                if (checkExistingCandidate)
+                    throw new Exception("Candidate already has this Test in his profile!");
+
+                var candidateTest = new CandidateTest
+                {
+                    Id = Guid.NewGuid(),
+                    CandidateId = dto.CandidateId,
+                    TestId = dto.TestId,
+                };
+
+                db.CandidateTests.Add(candidateTest);
+
+                var testScores = await db.TestScores.Where(c => c.TestId == dto.TestId).ToListAsync();
+
+                foreach (var testScore in testScores)
+                {
+                    var candidateTestScore = new CandidateTestScore
+                    {
+                        Id = Guid.NewGuid(),
+                        CandidateTestId = candidateTest.Id,
+                        TestScoreId = testScore.Id,
+                        Value = 0,
+                    };
+
+                    db.CandidateTestScores.Add(candidateTestScore);
+                }
+
+                await db.SaveChangesAsync();
+
+                return await GetCandidateTest(candidateTest.CandidateId, candidateTest.TestId);
+            }
+        }
+
+        public async Task<CandidateTestDto> GetCandidateTest(Guid candidateId, Guid testId)
+        {
+            using (var db = new CMSContext())
+            {
+                var candidateTest = (from cnd in db.Candidates
+                                     join cdt in db.CandidateTests on cnd.Id equals cdt.CandidateId
+                                     join tst in db.Tests on cdt.TestId equals tst.Id
+                                     join cdts in db.CandidateTestScores on cdt.Id equals cdts.CandidateTestId
+                                     join tsts in db.TestScores on cdts.TestScoreId equals tsts.Id
+                                     where
+                                     cnd.Id == candidateId &&
+                                     tst.Id == testId
+                                     select new
+                                     {
+                                         CandidateId = cnd.Id,
+                                         TestTitle = tst.Title,
+
+                                         TestScoreId = tsts.Id,
+                                         TestScoreTitle = tsts.Title,
+                                         TestScoreIsMandatory = tsts.IsMandatory,
+
+                                         CandidateTestScoreId = cdts.Id,
+                                         CandidateTestScoreValue = cdts.Value,
+                                         CandidateTestScoreComment = cdts.Comment
+                                     })
+                                    .GroupBy(t => new { t.CandidateId, t.TestTitle })
+                                    .Select(t => new CandidateTestDto
+                                    {
+                                        CandidateId = t.Key.CandidateId,
+                                        Title = t.Key.TestTitle,
+
+                                        CandidateTestScores = t.Select(ts => new CandidateTestScoreDto
+                                        {
+                                            CandidateTestScoreId = ts.CandidateTestScoreId,
+                                            TestScoreId = ts.TestScoreId,
+                                            Title = ts.TestScoreTitle,
+                                            IsMandatory = ts.TestScoreIsMandatory,
+
+                                            Value = ts.CandidateTestScoreValue,
+                                            Comment = ts.CandidateTestScoreComment
+                                        }).ToList()
+                                    });
+
+                return await candidateTest.SingleOrDefaultAsync();
+            }
+        }
+
+        public async Task UpdateCandidateTestScore(UpdateCandidateTestScoreDto dto)
+        {
+            using (var db = new CMSContext())
+            {
+                var candidateTestScore = await db.CandidateTestScores.SingleOrDefaultAsync(ts => ts.Id == dto.CandidateTestScoreId);
+
+                if (candidateTestScore == null)
+                    throw new Exception("Candidate Test Score doesn't exist!");
+
+                candidateTestScore.Value = dto.Value;
+                candidateTestScore.Comment = dto.Comment;
+
+                await db.SaveChangesAsync();
+            }
+        }
+        #endregion
     }
 }

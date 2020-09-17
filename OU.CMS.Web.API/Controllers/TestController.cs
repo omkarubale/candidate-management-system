@@ -16,7 +16,7 @@ namespace OU.CMS.Web.API.Controllers
     public class TestController : ApiController
     {
         private Guid myUserId = new Guid("1ff58b86-28a7-4324-bc40-518c29135f86");
-        private string myEmail = "oubale@gmail.com";
+        //private string myEmail = "oubale@gmail.com";
 
         #region Test
         public async Task<IEnumerable<GetTestDto>> GetAllTests()
