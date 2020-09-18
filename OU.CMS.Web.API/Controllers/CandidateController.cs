@@ -14,6 +14,7 @@ using OU.CMS.Models.Models.User;
 using OU.CMS.Models.Models.Company;
 using OU.CMS.Models.Models.JobOpening;
 using System.Security.Cryptography;
+using System.ComponentModel;
 
 namespace OU.CMS.Web.API.Controllers
 {
@@ -74,11 +75,11 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async Task<GetCandidateDto> GetCandidate(Guid id)
+        public async Task<GetCandidateDto> GetCandidate(Guid candidateId)
         {
             using (var db = new CMSContext())
             {
-                var candidate = (await GetAllCandidates(candidateId: id)).SingleOrDefault();
+                var candidate = (await GetAllCandidates(candidateId: candidateId)).SingleOrDefault();
 
                 if (candidate == null)
                     throw new Exception("Candidate does not exist!");
@@ -143,16 +144,20 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async Task DeleteCandidate(Guid id)
+        public async Task DeleteCandidate(Guid candidateId)
         {
             using (var db = new CMSContext())
             {
-                var Candidate = await db.Candidates.SingleOrDefaultAsync(c => c.Id == id);
+                var candidate = await db.Candidates.SingleOrDefaultAsync(c => c.Id == candidateId);
 
-                if (Candidate == null)
+                if (candidate == null)
                     throw new Exception("Candidate with Id not found!");
 
-                db.Candidates.Remove(Candidate);
+                var candidateTests = await db.CandidateTests.Include(ct => ct.CandidateTestScores).Where(ct => ct.CandidateId == candidateId).ToListAsync();
+
+                db.CandidateTestScores.RemoveRange(candidateTests.SelectMany(ct => ct.CandidateTestScores));
+                db.CandidateTests.RemoveRange(candidateTests);
+                db.Candidates.Remove(candidate);
 
                 await db.SaveChangesAsync();
             }

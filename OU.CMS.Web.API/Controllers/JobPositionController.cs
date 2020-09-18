@@ -91,7 +91,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async Task<GetJobOpeningDto> GetJobOpening(Guid id)
+        public async Task<GetJobOpeningDto> GetJobOpening(Guid jobOpeningId)
         {
             using (var db = new CMSContext())
             {
@@ -99,7 +99,7 @@ namespace OU.CMS.Web.API.Controllers
                                         join cmp in db.Companies on jo.CompanyId equals cmp.Id
                                         join usr in db.Users on jo.CreatedBy equals usr.Id
                                         where
-                                        jo.Id == id
+                                        jo.Id == jobOpeningId
                                         select new GetJobOpeningDto
                                         {
                                             Id = jo.Id,
@@ -179,16 +179,16 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async Task DeleteJobOpening(Guid id)
+        public async Task DeleteJobOpening(Guid jobOpeningId)
         {
             using (var db = new CMSContext())
             {
-                var jobOpening = await db.JobOpenings.SingleOrDefaultAsync(c => c.Id == id);
+                var jobOpening = await db.JobOpenings.SingleOrDefaultAsync(c => c.Id == jobOpeningId);
 
                 if (jobOpening == null)
                     throw new Exception("JobOpening with Id not found!");
 
-                var candidatesForJobOpening = await db.Candidates.Where(c => c.JobOpeningId == id).ToListAsync();
+                var candidatesForJobOpening = await db.Candidates.Where(c => c.JobOpeningId == jobOpeningId).ToListAsync();
 
                 db.Candidates.RemoveRange(candidatesForJobOpening);
                 db.JobOpenings.Remove(jobOpening);

@@ -42,13 +42,13 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async Task<GetCompanyDto> GetCompany(Guid id)
+        public async Task<GetCompanyDto> GetCompany(Guid companyId)
         {
             using (var db = new CMSContext())
             {
                 var company = await (from cmp in db.Companies
                                      join usr in db.Users on cmp.CreatedBy equals usr.Id
-                                     where cmp.Id == id
+                                     where cmp.Id == companyId
                                      select new GetCompanyDto
                                      {
                                          Id = cmp.Id,
@@ -135,14 +135,23 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async Task DeleteCompany(Guid id)
+        public async Task DeleteCompany(Guid companyId)
         {
             using (var db = new CMSContext())
             {
-                var company = await db.Companies.SingleOrDefaultAsync(c => c.Id == id);
+                var company = await db.Companies.Include(c => c.JobOpenings).Include(c => c.CompanyManagements).Include(c => c.CompanyManagementInvites).SingleOrDefaultAsync(c => c.Id == companyId);
 
                 if (company == null)
                     throw new Exception("Company with Id not found!");
+
+                var companyCandidates = await db.Candidates.AnyAsync(c => c.CompanyId == companyId);
+
+                if (!companyCandidates)
+                    throw new Exception("Company cannot be deleted as candidates have registered for this company's job Openings!");
+
+                db.CompanyManagementInvites.RemoveRange(company.CompanyManagementInvites);
+                db.CompanyManagements.RemoveRange(company.CompanyManagements);
+                db.JobOpenings.RemoveRange(company.JobOpenings);
 
                 db.Companies.Remove(company);
 

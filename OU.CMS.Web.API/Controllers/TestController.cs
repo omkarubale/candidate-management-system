@@ -43,14 +43,14 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async Task<GetTestDto> GetTest(Guid id)
+        public async Task<GetTestDto> GetTest(Guid testId)
         {
             using (var db = new CMSContext())
             {
                 var test = await (from tst in db.Tests
                                   join tstc in db.TestScores on tst.Id equals tstc.TestId
                                   join usr in db.Users on tst.CreatedBy equals usr.Id
-                                  where tst.Id == id
+                                  where tst.Id == testId
                                   group tstc by new { tst.Id, tst.Title, UserId = usr.Id, usr.FullName, usr.ShortName, tst.CreatedOn } into g
                                   select new GetTestDto
                                   {
@@ -127,11 +127,11 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async Task DeleteTest(Guid id)
+        public async Task DeleteTest(Guid testId)
         {
             using (var db = new CMSContext())
             {
-                var test = await db.Tests.SingleOrDefaultAsync(c => c.Id == id);
+                var test = await db.Tests.SingleOrDefaultAsync(c => c.Id == testId);
 
                 if (test == null)
                     throw new Exception("Test with Id not found!");
