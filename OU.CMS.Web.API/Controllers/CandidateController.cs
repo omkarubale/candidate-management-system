@@ -186,7 +186,8 @@ namespace OU.CMS.Web.API.Controllers
                         Id = Guid.NewGuid(),
                         CandidateTestId = candidateTest.Id,
                         TestScoreId = testScore.Id,
-                        Value = 0,
+                        Value = null,
+                        Comment = null
                     };
 
                     db.CandidateTestScores.Add(candidateTestScore);
@@ -249,10 +250,16 @@ namespace OU.CMS.Web.API.Controllers
         {
             using (var db = new CMSContext())
             {
-                var candidateTestScore = await db.CandidateTestScores.SingleOrDefaultAsync(ts => ts.Id == dto.CandidateTestScoreId);
+                var candidateTestScore = await db.CandidateTestScores.Include(cts => cts.TestScore).SingleOrDefaultAsync(ts => ts.Id == dto.CandidateTestScoreId);
 
                 if (candidateTestScore == null)
                     throw new Exception("Candidate Test Score doesn't exist!");
+
+                if(candidateTestScore.TestScore.MinimumScore > dto.Value)
+                    throw new Exception("Test Score has to be more than Minimum Value!");
+
+                if (candidateTestScore.TestScore.MaximumScore < dto.Value)
+                    throw new Exception("Test Score has to be less than Maximum Value!");
 
                 candidateTestScore.Value = dto.Value;
                 candidateTestScore.Comment = dto.Comment;

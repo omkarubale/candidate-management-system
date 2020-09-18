@@ -10,6 +10,7 @@ using OU.CMS.Domain.Contexts;
 using OU.CMS.Models.Models.Test;
 using OU.CMS.Models.Models.Common;
 using OU.CMS.Domain.Entities;
+using Microsoft.AspNet.Identity;
 
 namespace OU.CMS.Web.API.Controllers
 {
@@ -60,7 +61,10 @@ namespace OU.CMS.Web.API.Controllers
                                       {
                                           Id = t.Id,
                                           Title = t.Title,
-                                          IsMandatory = t.IsMandatory
+                                          IsMandatory = t.IsMandatory,
+                                          MinimumScore = t.MinimumScore,
+                                          MaximumScore = t.MaximumScore,
+                                          CutoffScore = t.CutoffScore
                                       }).ToList(),
 
                                       CreatedDetails = new CreatedOnDto
@@ -127,12 +131,15 @@ namespace OU.CMS.Web.API.Controllers
         {
             using (var db = new CMSContext())
             {
-                var company = await db.Tests.SingleOrDefaultAsync(c => c.Id == id);
+                var test = await db.Tests.SingleOrDefaultAsync(c => c.Id == id);
 
-                if (company == null)
+                if (test == null)
                     throw new Exception("Test with Id not found!");
 
-                db.Tests.Remove(company);
+                db.CandidateTestScores.RemoveRange(test.CandidateTests.SelectMany(cd => cd.CandidateTestScores));
+                db.CandidateTests.RemoveRange(test.CandidateTests);
+                db.TestScores.RemoveRange(test.TestScores);
+                db.Tests.Remove(test);
 
                 await db.SaveChangesAsync();
             }
@@ -154,6 +161,9 @@ namespace OU.CMS.Web.API.Controllers
                     TestId = dto.TestId,
                     Title = dto.Title.Trim(),
                     IsMandatory = dto.IsMandatory,
+                    MinimumScore = dto.MinimumScore,
+                    MaximumScore = dto.MaximumScore,
+                    CutoffScore = dto.CutoffScore
                 };
 
                 db.TestScores.Add(testScore);
@@ -164,7 +174,10 @@ namespace OU.CMS.Web.API.Controllers
                 {
                     Id = testScore.Id,
                     Title = testScore.Title,
-                    IsMandatory = testScore.IsMandatory
+                    IsMandatory = testScore.IsMandatory,
+                    MinimumScore = testScore.MinimumScore,
+                    MaximumScore = testScore.MaximumScore,
+                    CutoffScore = testScore.CutoffScore
                 };
             }
         }
@@ -183,6 +196,9 @@ namespace OU.CMS.Web.API.Controllers
 
                 testScore.Title = dto.Title;
                 testScore.IsMandatory = dto.IsMandatory;
+                testScore.MinimumScore = dto.MinimumScore;
+                testScore.MaximumScore = dto.MaximumScore;
+                testScore.CutoffScore = dto.CutoffScore;
 
                 await db.SaveChangesAsync();
 
@@ -190,7 +206,10 @@ namespace OU.CMS.Web.API.Controllers
                 {
                     Id = testScore.Id,
                     Title = testScore.Title,
-                    IsMandatory = testScore.IsMandatory
+                    IsMandatory = testScore.IsMandatory,
+                    MinimumScore = testScore.MinimumScore,
+                    MaximumScore = testScore.MaximumScore,
+                    CutoffScore = testScore.CutoffScore
                 };
             }
         }

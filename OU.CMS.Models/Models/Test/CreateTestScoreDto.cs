@@ -13,5 +13,11 @@ namespace OU.CMS.Models.Models.Test
         public string Title { get; set; }
 
         public bool IsMandatory { get; set; }
+
+        public decimal MinimumScore { get; set; }
+
+        public decimal MaximumScore { get; set; }
+
+        public decimal? CutoffScore { get; set; }
     }
 }

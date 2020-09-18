@@ -109,6 +109,10 @@
     <Compile Include="Migrations\202009171906338_AddedDeadlineColumnToJobOpeningTable.Designer.cs">
       <DependentUpon>202009171906338_AddedDeadlineColumnToJobOpeningTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009181141502_AddedScoreRequirementsOnTestScore.cs" />
+    <Compile Include="Migrations\202009181141502_AddedScoreRequirementsOnTestScore.Designer.cs">
+      <DependentUpon>202009181141502_AddedScoreRequirementsOnTestScore.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -150,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009171906338_AddedDeadlineColumnToJobOpeningTable.resx">
       <DependentUpon>202009171906338_AddedDeadlineColumnToJobOpeningTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009181141502_AddedScoreRequirementsOnTestScore.resx">
+      <DependentUpon>202009181141502_AddedScoreRequirementsOnTestScore.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -13,6 +13,12 @@ namespace OU.CMS.Domain.Entities
 
         public bool IsMandatory { get; set; }
 
+        public decimal MinimumScore { get; set; }
+
+        public decimal MaximumScore { get; set; }
+
+        public decimal? CutoffScore { get; set; }
+
         public Guid TestId { get; set; }
 
         [ForeignKey(nameof(TestId))]

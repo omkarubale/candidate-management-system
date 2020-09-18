@@ -16,7 +16,7 @@ namespace OU.CMS.Domain.Entities
 
         public TestScore TestScore { get; set; }
 
-        public decimal Value { get; set; }
+        public decimal? Value { get; set; }
 
         public string Comment { get; set; }
     }

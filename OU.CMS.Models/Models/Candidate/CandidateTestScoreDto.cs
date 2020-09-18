@@ -16,7 +16,7 @@ namespace OU.CMS.Models.Models.Candidate
 
         public bool IsMandatory { get; set; }
 
-        public decimal Value { get; set; }
+        public decimal? Value { get; set; }
 
         public string Comment { get; set; }
     }
