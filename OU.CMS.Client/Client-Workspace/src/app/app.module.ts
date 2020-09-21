@@ -3,10 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 import { CompaniesListComponent } from './companies-list/companies-list.component';
 import { CompanyService } from './shared/api/company.service';
 import { CompanyEditComponent } from './company-edit/company-edit.component';
-import { Routes } from '@angular/router';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/company-list', pathMatch: 'full' },
@@ -32,7 +37,11 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [CompanyService],
   bootstrap: [AppComponent]

@@ -113,6 +113,10 @@
     <Compile Include="Migrations\202009181141502_AddedScoreRequirementsOnTestScore.Designer.cs">
       <DependentUpon>202009181141502_AddedScoreRequirementsOnTestScore.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009201547484_AddedCutoffScoreToTestScoreTable.cs" />
+    <Compile Include="Migrations\202009201547484_AddedCutoffScoreToTestScoreTable.Designer.cs">
+      <DependentUpon>202009201547484_AddedCutoffScoreToTestScoreTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009181141502_AddedScoreRequirementsOnTestScore.resx">
       <DependentUpon>202009181141502_AddedScoreRequirementsOnTestScore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009201547484_AddedCutoffScoreToTestScoreTable.resx">
+      <DependentUpon>202009201547484_AddedCutoffScoreToTestScoreTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

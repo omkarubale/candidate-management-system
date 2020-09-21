@@ -19,6 +19,7 @@ namespace OU.CMS.Web.API.Controllers
         private string myEmail = "oubale@gmail.com";
 
         #region Company
+        [HttpGet]
         public async Task<List<GetCompanyDto>> GetAllCompanies()
         {
             using (var db = new CMSContext())

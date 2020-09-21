@@ -5,6 +5,8 @@ import { NgForm } from '@angular/forms';
 
 import { CompanyService } from '../shared/api/company.service';
 import Company from '../shared/models/Company';
+import { stringify } from '@angular/compiler/src/util';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-company-edit',
@@ -19,14 +21,16 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+    this.resetForm();
     this.sub = this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
-        this.companyService.get(id).subscribe((company: any) => {
+        this.companyService.getCompany(id).subscribe((company: any) => {
           if (company) {
             this.company = company;
           } else {
@@ -48,8 +52,18 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
     this.router.navigate(['/company-list']);
   }
 
-  save(form: any) {
-    this.companyService.save(form).subscribe(
+  saveCompany(form: any) {
+    this.companyService.saveCompany(form.value).subscribe(
+      result => {
+        this.toastr.success("Company was saved successfully!", "Save Successful")
+        this.gotoList();
+      },
+      error => console.error(error)
+    );
+  }
+
+  deleteCompany(companyId: string) {
+    this.companyService.deleteCompany(companyId).subscribe(
       result => {
         this.gotoList();
       },
@@ -57,12 +71,14 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  remove(id: number) {
-    this.companyService.remove(id).subscribe(
-      result => {
-        this.gotoList();
-      },
-      error => console.error(error)
-    );
+  resetForm(form?: NgForm) {
+    if(form != null) {
+      form.resetForm();
+    }
+
+    this.companyService.formData =  {
+      id: null,
+      name: null
+    }
   }
 }

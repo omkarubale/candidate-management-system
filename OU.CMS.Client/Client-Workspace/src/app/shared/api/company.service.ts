@@ -5,35 +5,37 @@ import Company from '../models/Company';
 
 @Injectable()
 export class CompanyService {
-  public API = 'http://localhost:8080/api';
-  public COMPANIES_API = `${this.API}/comapanies`;
+  public API = 'https://localhost:44305/api';
+  public COMPANIES_API = `${this.API}/company`;
+  formData : Company;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getAll(): Observable<Array<Company>> {
-    return this.http.get<Array<Company>>(this.COMPANIES_API);
+  getAllCompanies(): Observable<Array<Company>> {
+    var url = `${this.COMPANIES_API}/GetAllCompanies`;
+    console.log("getAllCompanies HIT: " + url);
+    var result = this.http.get<Array<Company>>(url);
+    console.log(result);
+    return result;
   }
 
-  get(id: string) {
-    return this.http.get(`${this.COMPANIES_API}/${id}`);
+  getCompany(companyId: string) {
+    return this.http.get(`${this.COMPANIES_API}/GetCompany?companyId=${companyId}`);
   }
 
-  save(company: Company): Observable<Company> {
+  saveCompany(company: Company): Observable<Company> {
     let result: Observable<Company>;
     if (company.id) {
-      result = this.http.put<Company>(
-        `${this.COMPANIES_API}/${company.id}`,
-        company
-      );
+      result = this.http.put<Company>(`${this.COMPANIES_API}/CreateCompany`, company);
     } else {
-      result = this.http.post<Company>(this.COMPANIES_API, company);
+      result = this.http.post<Company>(`${this.COMPANIES_API}/UpdateCompany`, company);
     }
     return result;
   }
 
-  remove(id: number) {
-    return this.http.delete(`${this.COMPANIES_API}/${id.toString()}`);
+  deleteCompany(companyId: string) {
+    return this.http.delete(`${this.COMPANIES_API}/DeleteCompany?companyId=${companyId}`);
   }
 }

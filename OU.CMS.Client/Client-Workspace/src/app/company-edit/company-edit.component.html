@@ -1,22 +1,28 @@
 <div>
-  <form #companyForm="ngForm" (ngSubmit)="save(companyForm.value)">
+  <form #companyForm="ngForm" (ngSubmit)="saveCompany(companyForm.value)" autocomplete="off">
 	<div>
   	<div>
-    	<h2>{{company.value ? 'Edit' : 'Add'}} Company</h2>
+    	<h2>{{company == undefined ? 'Edit' : 'Add'}} Company</h2>
   	</div>
 	</div>
 	<div>
     	<input type="hidden" name="id" [(ngModel)]="company.id">
-  	<div>
-    	<input matInput placeholder="Company Name" [(ngModel)]="company.name" required name="name">
+  	<div class="form-group">
+      <label>Name</label>
+      <input name="name" #Name="ngModel" class="form-control" placeholder="Company Name" [(ngModel)]="company.name" required>
+      <div class="validation-error" *ngIf="Name.invalid && Name.touched">This field is required.</div>
   	</div>
 	</div>
 	<div>
-  	<button mat-raised-button color="primary" type="submit" [disabled]="!companyForm.form.valid">Save
+  	<button class="btn" color="primary" type="submit" [disabled]="!companyForm.form.valid">
+      Save
   	</button>
-  	<button mat-raised-button color="secondary" (click)="remove(company.id)" *ngIf="company.id" type="button">Delete
+  	<button class="btn btn-warning" color="secondary" (click)="deleteCompany(company.id)" *ngIf="company.id" type="button">
+      Delete
   	</button>
-  	<a mat-button routerLink="/company-list">Cancel</a>
+    <a class="btn" routerLink="/company-list">
+      Cancel
+    </a>
 	</div>
 	<div>
 

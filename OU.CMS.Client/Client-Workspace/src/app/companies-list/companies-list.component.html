@@ -1,14 +1,13 @@
-<div>
+<div class="jumbotron">
   <h2>Companies List</h2>
-  <div>
-      <div *ngFor="let company of companiesList">
-        <h3>
+  <hr>
+  <table class="table table-hover">
+      <tr class="col-md-12" *ngFor="let company of companiesList">
           <a [routerLink]="['/company-edit', company.id]">
-            -
+            {{company.name}}
           </a>
-        </h3>
-      </div>
-  </div>
+        </tr>
+    </table>
 
   <button mat-fab color="primary" [routerLink]="['/company-add']">
     Add
