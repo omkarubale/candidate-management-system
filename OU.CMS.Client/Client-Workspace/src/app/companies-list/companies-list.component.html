@@ -3,8 +3,8 @@
   <hr>
   <table class="table table-hover">
       <tr class="col-md-12" *ngFor="let company of companiesList">
-          <a [routerLink]="['/company-edit', company.id]">
-            {{company.name}}
+          <a [routerLink]="['/company-edit', company.Id]">
+            {{company.Name}}
           </a>
         </tr>
     </table>

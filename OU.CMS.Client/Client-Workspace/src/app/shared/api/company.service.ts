@@ -1,41 +1,57 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import Company from '../models/Company';
+import  {
+  SaveCompanyDto,
+  GetCompanyDto,
+  DeleteCompanyManagementDto,
+  CreateCompanyManagementInviteDto,
+  AcceptCompanyManagementInviteDto,
+  RevokeCompanyManagementInviteDto
+} from '../models/CompanyModels';
 
 @Injectable()
 export class CompanyService {
   public API = 'https://localhost:44305/api';
   public COMPANIES_API = `${this.API}/company`;
-  formData : Company;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getAllCompanies(): Observable<Array<Company>> {
+  getAllCompanies(): Observable<Array<GetCompanyDto>> {
     var url = `${this.COMPANIES_API}/GetAllCompanies`;
     console.log("getAllCompanies HIT: " + url);
-    var result = this.http.get<Array<Company>>(url);
+    var result = this.http.get<Array<GetCompanyDto>>(url);
     console.log(result);
     return result;
   }
 
-  getCompany(companyId: string) {
-    return this.http.get(`${this.COMPANIES_API}/GetCompany?companyId=${companyId}`);
+  getCompany(companyId: string): Observable<GetCompanyDto> {
+    return this.http.get<GetCompanyDto>(`${this.COMPANIES_API}/GetCompany?companyId=${companyId}`);
   }
 
-  saveCompany(company: Company): Observable<Company> {
-    let result: Observable<Company>;
-    if (company.id) {
-      result = this.http.put<Company>(`${this.COMPANIES_API}/CreateCompany`, company);
-    } else {
-      result = this.http.post<Company>(`${this.COMPANIES_API}/UpdateCompany`, company);
-    }
-    return result;
+  saveCompany(company: SaveCompanyDto): Observable<GetCompanyDto> {
+    return this.http.post<GetCompanyDto>(`${this.COMPANIES_API}/SaveCompany`, company);
   }
 
   deleteCompany(companyId: string) {
     return this.http.delete(`${this.COMPANIES_API}/DeleteCompany?companyId=${companyId}`);
+  }
+
+  deleteCompanyManagement(companyManagement: DeleteCompanyManagementDto) {
+    return this.http.post(`${this.COMPANIES_API}/DeleteCompanyManagement`, companyManagement);
+  }
+
+  createCompanyManagementInvite(companyManagementInvite: CreateCompanyManagementInviteDto) {
+    return this.http.put(`${this.COMPANIES_API}/CreateCompanyManagementInvite`, companyManagementInvite);
+  }
+
+  acceptCompanyManagementInvite(companyManagementInvite: AcceptCompanyManagementInviteDto) {
+    return this.http.put(`${this.COMPANIES_API}/AcceptCompanyManagementInvite`, companyManagementInvite);
+  }
+
+  revokeCompanyManagementInvite(companyManagementInvite: RevokeCompanyManagementInviteDto) {
+    return this.http.put(`${this.COMPANIES_API}/RevokeCompanyManagementInvite`, companyManagementInvite);
   }
 }

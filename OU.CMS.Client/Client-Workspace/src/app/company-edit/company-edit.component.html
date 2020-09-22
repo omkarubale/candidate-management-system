@@ -6,10 +6,10 @@
   	</div>
 	</div>
 	<div>
-    	<input type="hidden" name="id" [(ngModel)]="company.id">
+    	<input type="hidden" name="Nd" [(ngModel)]="company.Id">
   	<div class="form-group">
       <label>Name</label>
-      <input name="name" #Name="ngModel" class="form-control" placeholder="Company Name" [(ngModel)]="company.name" required>
+      <input name="Name" #Name="ngModel" class="form-control" placeholder="Company Name" [(ngModel)]="company.Name" required>
       <div class="validation-error" *ngIf="Name.invalid && Name.touched">This field is required.</div>
   	</div>
 	</div>
@@ -17,7 +17,7 @@
   	<button class="btn" color="primary" type="submit" [disabled]="!companyForm.form.valid">
       Save
   	</button>
-  	<button class="btn btn-warning" color="secondary" (click)="deleteCompany(company.id)" *ngIf="company.id" type="button">
+  	<button class="btn btn-warning" color="secondary" (click)="deleteCompany(company.Id)" *ngIf="company.Id" type="button">
       Delete
   	</button>
     <a class="btn" routerLink="/company-list">

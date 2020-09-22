@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import { CompanyService } from '../shared/api/company.service';
-import Company from '../shared/models/Company';
+import  { SaveCompanyDto } from '../shared/models/CompanyModels';
 import { stringify } from '@angular/compiler/src/util';
 import { ToastrService } from 'ngx-toastr';
 
@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./company-edit.component.css'],
 })
 export class CompanyEditComponent implements OnInit, OnDestroy {
-  company: Company = new Company();
+  company: SaveCompanyDto = new SaveCompanyDto();
 
   sub: Subscription;
 
@@ -74,11 +74,6 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
   resetForm(form?: NgForm) {
     if(form != null) {
       form.resetForm();
-    }
-
-    this.companyService.formData =  {
-      id: null,
-      name: null
     }
   }
 }

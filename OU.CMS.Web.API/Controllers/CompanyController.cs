@@ -42,7 +42,8 @@ namespace OU.CMS.Web.API.Controllers
                 return companies;
             }
         }
-
+        
+        [HttpGet]
         public async Task<GetCompanyDto> GetCompany(Guid companyId)
         {
             using (var db = new CMSContext())
@@ -70,6 +71,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpPut]
         public async Task<GetCompanyDto> CreateCompany(CreateCompanyDto dto)
         {
             using (var db = new CMSContext())
@@ -105,19 +107,37 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async Task<GetCompanyDto> UpdateCompany(UpdateCompanyDto dto)
+        [HttpPost]
+        public async Task<GetCompanyDto> SaveCompany(SaveCompanyDto dto)
         {
             using (var db = new CMSContext())
             {
-                var company = await db.Companies.SingleOrDefaultAsync(c => c.Id == dto.Id);
-                if (company == null)
-                    throw new Exception("Company with Id not found!");
-
-                var checkExistingCompany = db.Companies.Any(c => c.Name == dto.Name.Trim() && c.Id != dto.Id);
+                Company company;
+                var isNew = dto.Id == Guid.Empty;
+                var checkExistingCompany = db.Companies.Any(c => c.Name == dto.Name.Trim() && (isNew || c.Id != dto.Id));
                 if (checkExistingCompany)
                     throw new Exception("Company with this name already exists!");
 
-                company.Name = dto.Name;
+                if (isNew)
+                {
+                    company = new Company
+                    {
+                        Id = Guid.NewGuid(),
+                        CreatedBy = myUserId, //TODO: Change to identityUser.UserId
+                        CreatedOn = DateTime.UtcNow
+                    };
+                }
+                else
+                {
+                    company = await db.Companies.SingleOrDefaultAsync(c => c.Id == dto.Id);
+                    if (company == null)
+                        throw new Exception("Company with Id not found!");
+                }
+                
+                company.Name = dto.Name.Trim();
+
+                if(isNew)
+                    db.Companies.Add(company);
 
                 await db.SaveChangesAsync();
 
@@ -136,6 +156,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpDelete]
         public async Task DeleteCompany(Guid companyId)
         {
             using (var db = new CMSContext())
@@ -162,6 +183,7 @@ namespace OU.CMS.Web.API.Controllers
         #endregion
 
         #region CompanyManagement
+        [HttpPost]
         public async Task DeleteCompanyManagement(DeleteCompanyManagementDto dto)
         {
             using (var db = new CMSContext())
@@ -177,7 +199,8 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async void CreateCompanyManagementInvite(CreateCompanyManagementInviteDto dto)
+        [HttpPut]
+        public async Task CreateCompanyManagementInvite(CreateCompanyManagementInviteDto dto)
         {
             using (var db = new CMSContext())
             {
@@ -210,7 +233,8 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async void AcceptCompanyManagementInvite(AcceptCompanyManagementInviteDto dto)
+        [HttpPost]
+        public async Task AcceptCompanyManagementInvite(AcceptCompanyManagementInviteDto dto)
         {
             using (var db = new CMSContext())
             {
@@ -237,7 +261,8 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async void RevokeCompanyManagementInvite(RevokeCompanyManagementInviteDto dto)
+        [HttpPost]
+        public async Task RevokeCompanyManagementInvite(RevokeCompanyManagementInviteDto dto)
         {
             using (var db = new CMSContext())
             {

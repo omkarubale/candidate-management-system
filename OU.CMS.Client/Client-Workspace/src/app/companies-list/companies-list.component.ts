@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../shared/api/company.service';
-import Company from '../shared/models/Company';
+import  { GetCompanyDto } from '../shared/models/CompanyModels';
 
 @Component({
   selector: 'app-companies-list',
@@ -8,7 +8,7 @@ import Company from '../shared/models/Company';
   styleUrls: ['./companies-list.component.css']
 })
 export class CompaniesListComponent implements OnInit {
-  companiesList :Array<Company>;
+  companiesList :Array<GetCompanyDto>;
 
   constructor(private companyService: CompanyService) { }
 
