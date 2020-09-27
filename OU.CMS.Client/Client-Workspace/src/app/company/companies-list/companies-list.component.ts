@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CompanyService } from '../shared/api/company.service';
-import  { GetCompanyDto } from '../shared/models/CompanyModels';
+import { CompanyService } from '../../shared/api/company.service';
+import  { GetCompanyDto } from '../../shared/models/CompanyModels';
 
 @Component({
   selector: 'app-companies-list',

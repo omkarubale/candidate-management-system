@@ -3,8 +3,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
-import { CompanyService } from '../shared/api/company.service';
-import  { SaveCompanyDto } from '../shared/models/CompanyModels';
+import { CompanyService } from '../../shared/api/company.service';
+import  { SaveCompanyDto } from '../../shared/models/CompanyModels';
 import { stringify } from '@angular/compiler/src/util';
 import { ToastrService } from 'ngx-toastr';
 

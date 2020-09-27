@@ -1,0 +1,12 @@
+nav ul li.active {
+  background-color: #79B953;
+}
+
+.github-icon {
+  font-size: 25px;
+}
+
+.github-text {
+  padding: 5px;
+  vertical-align: text-bottom;
+}
