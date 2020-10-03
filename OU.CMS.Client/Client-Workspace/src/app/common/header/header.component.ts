@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  // TODO: get these values from back end
   isAuthenticated: boolean = true;
   isCandidate: boolean = false;
 

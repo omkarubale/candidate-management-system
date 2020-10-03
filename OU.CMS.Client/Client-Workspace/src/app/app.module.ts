@@ -9,55 +9,38 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
+import { candidateRouterConfig } from './routes/candidateRoutes';
+import { companyManagerRouterConfig } from './routes/companyManagerRoutes';
+
 import { CompaniesListComponent } from './company/companies-list/companies-list.component';
 import { CompanyService } from './shared/api/company.service';
 import { CompanyEditComponent } from './company/company-edit/company-edit.component';
 import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
+import { CandidateDashboardComponent } from './candidate/candidate-dashboard/candidate-dashboard.component';
+import { CandidateMyProfileComponent } from './candidate/candidate-my-profile/candidate-my-profile.component';
+import { CandidateJobsComponent } from './candidate/candidate-jobs/candidate-jobs.component';
+import { CompanyManagerDashboardComponent } from './companyManager/company-manager-dashboard/company-manager-dashboard.component';
+import { CompanyManagerCompanyComponent } from './companyManager/company-manager-company/company-manager-company.component';
+import { CompanyManagerPositionsComponent } from './companyManager/company-manager-positions/company-manager-positions.component';
+import { CompanyManagerAssessmentsComponent } from './companyManager/company-manager-assessments/company-manager-assessments.component';
+import { CompanyManagerDrivesComponent } from './companyManager/company-manager-drives/company-manager-drives.component';
+import { LoginComponent } from './common/login/login.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login', pathMatch: 'full' },
   // Sign In/Sign Up Page
-  // {
-  //   path: 'login',
-  //   component: LoginComponent
-  // },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
 
   // Candidate Pages
-  // {
-  //   path: 'candidate-dashboard',
-  //   component: CandidateDashboardComponent
-  // },
-  // {
-  //   path: 'candidate-myProfile',
-  //   component: CandidateMyProfileComponent
-  // },
-  // {
-  //   path: 'candidate-jobs',
-  //   component: CandidateJobsComponent
-  // },
+  ...candidateRouterConfig,
 
   // Company Manager Pages
-  // {
-  //   path: 'companyManager-dashboard',
-  //   component: CompanyManagerDashboardComponent
-  // },
-  // {
-  //   path: 'companyManager-company',
-  //   component: CompanyManagerCompanyComponent
-  // },
-  // {
-  //   path: 'companyManager-positions',
-  //   component: CompanyManagerPositionsComponent
-  // },
-  // {
-  //   path: 'companyManager-assessments',
-  //   component: CompanyManagerAssessmentsComponent
-  // },
-  // {
-  //   path: 'companyManager-drives',
-  //   component: CompanyManagerDrivesComponent
-  // },
+  ...companyManagerRouterConfig,
 
   // To be deleted
   {
@@ -80,7 +63,16 @@ const appRoutes: Routes = [
     CompaniesListComponent,
     CompanyEditComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    CandidateDashboardComponent,
+    CandidateMyProfileComponent,
+    CandidateJobsComponent,
+    CompanyManagerDashboardComponent,
+    CompanyManagerCompanyComponent,
+    CompanyManagerPositionsComponent,
+    CompanyManagerAssessmentsComponent,
+    CompanyManagerDrivesComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
