@@ -12,7 +12,6 @@ namespace OU.CMS.Web.API
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
         }
     }
 }

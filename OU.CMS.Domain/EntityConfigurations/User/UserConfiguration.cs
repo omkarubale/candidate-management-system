@@ -32,10 +32,6 @@ namespace OU.CMS.Domain.EntityConfigurations
                 .IsRequired()
                 .HasMaxLength(255);
 
-            Property(v => v.PasswordTemp)
-                .IsRequired()
-                .HasMaxLength(25);
-
             Property(v => v.PasswordSalt)
                 .IsRequired()
                 .HasMaxLength(100);

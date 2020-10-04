@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,14 @@ namespace OU.CMS.Domain.Entities
 
         public DateTime? DateOfBirth { get; set; }
 
-        public string PasswordTemp { get; set; }
+        public byte[] PasswordHash { get; set; }
 
-        public string PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
 
-        public string PasswordSalt { get; set; }
+        public Guid? DefaultCompanyId { get; set; }
+
+        [ForeignKey(nameof(DefaultCompanyId))]
+        public Company DefaultCompany { get; set; }
 
         public IList<Candidate> Candidates { get; set; }
         public IList<CompanyManagement> CompanyManagements { get; set; }
