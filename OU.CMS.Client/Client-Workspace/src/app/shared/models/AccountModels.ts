@@ -3,7 +3,7 @@ export class SignInDto {
   password: string;
 }
 
-export class Candidate {
+export class SignUpDto {
   Email: string;
   Password: string;
   ConfirmPassword: string;
@@ -13,4 +13,6 @@ export class Candidate {
   ShortName: string;
   UserType: number;
   DateOfBirth: Date;
+  IsCandidateLogin: boolean;
+  IsPasswordMatch: boolean;
 }

@@ -1,4 +1,5 @@
 import { CompanyManagerDashboardComponent } from '../companyManager/company-manager-dashboard/company-manager-dashboard.component';
+import { CompanyManagerLoginComponent } from '../companyManager/company-manager-login/company-manager-login.component';
 import { CompanyManagerCompanyComponent } from '../companyManager/company-manager-company/company-manager-company.component';
 import { CompanyManagerPositionsComponent } from '../companyManager/company-manager-positions/company-manager-positions.component';
 import { CompanyManagerAssessmentsComponent } from '../companyManager/company-manager-assessments/company-manager-assessments.component';
@@ -6,6 +7,10 @@ import { CompanyManagerDrivesComponent } from '../companyManager/company-manager
 
 
 export const companyManagerRouterConfig = [
+  {
+    path: 'companyManager-login',
+    component: CompanyManagerLoginComponent
+  },
   {
     path: 'companyManager-dashboard',
     component: CompanyManagerDashboardComponent
