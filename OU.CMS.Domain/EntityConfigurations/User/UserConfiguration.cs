@@ -33,12 +33,10 @@ namespace OU.CMS.Domain.EntityConfigurations
                 .HasMaxLength(255);
 
             Property(v => v.PasswordSalt)
-                .IsRequired()
-                .HasMaxLength(100);
+                .IsRequired();
 
             Property(v => v.PasswordHash)
-                .IsRequired()
-                .HasMaxLength(100);
+                .IsRequired();
         }
     }
 }

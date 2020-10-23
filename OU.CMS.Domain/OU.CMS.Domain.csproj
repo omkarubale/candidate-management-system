@@ -125,6 +125,10 @@
     <Compile Include="Migrations\202010231437122_AddedPasswordFields.Designer.cs">
       <DependentUpon>202010231437122_AddedPasswordFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010231455080_RemovedLengthConstraintOnPasswordHashAndSalt.cs" />
+    <Compile Include="Migrations\202010231455080_RemovedLengthConstraintOnPasswordHashAndSalt.Designer.cs">
+      <DependentUpon>202010231455080_RemovedLengthConstraintOnPasswordHashAndSalt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,6 +182,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010231437122_AddedPasswordFields.resx">
       <DependentUpon>202010231437122_AddedPasswordFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010231455080_RemovedLengthConstraintOnPasswordHashAndSalt.resx">
+      <DependentUpon>202010231455080_RemovedLengthConstraintOnPasswordHashAndSalt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

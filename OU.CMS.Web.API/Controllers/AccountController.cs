@@ -118,6 +118,34 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task SetPassword(Guid userId, string password)
+        {
+            using (var db = new CMSContext())
+            {
+                var user = await db.Users.SingleOrDefaultAsync(u => u.Id == userId);
+
+                // User doesn't exist
+                if (user == null)
+                    throw new Exception("User with this email doesn't exist!");
+
+                byte[] passwordHash, passwordSalt;
+                CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+                user.PasswordSalt = passwordSalt;
+                user.PasswordHash = passwordHash;
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch(Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
         #region System Password Methods
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
