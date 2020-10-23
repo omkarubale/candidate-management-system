@@ -117,6 +117,14 @@
     <Compile Include="Migrations\202009201547484_AddedCutoffScoreToTestScoreTable.Designer.cs">
       <DependentUpon>202009201547484_AddedCutoffScoreToTestScoreTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010231435158_AddedDefaultCompanyIdForUserAndRemovedPasswordFields.cs" />
+    <Compile Include="Migrations\202010231435158_AddedDefaultCompanyIdForUserAndRemovedPasswordFields.Designer.cs">
+      <DependentUpon>202010231435158_AddedDefaultCompanyIdForUserAndRemovedPasswordFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010231437122_AddedPasswordFields.cs" />
+    <Compile Include="Migrations\202010231437122_AddedPasswordFields.Designer.cs">
+      <DependentUpon>202010231437122_AddedPasswordFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -164,6 +172,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009201547484_AddedCutoffScoreToTestScoreTable.resx">
       <DependentUpon>202009201547484_AddedCutoffScoreToTestScoreTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010231435158_AddedDefaultCompanyIdForUserAndRemovedPasswordFields.resx">
+      <DependentUpon>202010231435158_AddedDefaultCompanyIdForUserAndRemovedPasswordFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010231437122_AddedPasswordFields.resx">
+      <DependentUpon>202010231437122_AddedPasswordFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

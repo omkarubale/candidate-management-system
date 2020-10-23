@@ -1,15 +1,20 @@
-import { CompanyManagerDashboardComponent } from '../companyManager/company-manager-dashboard/company-manager-dashboard.component';
-import { CompanyManagerLoginComponent } from '../companyManager/company-manager-login/company-manager-login.component';
-import { CompanyManagerCompanyComponent } from '../companyManager/company-manager-company/company-manager-company.component';
-import { CompanyManagerPositionsComponent } from '../companyManager/company-manager-positions/company-manager-positions.component';
-import { CompanyManagerAssessmentsComponent } from '../companyManager/company-manager-assessments/company-manager-assessments.component';
-import { CompanyManagerDrivesComponent } from '../companyManager/company-manager-drives/company-manager-drives.component';
+import { CompanyManagerDashboardComponent } from '../components/companyManager/company-manager-dashboard/company-manager-dashboard.component';
+import { CompanyManagerSignupComponent } from '../components/companyManager/company-manager-signup/company-manager-signup.component';
+import { CompanyManagerSigninComponent } from '../components/companyManager/company-manager-signin/company-manager-signin.component';
+import { CompanyManagerCompanyComponent } from '../components/companyManager/company-manager-company/company-manager-company.component';
+import { CompanyManagerPositionsComponent } from '../components/companyManager/company-manager-positions/company-manager-positions.component';
+import { CompanyManagerAssessmentsComponent } from '../components/companyManager/company-manager-assessments/company-manager-assessments.component';
+import { CompanyManagerDrivesComponent } from '../components/companyManager/company-manager-drives/company-manager-drives.component';
 
 
 export const companyManagerRouterConfig = [
   {
-    path: 'companyManager-login',
-    component: CompanyManagerLoginComponent
+    path: 'companyManager-signup',
+    component: CompanyManagerSignupComponent
+  },
+  {
+    path: 'companyManager-signin',
+    component: CompanyManagerSigninComponent
   },
   {
     path: 'companyManager-dashboard',

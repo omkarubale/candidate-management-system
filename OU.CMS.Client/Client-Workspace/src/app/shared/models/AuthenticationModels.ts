@@ -1,5 +1,5 @@
 export class UserInfo {
-  JwtToken: object;
+  Token: string;
   UserId: string;
   Email: string;
   FirstName: string;
@@ -7,5 +7,6 @@ export class UserInfo {
   ShortName: string;
   FullName: string;
   UserType: number;
+  IsCandidateLogin: boolean;
   CompanyId: string;
 }

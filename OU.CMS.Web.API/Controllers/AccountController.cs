@@ -26,7 +26,7 @@ namespace OU.CMS.Web.API.Controllers
 
             using (var db = new CMSContext())
             {
-                var user = await db.Users.SingleOrDefaultAsync(u => u.Email == loginDto.Email && u.UserType == loginDto.UserType);
+                var user = await db.Users.SingleOrDefaultAsync(u => u.Email == loginDto.Email && u.UserType == (UserType)loginDto.UserType);
 
                 // User doesn't exist
                 if (user == null)
@@ -40,6 +40,7 @@ namespace OU.CMS.Web.API.Controllers
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Name, user.FullName),
+                    //new Claim(ClaimTypes.) // Create partial class for adding custom claims
                 };
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
@@ -57,8 +58,9 @@ namespace OU.CMS.Web.API.Controllers
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
 
+                // Instead of returning this, put all of this in Token using Claims
                 return new UserInfo() { 
-                    JwtToken = token,
+                    Token = tokenHandler.WriteToken(token),
                     UserId = user.Id,
                     Email = user.Email,
                     FirstName = user.FirstName,
@@ -66,6 +68,7 @@ namespace OU.CMS.Web.API.Controllers
                     ShortName = user.ShortName,
                     FullName = user.FullName,
                     UserType = user.UserType,
+                    IsCandidateLogin = user.UserType == UserType.Candidate,
                     CompanyId = user.UserType == UserType.Management ? user.DefaultCompanyId : null
                     //TODO: Add more fields to UserInfo
                 };

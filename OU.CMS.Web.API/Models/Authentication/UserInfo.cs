@@ -9,7 +9,7 @@ namespace OU.CMS.Web.API.Models.Authentication
 {
     public class UserInfo
     {
-        public SecurityToken JwtToken { get; set; }
+        public string Token { get; set; }
 
         public Guid UserId { get; set; }
 
@@ -26,6 +26,8 @@ namespace OU.CMS.Web.API.Models.Authentication
         public UserType UserType { get; set; }
 
         //Only present when user is a companyManager
+        public bool IsCandidateLogin { get; set; }
+
         public Guid? CompanyId { get; set; }
 
         //TODO: Add more fields to UserInfo

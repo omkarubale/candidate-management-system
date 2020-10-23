@@ -1,0 +1,33 @@
+<div class="common-container row center">
+  <div class="candidate-container col-5 offset-1">
+    <div class="text-container">
+      Looking for new Opportunities?
+    </div>
+
+    <div class="buttons-container">
+      <a [routerLink]="'/candidate-signin'">
+        <button class="home-button btn btn-outline-primary m-4" >Continue Applying</button>
+      </a>
+      <a [routerLink]="'/candidate-signup'">
+        <button class="home-button btn btn-primary p2 m-4">Get Hired</button>
+      </a>
+    </div>
+  </div>
+
+  <div class="split-container"></div>
+
+  <div class="company-container col-5">
+    <div class="text-container">
+      Looking to Hire?
+    </div>
+
+    <div class="buttons-container">
+      <a  [routerLink]="'/companyManager-signin'">
+        <button class="home-button btn btn-outline-primary m-4">Continue Hiring</button>
+      </a>
+      <a [routerLink]="'/companyManager-signup'">
+        <button class="home-button btn btn-primary m-4" >Start Hiring</button>
+      </a>
+    </div>
+  </div>
+</div>

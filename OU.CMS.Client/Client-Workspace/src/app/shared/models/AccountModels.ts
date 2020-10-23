@@ -1,6 +1,7 @@
 export class SignInDto {
-  email: string;
-  password: string;
+  Email: string;
+  Password: string;
+  UserType: number;
 }
 
 export class SignUpDto {

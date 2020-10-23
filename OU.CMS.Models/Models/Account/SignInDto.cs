@@ -13,6 +13,6 @@ namespace OU.CMS.Models.Models.Account
 
         public string Password { get; set; }
 
-        public UserType UserType { get; set; }
+        public int UserType { get; set; }
     }
 }

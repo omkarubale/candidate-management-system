@@ -2,6 +2,10 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~ng-pick-datetime/assets/style/picker.min.css';
 
+body {
+  margin-top: 56px;
+}
+
 input .ng-touched.ng-invalid {
   border-color: #dc3545;
 }

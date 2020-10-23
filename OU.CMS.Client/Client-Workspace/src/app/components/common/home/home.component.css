@@ -1,0 +1,28 @@
+.split-container {
+  width: 0.5px;
+  margin-top: 20vh;
+  height: 270px;
+  background-color: #212529;
+}
+
+.candidate-container, .company-container {
+  margin-top: 20vh;
+  /* height: calc(100vh - 100px); */
+}
+
+.home-button {
+  height: 150px;
+  width: 180px;
+  font-size: x-large;
+}
+
+.text-container {
+  text-align: center;
+  font-size: 25px;
+  margin-top: 10px;
+}
+
+.buttons-container {
+  text-align: center;
+  margin-top: 25px;
+}

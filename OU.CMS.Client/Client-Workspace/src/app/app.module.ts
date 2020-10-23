@@ -3,71 +3,40 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
-import { candidateRouterConfig } from './routes/candidateRoutes';
-import { companyManagerRouterConfig } from './routes/companyManagerRoutes';
-
-import { CompaniesListComponent } from './company/companies-list/companies-list.component';
+import { CompaniesListComponent } from './components/company/companies-list/companies-list.component';
 import { CompanyService } from './shared/api/company.service';
 import { AccountService } from './shared/api/account.service';
 import { CommonService } from './shared/api/common.service';
-import { CompanyEditComponent } from './company/company-edit/company-edit.component';
-import { HeaderComponent } from './common/header/header.component';
-import { FooterComponent } from './common/footer/footer.component';
-import { CandidateDashboardComponent } from './candidate/candidate-dashboard/candidate-dashboard.component';
-import { CandidateMyProfileComponent } from './candidate/candidate-my-profile/candidate-my-profile.component';
-import { CandidateJobsComponent } from './candidate/candidate-jobs/candidate-jobs.component';
-import { CompanyManagerDashboardComponent } from './companyManager/company-manager-dashboard/company-manager-dashboard.component';
-import { CompanyManagerCompanyComponent } from './companyManager/company-manager-company/company-manager-company.component';
-import { CompanyManagerPositionsComponent } from './companyManager/company-manager-positions/company-manager-positions.component';
-import { CompanyManagerAssessmentsComponent } from './companyManager/company-manager-assessments/company-manager-assessments.component';
-import { CompanyManagerDrivesComponent } from './companyManager/company-manager-drives/company-manager-drives.component';
-import { LoginComponent } from './common/login/login.component';
-import { CandidateLoginComponent } from './candidate/candidate-login/candidate-login.component';
-import { CompanyManagerLoginComponent } from './companyManager/company-manager-login/company-manager-login.component';
-import { HomeComponent } from './common/home/home.component';
-
-const appRoutes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/home', pathMatch: 'full' },
-  // Sign In/Sign Up Page
-  {
-    path: 'home',
-    component: HomeComponent
-  },
-
-  // Candidate Pages
-  ...candidateRouterConfig,
-
-  // Company Manager Pages
-  ...companyManagerRouterConfig,
-
-  // To be deleted
-  {
-    path: 'company-list',
-    component: CompaniesListComponent
-  },
-  {
-    path: 'company-add',
-    component: CompanyEditComponent
-  },
-  {
-    path: 'company-edit/:id',
-    component: CompanyEditComponent
-  }
-];
+import { CompanyEditComponent } from './components/company/company-edit/company-edit.component';
+import { NavComponent } from './components/common/nav/nav.component';
+import { FooterComponent } from './components/common/footer/footer.component';
+import { CandidateDashboardComponent } from './components/candidate/candidate-dashboard/candidate-dashboard.component';
+import { CandidateMyProfileComponent } from './components/candidate/candidate-my-profile/candidate-my-profile.component';
+import { CandidateJobsComponent } from './components/candidate/candidate-jobs/candidate-jobs.component';
+import { CompanyManagerDashboardComponent } from './components/companyManager/company-manager-dashboard/company-manager-dashboard.component';
+import { CompanyManagerCompanyComponent } from './components/companyManager/company-manager-company/company-manager-company.component';
+import { CompanyManagerPositionsComponent } from './components/companyManager/company-manager-positions/company-manager-positions.component';
+import { CompanyManagerAssessmentsComponent } from './components/companyManager/company-manager-assessments/company-manager-assessments.component';
+import { CompanyManagerDrivesComponent } from './components/companyManager/company-manager-drives/company-manager-drives.component';
+import { HomeComponent } from './components/common/home/home.component';
+import { CandidateSignupComponent } from './components/candidate/candidate-signup/candidate-signup.component';
+import { CandidateSigninComponent } from './components/candidate/candidate-signin/candidate-signin.component';
+import { CompanyManagerSigninComponent } from './components/companyManager/company-manager-signin/company-manager-signin.component';
+import { CompanyManagerSignupComponent } from './components/companyManager/company-manager-signup/company-manager-signup.component';
+import { SigninFormComponent } from './components/account/signin-form/signin-form.component';
+import { SignupFormComponent } from './components/account/signup-form/signup-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CompaniesListComponent,
     CompanyEditComponent,
-    HeaderComponent,
+    NavComponent,
     FooterComponent,
     CandidateDashboardComponent,
     CandidateMyProfileComponent,
@@ -77,15 +46,17 @@ const appRoutes: Routes = [
     CompanyManagerPositionsComponent,
     CompanyManagerAssessmentsComponent,
     CompanyManagerDrivesComponent,
-    LoginComponent,
-    CandidateLoginComponent,
-    CompanyManagerLoginComponent,
-    HomeComponent
+    HomeComponent,
+    CandidateSignupComponent,
+    CandidateSigninComponent,
+    CompanyManagerSigninComponent,
+    CompanyManagerSignupComponent,
+    SigninFormComponent,
+    SignupFormComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule,
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,

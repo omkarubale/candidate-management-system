@@ -1,0 +1,31 @@
+<div>
+  <form #companyForm="ngForm" (ngSubmit)="saveCompany(companyForm.value)" autocomplete="off">
+	<div>
+  	<div>
+    	<h2>{{company == undefined ? 'Edit' : 'Add'}} Company</h2>
+  	</div>
+	</div>
+	<div>
+    	<input type="hidden" name="Id" [(ngModel)]="company.Id">
+  	<div class="form-group">
+      <label>Name</label>
+      <input name="Name" #Name="ngModel" class="form-control" placeholder="Company Name" [(ngModel)]="company.Name" required>
+      <div class="validation-error" *ngIf="Name.invalid && Name.touched">This field is required.</div>
+  	</div>
+	</div>
+	<div>
+  	<button class="btn" color="primary" type="submit" [disabled]="!companyForm.form.valid">
+      Save
+  	</button>
+  	<button class="btn btn-warning" color="secondary" (click)="deleteCompany(company.Id)" *ngIf="company.Id" type="button">
+      Delete
+  	</button>
+    <a class="btn" routerLink="/company-list">
+      Cancel
+    </a>
+	</div>
+	<div>
+
+	</div>
+  </form>
+</div>
