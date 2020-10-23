@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 
 @Component({
@@ -8,12 +10,37 @@ import { AccountService } from 'src/app/shared/api/account.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private accountService: AccountService) {}
+  constructor(
+    private accountService: AccountService,
+    private router: Router,
+    private toastr: ToastrService
+    ) {}
 
-  isAuthenticated: boolean = this.accountService.isAuthenticated;
-  isCandidate: boolean = this.accountService.isCandidateLogin;
+  isAuthenticated: boolean;
+  isCandidate: boolean;
+
+  isAuthenticatedSubscription = this.accountService.isAuthenticatedChange.subscribe((value) => {
+    this.isAuthenticated = value;
+  });
+  isCandidateLoginSubscription = this.accountService.isCandidateLoginChange.subscribe((value) => {
+    this.isCandidate = value;
+  });
 
   ngOnInit(): void {
+    this.isAuthenticated = this.accountService.isAuthenticated;
+    console.log("account Service isAuthenticated: ", this.isAuthenticated);
+    this.isCandidate = this.accountService.isCandidateLogin;
+  }
+
+  logout() {
+    this.accountService.logout();
+    this.toastr.success('You have signed out successfully.', 'Sign out Successful!');
+    this.router.navigate(['/home']);
+  }
+
+  ngOnDestroy(): void {
+    this.isAuthenticatedSubscription.unsubscribe();
+    this.isCandidateLoginSubscription.unsubscribe();
   }
 
 }

@@ -47,10 +47,17 @@
       </li>
     </ul>
 
-    <div class="ml-auto my-2 my-lg-0" style="display: inline">
+    <div *ngIf="isAuthenticated" class="ml-auto my-2 my-lg-0" style="display: inline">
+      <a class="btn btn-secondary my-2 my-sm-0 p-0" (click)="logout()">
+        <div class="p-1 github-icon"><i class="fa fa-power-off"></i></div>
+        <div class="github-text">Logout</div>
+      </a>
+    </div>
+
+    <div [ngClass]="(isAuthenticated) ? 'ml-2' :'ml-auto'" class="my-2 my-lg-0" style="display: inline">
       <a class="btn btn-secondary my-2 my-sm-0 p-0" href="https://github.com/omkarubale/candidate-management-system">
-        <span class="p-1 github-icon"><i class="fa fa-github"></i></span>
-        <span class="github-text">Checkout on Github</span>
+        <div class="p-1 github-icon"><i class="fa fa-github"></i></div>
+        <div class="github-text">Github</div>
       </a>
     </div>
   </div>

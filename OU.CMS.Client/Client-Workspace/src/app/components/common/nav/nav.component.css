@@ -4,9 +4,12 @@ nav ul li.active {
 
 .github-icon {
   font-size: 25px;
+  display: inline-flex;
 }
 
 .github-text {
   padding: 5px;
   vertical-align: text-bottom;
+  display: inline-flex;
+  margin-bottom: -3px;
 }
