@@ -11,12 +11,13 @@ using OU.CMS.Domain.Contexts;
 using OU.CMS.Models.Models.Account;
 using OU.CMS.Web.API.Models.Authentication;
 using OU.CMS.Domain.Lookups;
+using OU.CMS.Common;
+using System.Collections.Generic;
 
 namespace OU.CMS.Web.API.Controllers
 {
     public class AccountController : ApiController
     {
-        private static string Secret = "5C0E753CA285F031D86A5496E857D70FDE170EE42F61734391CEF0DA8A677F44E68E859E5BE8ACE93D605128CC8B4BD8B03F9D15A7B72953A7FF45142FB6EA8037A5834BDB8C9D1E69899F1DCCE9F15134FC7021EEEF4A01A1E229B17CEA5FF1BF43AEE1702F4283928551AA24F83C81A3247DB2C8F0";
 
         [HttpPost]
         [AllowAnonymous]
@@ -36,32 +37,12 @@ namespace OU.CMS.Web.API.Controllers
                 if (!VerifyPasswordHash(loginDto.Password, user.PasswordHash, user.PasswordSalt))
                     throw new Exception("User does not exist or Password is not correct!");
 
-                var claims = new[] {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Name, user.FullName),
-                    //new Claim(ClaimTypes.) // Create partial class for adding custom claims
-                };
-
-                var key = Convert.FromBase64String(Secret);
-                var securitykey = new SymmetricSecurityKey(key);
-
-                var credentials = new SigningCredentials(securitykey, SecurityAlgorithms.HmacSha512Signature);
-
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.Now.AddDays(1),
-                    SigningCredentials = credentials
-                };
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var companyId = user.UserType == UserType.Management ? user.DefaultCompanyId : null;
 
                 // Instead of returning this, put all of this in Token using Claims
-                return new UserInfo() { 
-                    Token = tokenHandler.WriteToken(token),
+                return new UserInfo()
+                {
+                    Token = JwtManager.GenerateToken(user, 30, companyId),
                     UserId = user.Id,
                     Email = user.Email,
                     FirstName = user.FirstName,
@@ -70,7 +51,7 @@ namespace OU.CMS.Web.API.Controllers
                     FullName = user.FullName,
                     UserType = user.UserType,
                     IsCandidateLogin = user.UserType == UserType.Candidate,
-                    CompanyId = user.UserType == UserType.Management ? user.DefaultCompanyId : null
+                    CompanyId = companyId
                     //TODO: Add more fields to UserInfo
                 };
             }
@@ -91,8 +72,6 @@ namespace OU.CMS.Web.API.Controllers
                 // Password Incorrect
                 if (registerDto.IsPasswordMatch)
                     throw new Exception("Password confirmation does not match!");
-
-                
 
                 byte[] passwordHash, passwordSalt;
                 CreatePasswordHash(registerDto.Password, out passwordHash, out passwordSalt);
@@ -119,33 +98,33 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task SetPassword(Guid userId, string password)
-        {
-            using (var db = new CMSContext())
-            {
-                var user = await db.Users.SingleOrDefaultAsync(u => u.Id == userId);
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task SetPassword(Guid userId, string password)
+        //{
+        //    using (var db = new CMSContext())
+        //    {
+        //        var user = await db.Users.SingleOrDefaultAsync(u => u.Id == userId);
 
-                // User doesn't exist
-                if (user == null)
-                    throw new Exception("User with this email doesn't exist!");
+        //        // User doesn't exist
+        //        if (user == null)
+        //            throw new Exception("User with this email doesn't exist!");
 
-                byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(password, out passwordHash, out passwordSalt);
+        //        byte[] passwordHash, passwordSalt;
+        //        CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
-                user.PasswordSalt = passwordSalt;
-                user.PasswordHash = passwordHash;
-                try
-                {
-                    await db.SaveChangesAsync();
-                }
-                catch(Exception e)
-                {
-                    throw e;
-                }
-            }
-        }
+        //        user.PasswordSalt = passwordSalt;
+        //        user.PasswordHash = passwordHash;
+        //        try
+        //        {
+        //            await db.SaveChangesAsync();
+        //        }
+        //        catch(Exception e)
+        //        {
+        //            throw e;
+        //        }
+        //    }
+        //}
 
         #region System Password Methods
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

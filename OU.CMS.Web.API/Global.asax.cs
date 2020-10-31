@@ -9,7 +9,7 @@ using System.Web.Routing;
 
 namespace OU.CMS.Web.API
 {
-    public class WebApiApplication : System.Web.HttpApplication
+    public class WebApiApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -18,6 +18,9 @@ namespace OU.CMS.Web.API
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            GlobalConfiguration.Configuration.Formatters
+                .Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
         }
     }
 }

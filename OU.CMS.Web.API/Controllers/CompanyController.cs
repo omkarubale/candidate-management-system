@@ -10,14 +10,12 @@ using OU.CMS.Domain.Contexts;
 using OU.CMS.Models.Models.Company;
 using OU.CMS.Models.Models.Common;
 using OU.CMS.Domain.Entities;
+using OU.CMS.Web.API.Filters;
 
 namespace OU.CMS.Web.API.Controllers
 {
-    public class CompanyController : ApiController
+    public class CompanyController : BaseSecureController
     {
-        private Guid myUserId = new Guid("1ff58b86-28a7-4324-bc40-518c29135f86");
-        private string myEmail = "oubale@gmail.com";
-
         #region Company
         [HttpGet]
         public async Task<List<GetCompanyDto>> GetAllCompanies()
@@ -71,7 +69,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<GetCompanyDto> CreateCompany(CreateCompanyDto dto)
         {
             using (var db = new CMSContext())
@@ -84,7 +82,7 @@ namespace OU.CMS.Web.API.Controllers
                 {
                     Id = Guid.NewGuid(),
                     Name = dto.Name.Trim(),
-                    CreatedBy = myUserId, //TODO: Change to identityUser.UserId
+                    CreatedBy = UserInfo.UserId,
                     CreatedOn = DateTime.UtcNow
                 };
 
@@ -99,8 +97,8 @@ namespace OU.CMS.Web.API.Controllers
                     CreatedDetails = new CreatedOnDto
                     {
                         UserId = company.CreatedBy,
-                        FullName = "Omkar Ubale", //TODO: Change to identityUser.FullName
-                        ShortName = "OU", //TODO: Change to identityUser.ShortName
+                        FullName = UserInfo.FullName,
+                        ShortName = UserInfo.ShortName,
                         CreatedOn = company.CreatedOn
                     }
                 };
@@ -123,7 +121,7 @@ namespace OU.CMS.Web.API.Controllers
                     company = new Company
                     {
                         Id = Guid.NewGuid(),
-                        CreatedBy = myUserId, //TODO: Change to identityUser.UserId
+                        CreatedBy = UserInfo.UserId,
                         CreatedOn = DateTime.UtcNow
                     };
                 }
@@ -148,8 +146,8 @@ namespace OU.CMS.Web.API.Controllers
                     CreatedDetails = new CreatedOnDto
                     {
                         UserId = company.CreatedBy,
-                        FullName = "Omkar Ubale", //TODO: Change to identityUser.FullName
-                        ShortName = "OU", //TODO: Change to identityUser.ShortName
+                        FullName = UserInfo.FullName,
+                        ShortName = UserInfo.ShortName,
                         CreatedOn = company.CreatedOn
                     }
                 };
@@ -223,7 +221,7 @@ namespace OU.CMS.Web.API.Controllers
                     CompanyId = dto.CompanyId,
                     Email = dto.Email,
                     IsInviteForAdmin = dto.IsInviteForAdmin,
-                    CreatedBy = myUserId, //TODO: Change to identityUser.UserId
+                    CreatedBy = UserInfo.UserId,
                     CreatedOn = DateTime.UtcNow
                 };
 
@@ -239,7 +237,7 @@ namespace OU.CMS.Web.API.Controllers
             using (var db = new CMSContext())
             {
                 //TODO: change to identityUser.Email
-                var companyManagementInvite = await db.CompanyManagementInvites.SingleOrDefaultAsync(c => c.Email == myEmail && c.CompanyId == dto.CompanyId);
+                var companyManagementInvite = await db.CompanyManagementInvites.SingleOrDefaultAsync(c => c.Email == UserInfo.Email && c.CompanyId == dto.CompanyId);
                 if (companyManagementInvite == null)
                     throw new Exception("Company Management Invite for this User doesn't exist!");
 
@@ -249,9 +247,9 @@ namespace OU.CMS.Web.API.Controllers
                 {
                     Id = Guid.NewGuid(),
                     CompanyId = dto.CompanyId,
-                    UserId = myUserId, //TODO: Change to identityUser.UserId
+                    UserId = UserInfo.UserId,
                     IsAdmin = companyManagementInvite.IsInviteForAdmin,
-                    CreatedBy = myUserId, //TODO: Change to identityUser.UserId
+                    CreatedBy = UserInfo.UserId,
                     CreatedOn = DateTime.UtcNow
                 };
 
