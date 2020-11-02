@@ -1,21 +1,23 @@
-<div class="signin-page-container row pt-4">
-  <div class="candidate-details offset-2 col-4 d-none d-md-block p-4 mt-4">
-    <div class="candidate-details-content">
-      <div class="candidate-details-heading">
-        What you can do as <br/>a Candidate
-      </div>
-      <div class="candidate-details-details">
-        <ul>
-          <li>Apply for jobs</li>
-          <li>Receive real time application status</li>
-          <li>Track interview processes for each company you applied</li>
-          <li>Receive feedback from the recruiter to help you perform better in your next interview in case you don't get the job.</li>
-          <li>Track applications</li>
-        </ul>
+<div class="page-container">
+  <div class="row pt-4">
+    <div class="signin-form offset-1 col-5">
+      <app-signin-form [isCandidateLogin]=true></app-signin-form>
+    </div>
+    <div class="candidate-details col-4 d-none d-md-block p-4 mt-4">
+      <div class="candidate-details-content">
+        <div class="candidate-details-heading">
+          What you can do as <br/>a Candidate
+        </div>
+        <div class="candidate-details-details">
+          <ul>
+            <li>Apply for jobs</li>
+            <li>Receive real time application status</li>
+            <li>Track interview processes for each company you applied</li>
+            <li>Receive feedback from the recruiter to help you perform better in your next interview in case you don't get the job.</li>
+            <li>Track applications</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="signin-form offset-1 col-5">
-    <app-signin-form [isCandidateLogin]=true></app-signin-form>
   </div>
 </div>

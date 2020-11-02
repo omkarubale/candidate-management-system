@@ -16,3 +16,13 @@ div.validation-error {
   font-size: 80%;
   color: #dc3545;
 }
+
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
+.page-container {
+  height: calc(100vh - 57px);
+  overflow-x: hidden;
+}

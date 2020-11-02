@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
+import { NavbarTabs } from 'src/app/shared/enums/NavbarTabs';
 
 @Component({
   selector: 'app-nav',
@@ -18,6 +19,8 @@ export class NavComponent implements OnInit {
 
   isAuthenticated: boolean;
   isCandidate: boolean;
+
+  currentTab: NavbarTabs = NavbarTabs.Dashboard;
 
   isAuthenticatedSubscription = this.accountService.isAuthenticatedChange.subscribe((value) => {
     this.isAuthenticated = value;
@@ -36,6 +39,10 @@ export class NavComponent implements OnInit {
     this.accountService.logout();
     this.toastr.success('You have signed out successfully.', 'Sign out Successful!');
     this.router.navigate(['/home']);
+  }
+
+  changeActiveTab(tab: number) {
+    this.currentTab = tab;
   }
 
   ngOnDestroy(): void {

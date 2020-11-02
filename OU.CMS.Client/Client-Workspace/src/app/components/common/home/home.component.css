@@ -9,7 +9,8 @@
   background-color: #212529;
 }
 
-.candidate-container, .company-container {
+.candidate-container,
+.company-container {
   margin-top: 20vh;
   /* height: calc(100vh - 100px); */
 }
@@ -18,6 +19,17 @@
   height: 150px;
   width: 180px;
   font-size: x-large;
+  border-color: #79b953;
+  color: #79b953;
+}
+
+.home-button.signin-button {
+  color: #79b953;
+}
+
+.home-button.signup-button {
+  background-color: #79b953;
+  color: #ffffff;
 }
 
 .text-container {
