@@ -1,52 +1,59 @@
-<div class="signin-container">
+<div class="signin-container col-8 px-4 py-4 my-4">
   <form
     #signInForm="ngForm"
     (ngSubmit)="signIn(signInForm.value)"
     autocomplete="off"
   >
     <div class="signin-heading">
-      <h2>Sign In as {{ userTypeTag }}</h2>
+      <h2>Sign In <br> as {{ userTypeTag }}</h2>
     </div>
-    <div>
-      <input
-        type="hidden"
-        name="UserType"
-        [(ngModel)]="signInCredentials.UserType"
-      />
-      <div class="form-group">
+    <div class="signin-form-container">
+      <div class="signin-form-inputs">
         <input
-          name="Email"
-          #Name="ngModel"
-          class="form-control"
-          placeholder="Email"
-          [(ngModel)]="signInCredentials.Email"
-          required
+          type="hidden"
+          name="UserType"
+          [(ngModel)]="signInCredentials.UserType"
         />
-        <div class="validation-error" *ngIf="Name.invalid && Name.touched">
-          This field is required.
+        <div class="form-group">
+          <div class="textbox">
+            <input
+              name="Email"
+              #Name="ngModel"
+              class="form-control"
+              placeholder="Email"
+              [(ngModel)]="signInCredentials.Email"
+              required
+            />
+          </div>
+          <div class="validation-error mt-2">
+            <div class="validation-error-text" *ngIf="Name.invalid && Name.touched">
+              This field is required.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="textbox">
+            <input
+              name="Password"
+              type="password"
+              #Password="ngModel"
+              class="form-control"
+              placeholder="Password"
+              [(ngModel)]="signInCredentials.Password"
+              required
+            />
+          </div>
+          <div class="validation-error mt-2">
+            <div class="validation-error-text" *ngIf="Password.invalid && Password.touched">
+              This field is required.
+            </div>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <input
-          name="Password"
-          type="password"
-          #Password="ngModel"
-          class="form-control"
-          placeholder="Password"
-          [(ngModel)]="signInCredentials.Password"
-          required
-        />
-        <div
-          class="validation-error"
-          *ngIf="Password.invalid && Password.touched"
-        >
-          This field is required.
-        </div>
-      </div>
     </div>
-    <div>
+    <div class="signin-form-submit">
       <button
-        class="btn btn-primary"
+        class="btn btn-primary signin-button"
         color="primary"
         type="submit"
         [disabled]="!signInForm.form.valid"

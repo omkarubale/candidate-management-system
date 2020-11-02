@@ -13,6 +13,7 @@ using OU.CMS.Web.API.Models.Authentication;
 using OU.CMS.Domain.Lookups;
 using OU.CMS.Common;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OU.CMS.Web.API.Controllers
 {
@@ -39,7 +40,6 @@ namespace OU.CMS.Web.API.Controllers
 
                 var companyId = user.UserType == UserType.Management ? user.DefaultCompanyId : null;
 
-                // Instead of returning this, put all of this in Token using Claims
                 return new UserInfo()
                 {
                     Token = JwtManager.GenerateToken(user, 30, companyId),
@@ -63,18 +63,20 @@ namespace OU.CMS.Web.API.Controllers
         {
             using (var db = new CMSContext())
             {
-                var user = await db.Users.SingleOrDefaultAsync(u => u.Email == registerDto.Email);
+				var user = await db.Users.SingleOrDefaultAsync(u => u.Email == registerDto.Email);
 
                 // User doesn't exist
                 if (user != null)
                     throw new Exception("User with this email already exists!");
 
                 // Password Incorrect
-                if (registerDto.IsPasswordMatch)
+                if (!registerDto.IsPasswordMatch)
                     throw new Exception("Password confirmation does not match!");
 
                 byte[] passwordHash, passwordSalt;
                 CreatePasswordHash(registerDto.Password, out passwordHash, out passwordSalt);
+
+                var x = registerDto.FirstName.ToCharArray().First().ToString() + registerDto.LastName.ToCharArray().First().ToString();
 
                 user = new Domain.Entities.User()
                 {
@@ -84,16 +86,36 @@ namespace OU.CMS.Web.API.Controllers
                     PasswordSalt = passwordSalt,
                     UserType = registerDto.UserType,
 
-                    FullName = registerDto.FullName,
+                    FullName = registerDto.FirstName + " " + registerDto.LastName,
                     FirstName = registerDto.FirstName,
                     LastName = registerDto.LastName,
-                    ShortName = registerDto.ShortName,
-                    DateOfBirth = registerDto.DateOfBirth,
-
+                    ShortName = (registerDto.FirstName.ToCharArray().First().ToString() + registerDto.LastName.ToCharArray().First().ToString()).ToUpper(),
                     // TODO: Add Default company when getting invite for company Manager
                 };
 
                 db.Users.Add(user);
+
+                if (!registerDto.IsCandidateLogin)
+                {
+                    var company = new Domain.Entities.Company()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = registerDto.CompanyName
+                    };
+
+                    var companyManagement = new Domain.Entities.CompanyManagement()
+                    {
+                        Id = Guid.NewGuid(),
+                        CompanyId = company.Id,
+                        UserId = user.Id,
+                        CreatedOn = DateTime.UtcNow,
+                        CreatedBy = user.Id
+                    };
+
+                    db.Companies.Add(company);
+                    db.CompanyManagements.Add(companyManagement);
+                }
+                
                 await db.SaveChangesAsync();
             }
         }

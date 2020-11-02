@@ -1,9 +1,31 @@
-
-/* Company Manager Details */
-.company-manager-details-heading {
-  color: #79B953;
+.signin-page-container {
+  height: calc(100vh - 73px);
 }
 
-.company-manager-details-content {
+/* Company Manager Details */
+
+.company-manager-details {
+  border: 1px solid #212529;
+  border-radius: 10px;
+  background-color: white;
+  height: 70vh;
+
+  vertical-align: middle;
+}
+
+.company-manager-details-heading {
+  color: #79B953;
+  font-size: 30px;
+  text-align: center;
+}
+
+.company-manager-details-details {
   color: #707070;
+  font-size: 22px;
+}
+
+/* Company Manager Details */
+
+.signin-form {
+  padding-right: 0;
 }

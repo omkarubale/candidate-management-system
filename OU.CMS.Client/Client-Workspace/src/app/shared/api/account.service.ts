@@ -26,7 +26,7 @@ export class AccountService {
     this.isAuthenticated = localStorage.getItem('token') !== null;
     if(this.isAuthenticated)
     {
-      var userInfo = JSON.parse(localStorage.getItem('userInfo'));
+      var userInfo = this.getUserInfo();
       this.userInfo = userInfo;
       this.isCandidateLogin = userInfo.IsCandidateLogin;
     }
@@ -39,7 +39,6 @@ export class AccountService {
           localStorage.setItem('token', response.Token);
           localStorage.setItem('userInfo', JSON.stringify(response));
 
-          // this.decodedToken = this.jwtHelper.decodeToken(user.token);
           this.isAuthenticated = true;
           this.isCandidateLogin = response.IsCandidateLogin;
           this.userInfo = response;
@@ -60,7 +59,6 @@ export class AccountService {
     localStorage.removeItem('token');
     localStorage.removeItem('userInfo');
 
-    // this.decodedToken = this.jwtHelper.decodeToken(user.token);
     this.isAuthenticated = false;
     this.isCandidateLogin = false;
     this.userInfo = undefined;
@@ -71,4 +69,10 @@ export class AccountService {
 
     return;
   }
+
+  getUserInfo() : any {
+    var userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    return userInfo;
+  }
+
 }

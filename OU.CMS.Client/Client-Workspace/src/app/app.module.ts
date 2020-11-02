@@ -12,6 +12,8 @@ import { CompaniesListComponent } from './components/company/companies-list/comp
 import { CompanyService } from './shared/api/company.service';
 import { AccountService } from './shared/api/account.service';
 import { CommonService } from './shared/api/common.service';
+import { AuthInterceptorProvider } from './shared/interceptors/auth.interceptor';
+import { ErrorInterceptorProvider } from './shared/interceptors/error.interceptor';
 import { CompanyEditComponent } from './components/company/company-edit/company-edit.component';
 import { NavComponent } from './components/common/nav/nav.component';
 import { FooterComponent } from './components/common/footer/footer.component';
@@ -65,7 +67,9 @@ import { SignupFormComponent } from './components/account/signup-form/signup-for
   providers: [
     CompanyService,
     AccountService,
-    CommonService
+    CommonService,
+    AuthInterceptorProvider,
+    ErrorInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })

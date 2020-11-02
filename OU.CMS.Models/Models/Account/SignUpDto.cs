@@ -25,9 +25,9 @@ namespace OU.CMS.Models.Models.Account
 
         public UserType UserType { get; set; }
 
-        public DateTime? DateOfBirth { get; set; } 
-
         public bool IsCandidateLogin { get; set; }
+
+        public string CompanyName { get; set; } 
 
         public bool IsPasswordMatch => Password == ConfirmPassword;
     }

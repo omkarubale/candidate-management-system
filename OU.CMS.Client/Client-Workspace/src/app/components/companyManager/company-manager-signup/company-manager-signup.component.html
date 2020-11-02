@@ -1,1 +1,21 @@
-<p>company-manager-signup works!</p>
+<div class="signup-page-container row pt-4">
+  <div class="company-manager-details offset-2 col-4 d-none d-md-block p-4 mt-4">
+    <div class="company-manager-details-content">
+      <div class="company-manager-details-heading">
+        What you can do as <br/>a Company Manager
+      </div>
+      <div class="company-manager-details-details">
+        <ul>
+          <li>Create and Manage Job Openings</li>
+          <li>Manage Candidates who apply for your job openings</li>
+          <li>Manage Assessments that your job opening requires and track candidate's scores against your template</li>
+          <li>Manage Recruitment drives for walk ins, all managed on one portal</li>
+          <li>Manage Interviews and give updates to candidates over the portal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="signup-form offset-1 col-5">
+    <app-signup-form [isCandidateSignup]=false></app-signup-form>
+  </div>
+</div>

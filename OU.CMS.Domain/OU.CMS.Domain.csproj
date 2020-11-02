@@ -129,6 +129,10 @@
     <Compile Include="Migrations\202010231455080_RemovedLengthConstraintOnPasswordHashAndSalt.Designer.cs">
       <DependentUpon>202010231455080_RemovedLengthConstraintOnPasswordHashAndSalt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011021519111_RemovedDateOfBirthFromUser.cs" />
+    <Compile Include="Migrations\202011021519111_RemovedDateOfBirthFromUser.Designer.cs">
+      <DependentUpon>202011021519111_RemovedDateOfBirthFromUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -185,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010231455080_RemovedLengthConstraintOnPasswordHashAndSalt.resx">
       <DependentUpon>202010231455080_RemovedLengthConstraintOnPasswordHashAndSalt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011021519111_RemovedDateOfBirthFromUser.resx">
+      <DependentUpon>202011021519111_RemovedDateOfBirthFromUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

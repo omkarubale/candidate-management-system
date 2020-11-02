@@ -13,7 +13,7 @@ export class SignUpDto {
   FullName: string;
   ShortName: string;
   UserType: number;
-  DateOfBirth: Date;
   IsCandidateLogin: boolean;
+  CompanyName: string;
   IsPasswordMatch: boolean;
 }

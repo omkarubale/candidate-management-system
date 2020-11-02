@@ -1,1 +1,191 @@
-<p>signup-form works!</p>
+<div class="signin-container col-8 px-4 py-4 my-4">
+  <form
+    #signUpForm="ngForm"
+    (ngSubmit)="signUp(signUpForm.value)"
+    autocomplete="off"
+  >
+    <div class="signin-heading">
+      <h2>
+        Sign Up <br />
+        as {{ userTypeTag }}
+      </h2>
+    </div>
+
+    <div class="signin-form-container">
+      <!-- Email and Password -->
+      <div class="signin-form-inputs" [hidden]="takingDetails">
+        <input
+          type="hidden"
+          name="UserType"
+          [(ngModel)]="signUpCredentials.UserType"
+        />
+        <div class="form-group">
+          <div class="textbox">
+            <input
+              name="Email"
+              #Email="ngModel"
+              class="form-control"
+              placeholder="Email"
+              [(ngModel)]="signUpCredentials.Email"
+              required
+            />
+          </div>
+          <div class="validation-error mt-2">
+            <div
+              class="validation-error-text"
+              *ngIf="Email.invalid && Email.touched"
+            >
+              This field is required.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="textbox">
+            <input
+              name="Password"
+              type="password"
+              #Password="ngModel"
+              class="form-control"
+              placeholder="Password"
+              [(ngModel)]="signUpCredentials.Password"
+              ng-minlength="8"
+              required
+            />
+          </div>
+          <div class="validation-error mt-2">
+            <div
+              class="validation-error-text"
+              *ngIf="Password.invalid && Password.touched"
+            >
+              This field is required.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="textbox">
+            <input
+              name="ConfirmPassword"
+              type="password"
+              #ConfirmPassword="ngModel"
+              class="form-control"
+              placeholder="Confirm Password"
+              [(ngModel)]="signUpCredentials.ConfirmPassword"
+              ng-minlength="8"
+              required
+            />
+          </div>
+          <div class="validation-error mt-2">
+            <div
+              class="validation-error-text"
+              *ngIf="ConfirmPassword.invalid && ConfirmPassword.touched"
+            >
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Name and DoB -->
+      <div class="signin-form-inputs" [hidden]="!takingDetails">
+        <div class="form-group">
+          <div class="textbox">
+            <input
+              name="FirstName"
+              #FirstName="ngModel"
+              class="form-control"
+              placeholder="First Name"
+              [(ngModel)]="signUpCredentials.FirstName"
+              required
+            />
+          </div>
+          <div class="validation-error mt-2">
+            <div
+              class="validation-error-text"
+              *ngIf="FirstName.invalid && FirstName.touched"
+            >
+              This field is required.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="textbox">
+            <input
+              name="LastName"
+              #LastName="ngModel"
+              class="form-control"
+              placeholder="Last Name"
+              [(ngModel)]="signUpCredentials.LastName"
+              required
+            />
+          </div>
+          <div class="validation-error mt-2">
+            <div
+              class="validation-error-text"
+              *ngIf="LastName.invalid && LastName.touched"
+            >
+              This field is required.
+            </div>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="!signUpCredentials.IsCandidateLogin">
+          <div class="textbox">
+            <input
+              name="CompanyName"
+              type="date"
+              #CompanyName="ngModel"
+              class="form-control"
+              placeholder="New Company Name"
+              [(ngModel)]="signUpCredentials.CompanyName"
+              required
+            />
+          </div>
+          <div class="validation-error mt-2">
+            <div
+              class="validation-error-text"
+              *ngIf="CompanyName.invalid && CompanyName.touched"
+            >
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="signin-form-submit">
+      <button
+        class="btn btn-primary signin-button"
+        color="primary"
+        type="button"
+        [disabled]="
+          Email.invalid &&
+          !Email.touched &&
+          Password.invalid &&
+          !Password.touched &&
+          ConfirmPassword.invalid &&
+          !ConfirmPassword.touched
+        "
+        [hidden]="takingDetails"
+        (click)="takeDetailsButton()"
+      >
+        Continue
+      </button>
+
+      <button
+        class="btn btn-primary goBack-button mr-3"
+        color="primary"
+        type="button"
+        [hidden]="!takingDetails"
+        (click)="goBackToCredentialsButton()"
+      >
+        Go back
+      </button>
+      <button
+        class="btn btn-primary signin-button"
+        color="primary"
+        type="submit"
+        [disabled]="!signUpForm.form.valid"
+        [hidden]="!takingDetails"
+      >
+        Sign Up
+      </button>
+    </div>
+  </form>
+</div>

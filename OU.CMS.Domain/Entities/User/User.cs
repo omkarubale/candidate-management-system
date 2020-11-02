@@ -22,8 +22,6 @@ namespace OU.CMS.Domain.Entities
 
         public UserType UserType { get; set; }
 
-        public DateTime? DateOfBirth { get; set; }
-
         public byte[] PasswordHash { get; set; }
 
         public byte[] PasswordSalt { get; set; }

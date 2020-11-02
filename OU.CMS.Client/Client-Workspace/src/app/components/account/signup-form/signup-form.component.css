@@ -1,0 +1,70 @@
+.signin-container {
+  border: 1px solid #707070;
+  border-radius: 10px;
+  background-color: #474747;
+  height: 500px;
+  text-align: center;
+}
+
+.signin-heading {
+  color: #FFFFFF;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.textbox {
+  width: 100%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 2px 0;
+  margin: 8px 0;
+  border-bottom: 1px solid white;
+}
+
+.textbox:focus-within {
+  border-bottom: 1px solid #79B953;
+}
+
+  .textbox input {
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: 18px;
+    /* float: left; */
+  }
+
+.form-control:focus {
+  color: #495057;
+  outline: 0;
+  box-shadow: none;
+}
+
+.validation-error {
+  height: 20px;
+  text-align: left;
+}
+
+.signin-form-submit {
+  margin-top: 20px;
+}
+
+.signin-button {
+  background-color: #79B953;
+  cursor: pointer;
+  height: 60px;
+  width: 120px;
+  border-radius: 30px;
+  font-size: 20px;
+}
+
+.goBack-button {
+  background-color: #ffffff;
+  color: #686868;
+  cursor: pointer;
+  height: 60px;
+  width: 120px;
+  border-radius: 30px;
+  font-size: 20px;
+}
