@@ -68,3 +68,8 @@
   border-radius: 30px;
   font-size: 20px;
 }
+
+.candidate-signup-space-filler {
+  height: 74px;
+  margin-bottom: 16px;
+}

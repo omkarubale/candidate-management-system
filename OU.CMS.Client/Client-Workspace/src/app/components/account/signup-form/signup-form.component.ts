@@ -28,16 +28,18 @@ export class SignupFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.resetForm();
-    this.signUpCredentials.UserType = this.isCandidateSignup ? UserType.Candidate : UserType.Management;
+    this.signUpCredentials.IsCandidateLogin = this.isCandidateSignup;
+    console.log("signup c IsCandidateLogin", this.signUpCredentials.IsCandidateLogin);
     this.userTypeTag = this.isCandidateSignup ? 'Candidate' : 'Company Manager';
     this.takingDetails = false;
   }
 
   signUp(form: SignUpDto) {
+    console.log("signup c IsCandidateLogin", this.signUpCredentials.IsCandidateLogin);
     this.accountService.register(form).subscribe(
       (result) => {
         this.toastr.success('You have signed up successfully! Please proceed to sign in.', 'Sign up Successful!');
-        if (form.UserType === UserType.Candidate) {
+        if (form.IsCandidateLogin) {
           this.router.navigate(['/candidate-signin']);
         } else {
           this.router.navigate(['/companyManager-signin']);

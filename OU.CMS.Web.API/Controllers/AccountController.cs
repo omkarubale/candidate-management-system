@@ -84,7 +84,7 @@ namespace OU.CMS.Web.API.Controllers
                     Email = registerDto.Email,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
-                    UserType = registerDto.UserType,
+                    UserType = registerDto.IsCandidateLogin ? UserType.Candidate : UserType.Management,
 
                     FullName = registerDto.FirstName + " " + registerDto.LastName,
                     FirstName = registerDto.FirstName,
@@ -93,14 +93,14 @@ namespace OU.CMS.Web.API.Controllers
                     // TODO: Add Default company when getting invite for company Manager
                 };
 
-                db.Users.Add(user);
-
                 if (!registerDto.IsCandidateLogin)
                 {
                     var company = new Domain.Entities.Company()
                     {
                         Id = Guid.NewGuid(),
-                        Name = registerDto.CompanyName
+                        Name = registerDto.CompanyName,
+                        CreatedOn = DateTime.UtcNow,
+                        CreatedBy = user.Id
                     };
 
                     var companyManagement = new Domain.Entities.CompanyManagement()
@@ -108,12 +108,20 @@ namespace OU.CMS.Web.API.Controllers
                         Id = Guid.NewGuid(),
                         CompanyId = company.Id,
                         UserId = user.Id,
+                        IsAdmin = true,
                         CreatedOn = DateTime.UtcNow,
                         CreatedBy = user.Id
                     };
 
+                    user.DefaultCompanyId = company.Id;
+
+                    db.Users.Add(user);
                     db.Companies.Add(company);
                     db.CompanyManagements.Add(companyManagement);
+                }
+                else
+                {
+                    db.Users.Add(user);
                 }
                 
                 await db.SaveChangesAsync();

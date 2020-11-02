@@ -16,8 +16,8 @@
       <div class="signin-form-inputs" [hidden]="takingDetails">
         <input
           type="hidden"
-          name="UserType"
-          [(ngModel)]="signUpCredentials.UserType"
+          name="IsCandidateLogin"
+          [(ngModel)]="signUpCredentials.IsCandidateLogin"
         />
         <div class="form-group">
           <div class="textbox">
@@ -130,7 +130,6 @@
           <div class="textbox">
             <input
               name="CompanyName"
-              type="date"
               #CompanyName="ngModel"
               class="form-control"
               placeholder="New Company Name"
@@ -147,6 +146,7 @@
             </div>
           </div>
         </div>
+        <div class="candidate-signup-space-filler" *ngIf="signUpCredentials.IsCandidateLogin"></div>
       </div>
     </div>
     <div class="signin-form-submit">

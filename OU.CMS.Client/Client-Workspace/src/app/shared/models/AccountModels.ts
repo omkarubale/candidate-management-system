@@ -12,7 +12,6 @@ export class SignUpDto {
   LastName: string;
   FullName: string;
   ShortName: string;
-  UserType: number;
   IsCandidateLogin: boolean;
   CompanyName: string;
   IsPasswordMatch: boolean;

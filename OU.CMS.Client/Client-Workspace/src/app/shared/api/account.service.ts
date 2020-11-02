@@ -52,6 +52,7 @@ export class AccountService {
   }
 
   register(signUpDto: SignUpDto) {
+    console.log("acc s IsCandidateLogin", signUpDto.IsCandidateLogin);
     return this.http.post(`${this.ACCOUNT_API}/Register`, signUpDto);
   }
 
