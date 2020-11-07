@@ -1,4 +1,5 @@
 import { CreatedOnDto } from "./CommonModels";
+import { UserSimpleDto } from "./UserModels";
 
 export class AcceptCompanyManagementInviteDto {
   CompanyId: string;
@@ -34,4 +35,15 @@ export class RevokeCompanyManagementInviteDto {
 export class SaveCompanyDto {
   Id: string;
   Name: string;
+}
+
+export class CompanyManagerDto {
+  User: UserSimpleDto;
+  IsAdmin: boolean;
+  HasAcceptedInvite: boolean;
+  InviteeEmail: string;
+}
+
+export class GetCompanyManagementDto {
+  CompanyManagers: CompanyManagerDto[];
 }

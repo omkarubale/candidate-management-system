@@ -42,7 +42,7 @@ namespace OU.CMS.Web.API.Controllers
 
                 return new UserInfo()
                 {
-                    Token = JwtManager.GenerateToken(user, 30, companyId),
+                    Token = JwtManager.GenerateToken(user, 180, companyId),
                     UserId = user.Id,
                     Email = user.Email,
                     FirstName = user.FirstName,

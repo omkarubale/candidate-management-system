@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { CompaniesListComponent } from './components/company/companies-list/companies-list.component';
 import { CompanyService } from './shared/api/company.service';
@@ -62,7 +63,8 @@ import { SignupFormComponent } from './components/account/signup-form/signup-for
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FontAwesomeModule
   ],
   providers: [
     CompanyService,

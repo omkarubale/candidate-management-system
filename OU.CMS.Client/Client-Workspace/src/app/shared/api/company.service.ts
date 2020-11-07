@@ -7,7 +7,8 @@ import  {
   DeleteCompanyManagementDto,
   CreateCompanyManagementInviteDto,
   AcceptCompanyManagementInviteDto,
-  RevokeCompanyManagementInviteDto
+  RevokeCompanyManagementInviteDto,
+  GetCompanyManagementDto
 } from '../models/CompanyModels';
 
 @Injectable()
@@ -39,6 +40,10 @@ export class CompanyService {
     return this.http.delete(`${this.COMPANIES_API}/DeleteCompany?companyId=${companyId}`);
   }
 
+  getCompanyManagement(companyId: string): Observable<GetCompanyManagementDto> {
+    return this.http.get<GetCompanyManagementDto>(`${this.COMPANIES_API}/GetCompanyManagement?companyId=${companyId}`);
+  }
+
   deleteCompanyManagement(companyManagement: DeleteCompanyManagementDto) {
     return this.http.post(`${this.COMPANIES_API}/DeleteCompanyManagement`, companyManagement);
   }
@@ -52,6 +57,6 @@ export class CompanyService {
   }
 
   revokeCompanyManagementInvite(companyManagementInvite: RevokeCompanyManagementInviteDto) {
-    return this.http.put(`${this.COMPANIES_API}/RevokeCompanyManagementInvite`, companyManagementInvite);
+    return this.http.post(`${this.COMPANIES_API}/RevokeCompanyManagementInvite`, companyManagementInvite);
   }
 }

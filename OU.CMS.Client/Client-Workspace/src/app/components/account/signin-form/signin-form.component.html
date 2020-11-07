@@ -18,7 +18,7 @@
           <div class="textbox">
             <input
               name="Email"
-              #Name="ngModel"
+              #Email="ngModel"
               class="form-control"
               placeholder="Email"
               [(ngModel)]="signInCredentials.Email"
@@ -26,7 +26,7 @@
             />
           </div>
           <div class="validation-error mt-2">
-            <div class="validation-error-text" *ngIf="Name.invalid && Name.touched">
+            <div class="validation-error-text" *ngIf="Email.invalid && Email.touched">
               This field is required.
             </div>
           </div>

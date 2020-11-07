@@ -53,11 +53,13 @@
     <Compile Include="Models\Candidate\UpdateCandidateTestScoreDto.cs" />
     <Compile Include="Models\Common\CreatedOnDto.cs" />
     <Compile Include="Models\Company\AcceptCompanyManagementInviteDto.cs" />
+    <Compile Include="Models\Company\CompanyManagerDto.cs" />
     <Compile Include="Models\Company\CompanySimpleDto.cs" />
     <Compile Include="Models\Company\CreateCompanyDto.cs" />
     <Compile Include="Models\Company\CreateCompanyManagementInviteDto.cs" />
     <Compile Include="Models\Company\DeleteCompanyManagementDto.cs" />
     <Compile Include="Models\Company\GetCompanyDto.cs" />
+    <Compile Include="Models\Company\GetCompanyManagementDto.cs" />
     <Compile Include="Models\Company\RevokeCompanyManagementInviteDto.cs" />
     <Compile Include="Models\Company\SaveCompanyDto.cs" />
     <Compile Include="Models\JobOpening\CreateJobOpeningDto.cs" />

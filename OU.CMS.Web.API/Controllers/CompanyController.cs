@@ -11,6 +11,8 @@ using OU.CMS.Models.Models.Company;
 using OU.CMS.Models.Models.Common;
 using OU.CMS.Domain.Entities;
 using OU.CMS.Web.API.Filters;
+using OU.CMS.Models.Models.User;
+using System.Runtime.InteropServices;
 
 namespace OU.CMS.Web.API.Controllers
 {
@@ -22,6 +24,9 @@ namespace OU.CMS.Web.API.Controllers
         {
             using (var db = new CMSContext())
             {
+                if (!UserInfo.IsCandidateLogin)
+                    throw new Exception("You do not have access to perform this action!");
+
                 var companies = await (from cmp in db.Companies
                                        join usr in db.Users on cmp.CreatedBy equals usr.Id
                                        select new GetCompanyDto
@@ -46,6 +51,9 @@ namespace OU.CMS.Web.API.Controllers
         {
             using (var db = new CMSContext())
             {
+                if (!UserInfo.IsCandidateLogin && UserInfo.CompanyId != companyId)
+                    throw new Exception("You do not have access to perform this action!");
+
                 var company = await (from cmp in db.Companies
                                      join usr in db.Users on cmp.CreatedBy equals usr.Id
                                      where cmp.Id == companyId
@@ -74,6 +82,9 @@ namespace OU.CMS.Web.API.Controllers
         {
             using (var db = new CMSContext())
             {
+                if (UserInfo.IsCandidateLogin)
+                    throw new Exception("You do not have access to perform this action!");
+
                 var checkExistingCompany = db.Companies.Any(c => c.Name == dto.Name.Trim());
                 if (checkExistingCompany)
                     throw new Exception("Company with this name already exists!");
@@ -86,7 +97,18 @@ namespace OU.CMS.Web.API.Controllers
                     CreatedOn = DateTime.UtcNow
                 };
 
+                var companyManagement = new CompanyManagement
+                {
+                    Id = Guid.NewGuid(),
+                    CompanyId = company.Id,
+                    UserId = UserInfo.UserId,
+                    IsAdmin = true,
+                    CreatedBy = UserInfo.UserId,
+                    CreatedOn = DateTime.UtcNow
+                };
+
                 db.Companies.Add(company);
+                db.CompanyManagements.Add(companyManagement);
 
                 await db.SaveChangesAsync();
 
@@ -108,34 +130,20 @@ namespace OU.CMS.Web.API.Controllers
         [HttpPost]
         public async Task<GetCompanyDto> SaveCompany(SaveCompanyDto dto)
         {
+            if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != dto.Id)
+                throw new Exception("You do not have access to perform this action!");
+
             using (var db = new CMSContext())
             {
-                Company company;
-                var isNew = dto.Id == Guid.Empty;
-                var checkExistingCompany = db.Companies.Any(c => c.Name == dto.Name.Trim() && (isNew || c.Id != dto.Id));
+                var checkExistingCompany = db.Companies.Any(c => c.Name == dto.Name.Trim() && (c.Id != dto.Id));
                 if (checkExistingCompany)
                     throw new Exception("Company with this name already exists!");
 
-                if (isNew)
-                {
-                    company = new Company
-                    {
-                        Id = Guid.NewGuid(),
-                        CreatedBy = UserInfo.UserId,
-                        CreatedOn = DateTime.UtcNow
-                    };
-                }
-                else
-                {
-                    company = await db.Companies.SingleOrDefaultAsync(c => c.Id == dto.Id);
-                    if (company == null)
-                        throw new Exception("Company with Id not found!");
-                }
+                var company = await db.Companies.SingleOrDefaultAsync(c => c.Id == dto.Id);
+                if (company == null)
+                    throw new Exception("Company with Id not found!");
                 
                 company.Name = dto.Name.Trim();
-
-                if(isNew)
-                    db.Companies.Add(company);
 
                 await db.SaveChangesAsync();
 
@@ -159,10 +167,18 @@ namespace OU.CMS.Web.API.Controllers
         {
             using (var db = new CMSContext())
             {
+                if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != companyId)
+                    throw new Exception("You do not have access to perform this action!");
+
                 var company = await db.Companies.Include(c => c.JobOpenings).Include(c => c.CompanyManagements).Include(c => c.CompanyManagementInvites).SingleOrDefaultAsync(c => c.Id == companyId);
 
                 if (company == null)
                     throw new Exception("Company with Id not found!");
+
+                var companyManagerAccess = company.CompanyManagements.SingleOrDefault(c => c.CompanyId == companyId && c.UserId == UserInfo.UserId && c.IsAdmin);
+
+                if (companyManagerAccess == null)
+                    throw new Exception("You do not have access to perform this action!");
 
                 var companyCandidates = await db.Candidates.AnyAsync(c => c.CompanyId == companyId);
 
@@ -181,6 +197,46 @@ namespace OU.CMS.Web.API.Controllers
         #endregion
 
         #region CompanyManagement
+        [HttpGet]
+        public async Task<GetCompanyManagementDto> GetCompanyManagement(Guid companyId)
+        {
+            if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != companyId)
+                throw new Exception("You do not have access to perform this action!");
+
+            using (var db = new CMSContext())
+            {
+                var companyManagers = await db.CompanyManagements.Where(cm => cm.CompanyId == companyId).Include(cm => cm.User).Select(cm => new CompanyManagerDto()
+                {
+                    User = new UserSimpleDto() {
+                        UserId = cm.User.Id,
+                        Email = cm.User.Email,
+                        FullName = cm.User.FullName,
+                        ShortName = cm.User.ShortName
+                    },
+                    IsAdmin = cm.IsAdmin,
+                    HasAcceptedInvite = true,
+                    InviteeEmail = cm.User.Email
+                }).OrderByDescending(cm => cm.IsAdmin).ThenBy(cm => cm.User.FullName).ToListAsync();
+
+                var companyManagerInvites = await db.CompanyManagementInvites.Where(cmi => cmi.CompanyId == companyId).Select(cmi => new CompanyManagerDto()
+                {
+                    User = new UserSimpleDto(),
+                    IsAdmin = cmi.IsInviteForAdmin,
+                    HasAcceptedInvite = false,
+                    InviteeEmail = cmi.Email
+                }).OrderByDescending(cm => cm.IsAdmin).ThenBy(cm => cm.InviteeEmail).ToListAsync();
+
+                var resultList = (companyManagers).Union(companyManagerInvites).ToList();
+
+                var result = new GetCompanyManagementDto
+                {
+                    CompanyManagers = resultList
+                };
+
+                return result;
+            }
+        }
+
         [HttpPost]
         public async Task DeleteCompanyManagement(DeleteCompanyManagementDto dto)
         {

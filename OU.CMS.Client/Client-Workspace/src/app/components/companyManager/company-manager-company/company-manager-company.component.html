@@ -6,7 +6,82 @@
           <h2>Company Details</h2>
         </div>
         <div class="content-details">
-          <div class="">{{this.companyDetails.Name}}</div>
+          <div class="row">
+            <!-- Company Details Form -->
+            <div class="col-md-6 col-sm-12">
+              <form
+                #companyEditForm="ngForm"
+                (ngSubmit)="editCompany(companyEditForm.value)"
+                autocomplete="off"
+              >
+                <input
+                  type="hidden"
+                  name="Id"
+                  [(ngModel)]="companyDetails.Id"
+                />
+                <div class="form-group">
+                  <div class="input-field">
+                    <input
+                      name="Name"
+                      #Name="ngModel"
+                      class="form-control"
+                      placeholder="Name"
+                      [(ngModel)]="companyDetails.Name"
+                      required
+                    />
+                  </div>
+                  <div class="validation-error mt-2">
+                    <div
+                      class="validation-error-text"
+                      *ngIf="Name.invalid && Name.touched"
+                    >
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-submit">
+                  <button
+                    class="btn btn-primary submit-button"
+                    color="primary"
+                    type="submit"
+                    [disabled]="!companyEditForm.form.valid"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Company Management Details -->
+            <div class="col-md-6 col-sm-12">
+              <h5 class="company-management-heading">Company Management</h5>
+              <table class="table table-sm managers-list">
+                <tr>
+                  <th class="col-6">Name</th>
+                  <th class="col-2">Role</th>
+                  <th class="col-4">Actions</th>
+                </tr>
+                <tr class="manager" *ngFor="let manager of this.companyManagers.CompanyManagers">
+                  <td class="company-manager-name col-6" *ngIf="manager.HasAcceptedInvite">{{manager.User.FullName}}</td>
+                  <td class="company-manager-name col-8" *ngIf="!manager.HasAcceptedInvite">{{manager.InviteeEmail}} <fa-icon [icon]="envelopeIcon"></fa-icon></td>
+
+                  <td class="company-manager-adminStatus col-2">
+                    <div class="text-center" *ngIf="manager.IsAdmin"><fa-icon [icon]="adminIcon"></fa-icon></div>
+                    <div class="text-center" *ngIf="!manager.IsAdmin"><fa-icon [icon]="userIcon"></fa-icon></div>
+                  </td>
+
+                  <td class="company-manager-actions col-4">
+                    <div class="text-center company-manager-action" *ngIf="manager.InviteeEmail != currentUserEmail" (click)="removeManager(manager)"><fa-icon [icon]="deleteIcon"></fa-icon></div>
+                  </td>
+                </tr>
+              </table>
+
+              <div class="managers-list">
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -21,6 +96,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
