@@ -33,6 +33,7 @@ import { CompanyManagerSigninComponent } from './components/companyManager/compa
 import { CompanyManagerSignupComponent } from './components/companyManager/company-manager-signup/company-manager-signup.component';
 import { SigninFormComponent } from './components/account/signin-form/signin-form.component';
 import { SignupFormComponent } from './components/account/signup-form/signup-form.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { SignupFormComponent } from './components/account/signup-form/signup-for
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgbModule
   ],
   providers: [
     CompanyService,

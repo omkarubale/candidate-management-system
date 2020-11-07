@@ -57,8 +57,8 @@
             <div class="col-md-6 col-sm-12">
               <div class="company-management-heading pb-2">
                 <h5 class="d-inline">Company Management</h5>
-                <div class="d-inline pl-2">
-                  <fa-icon [icon]="addIcon"></fa-icon>
+                <div class="d-inline pl-2 company-manager-add" title="Invite New Manager">
+                  <fa-icon [icon]="addIcon" (click)="openAddManagerModal(content)"></fa-icon>
                 </div>
               </div>
               <table class="table table-sm managers-list">
@@ -82,16 +82,16 @@
                     *ngIf="!manager.HasAcceptedInvite"
                   >
                     <div class="d-inline">{{ manager.InviteeEmail }}</div>
-                    <div class="d-inline pl-1 company-manager-invite">
+                    <div class="d-inline pl-1 company-manager-invite" title="Invited Manager">
                       <fa-icon [icon]="envelopeIcon"></fa-icon>
                     </div>
                   </td>
 
                   <td class="company-manager-adminStatus col-2">
-                    <div class="text-center" *ngIf="manager.IsAdmin">
+                    <div class="text-center" *ngIf="manager.IsAdmin" title="Admin Manager">
                       <fa-icon [icon]="adminIcon"></fa-icon>
                     </div>
-                    <div class="text-center" *ngIf="!manager.IsAdmin">
+                    <div class="text-center" *ngIf="!manager.IsAdmin" title="Regular Manager">
                       <fa-icon [icon]="userIcon"></fa-icon>
                     </div>
                   </td>
@@ -101,6 +101,7 @@
                       class="text-center company-manager-action"
                       *ngIf="manager.InviteeEmail != currentUserEmail"
                       (click)="removeManager(manager)"
+                      title="Delete Manager"
                     >
                       <fa-icon [icon]="deleteIcon"></fa-icon>
                     </div>
@@ -127,3 +128,74 @@
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">Invite Company Manager</h6>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span> × </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form
+      #addCompanyManagerForm="ngForm"
+      (ngSubmit)="addManager(addCompanyManagerForm.value)"
+      autocomplete="off"
+    >
+      <input
+        type="hidden"
+        name="CompanyId"
+        [(ngModel)]="addManagerForm.CompanyId"
+      />
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="Email"
+            class="form-control"
+            placeholder="Email"
+            type="email"
+            name="Email"
+            #Email="ngModel"
+            [(ngModel)]="addManagerForm.Email"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="Email.invalid && Email.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="">
+          <input
+            id="IsInviteForAdmin"
+            class=""
+            type="checkbox"
+            name="IsInviteForAdmin"
+            #IsInviteForAdmin="ngModel"
+            [(ngModel)]="addManagerForm.IsInviteForAdmin"
+          /> Grant Admin Access
+        </div>
+      </div>
+
+      <div class="form-submit">
+        <button
+          class="btn btn-primary submit-button"
+          type="submit"
+          [disabled]="!addCompanyManagerForm.form.valid"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
