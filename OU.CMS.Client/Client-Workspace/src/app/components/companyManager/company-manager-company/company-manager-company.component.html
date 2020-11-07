@@ -55,31 +55,60 @@
 
             <!-- Company Management Details -->
             <div class="col-md-6 col-sm-12">
-              <h5 class="company-management-heading">Company Management</h5>
+              <div class="company-management-heading pb-2">
+                <h5 class="d-inline">Company Management</h5>
+                <div class="d-inline pl-2">
+                  <fa-icon [icon]="addIcon"></fa-icon>
+                </div>
+              </div>
               <table class="table table-sm managers-list">
                 <tr>
                   <th class="col-6">Name</th>
                   <th class="col-2">Role</th>
                   <th class="col-4">Actions</th>
                 </tr>
-                <tr class="manager" *ngFor="let manager of this.companyManagers.CompanyManagers">
-                  <td class="company-manager-name col-6" *ngIf="manager.HasAcceptedInvite">{{manager.User.FullName}}</td>
-                  <td class="company-manager-name col-8" *ngIf="!manager.HasAcceptedInvite">{{manager.InviteeEmail}} <fa-icon [icon]="envelopeIcon"></fa-icon></td>
+                <tr
+                  class="manager"
+                  *ngFor="let manager of this.companyManagers.CompanyManagers"
+                >
+                  <td
+                    class="company-manager-name col-6"
+                    *ngIf="manager.HasAcceptedInvite"
+                  >
+                    {{ manager.User.FullName }}
+                  </td>
+                  <td
+                    class="company-manager-name col-8"
+                    *ngIf="!manager.HasAcceptedInvite"
+                  >
+                    <div class="d-inline">{{ manager.InviteeEmail }}</div>
+                    <div class="d-inline pl-1 company-manager-invite">
+                      <fa-icon [icon]="envelopeIcon"></fa-icon>
+                    </div>
+                  </td>
 
                   <td class="company-manager-adminStatus col-2">
-                    <div class="text-center" *ngIf="manager.IsAdmin"><fa-icon [icon]="adminIcon"></fa-icon></div>
-                    <div class="text-center" *ngIf="!manager.IsAdmin"><fa-icon [icon]="userIcon"></fa-icon></div>
+                    <div class="text-center" *ngIf="manager.IsAdmin">
+                      <fa-icon [icon]="adminIcon"></fa-icon>
+                    </div>
+                    <div class="text-center" *ngIf="!manager.IsAdmin">
+                      <fa-icon [icon]="userIcon"></fa-icon>
+                    </div>
                   </td>
 
                   <td class="company-manager-actions col-4">
-                    <div class="text-center company-manager-action" *ngIf="manager.InviteeEmail != currentUserEmail" (click)="removeManager(manager)"><fa-icon [icon]="deleteIcon"></fa-icon></div>
+                    <div
+                      class="text-center company-manager-action"
+                      *ngIf="manager.InviteeEmail != currentUserEmail"
+                      (click)="removeManager(manager)"
+                    >
+                      <fa-icon [icon]="deleteIcon"></fa-icon>
+                    </div>
                   </td>
                 </tr>
               </table>
 
-              <div class="managers-list">
-
-              </div>
+              <div class="managers-list"></div>
             </div>
           </div>
         </div>

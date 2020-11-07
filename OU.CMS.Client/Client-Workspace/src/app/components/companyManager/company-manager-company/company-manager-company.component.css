@@ -1,3 +1,8 @@
+.company-manager-action  {
+  cursor: pointer;
+  color: rgb(187, 25, 25);
+}
 
-
-
+.company-manager-invite {
+  color: rgb(255, 196, 87);
+}

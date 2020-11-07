@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 import { CompanyService } from 'src/app/shared/api/company.service';
-import { CompanyManagerDto, DeleteCompanyManagementDto, GetCompanyDto, GetCompanyManagementDto, RevokeCompanyManagementInviteDto, SaveCompanyDto } from 'src/app/shared/models/CompanyModels';
+import { CompanyManagerDto, CreateCompanyManagementInviteDto, DeleteCompanyManagementDto, GetCompanyDto, GetCompanyManagementDto, RevokeCompanyManagementInviteDto, SaveCompanyDto } from 'src/app/shared/models/CompanyModels';
 import { faClock, faEnvelope, faPlusSquare, faTrashAlt, faUser, faUserShield } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -51,6 +51,18 @@ export class CompanyManagerCompanyComponent implements OnInit {
       (error) => {
         console.error(error);
         this.toastr.error(error.message, 'There was an error saving the company!');
+      }
+    );
+  }
+
+  addManager(form: CreateCompanyManagementInviteDto) {
+    this.companyService.createCompanyManagementInvite(form).subscribe(
+      (result) => {
+        this.toastr.success("The manager was invited successfully.", 'Manager Invited!');
+      },
+      (error) => {
+        console.error(error);
+        this.toastr.error(error.message, 'There was an error inviting the company manager!');
       }
     );
   }
