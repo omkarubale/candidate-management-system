@@ -17,6 +17,7 @@ export class CreateTestScoreDto {
 export class GetTestDto {
   Id: string;
   Title: string;
+  CompanyId: string;
   TestScores: TestScoreDto[];
   CreatedDetails: CreatedOnDto;
 }
