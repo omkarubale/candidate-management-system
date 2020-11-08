@@ -141,12 +141,12 @@
       <span> × </span>
     </button>
   </div>
-  <div class="modal-body">
-    <form
+  <form
       #addCompanyManagerForm="ngForm"
       (ngSubmit)="addManager(addCompanyManagerForm.value)"
       autocomplete="off"
     >
+    <div class="modal-body">
       <input
         type="hidden"
         name="CompanyId"
@@ -186,7 +186,8 @@
           /> Grant Admin Access
         </div>
       </div>
-
+    </div>
+    <div class="modal-footer">
       <div class="form-submit">
         <button
           class="btn btn-primary submit-button"
@@ -196,6 +197,6 @@
           Submit
         </button>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </ng-template>
