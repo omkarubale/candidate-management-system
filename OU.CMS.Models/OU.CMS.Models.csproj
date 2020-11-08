@@ -63,6 +63,7 @@
     <Compile Include="Models\Company\RevokeCompanyManagementInviteDto.cs" />
     <Compile Include="Models\Company\SaveCompanyDto.cs" />
     <Compile Include="Models\JobOpening\CreateJobOpeningDto.cs" />
+    <Compile Include="Models\JobOpening\GetCandidateJobOpeningDto.cs" />
     <Compile Include="Models\JobOpening\GetJobOpeningCompanyDto.cs" />
     <Compile Include="Models\JobOpening\GetJobOpeningDto.cs" />
     <Compile Include="Models\JobOpening\JobOpeningSimpleDto.cs" />

@@ -10,6 +10,19 @@ export class CreateJobOpeningDto {
   CompanyId: string;
 }
 
+export class GetCandidateJobOpeningDto {
+  UserId: string;
+  JobOpeningId: string;
+  CandidateId: string;
+  Title: string;
+  Description: string;
+  Salary: number;
+  AppliedOn: Date;
+  Deadline: Date;
+  Company: CompanySimpleDto;
+  CreatedDetails: CreatedOnDto;
+}
+
 export class GetJobOpeningDto {
   Id: string;
   Title: string;

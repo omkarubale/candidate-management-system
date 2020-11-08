@@ -20,6 +20,9 @@ namespace OU.CMS.Web.API.Controllers
         #region JobOpening
         public async Task<List<GetJobOpeningCompanyDto>> GetAllJobOpeningsForCompany(Guid companyId)
         {
+            if (!UserInfo.IsCandidateLogin && UserInfo.CompanyId != companyId)
+                throw new Exception("You do not have access to perform this action!");
+
             using (var db = new CMSContext())
             {
                 var jobOpenings = await (from jo in db.JobOpenings
@@ -54,21 +57,28 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
-        public async Task<List<GetJobOpeningDto>> GetAllJobOpeningsForCandidate(Guid candidateId)
+        public async Task<List<GetCandidateJobOpeningDto>> GetAllJobOpeningsForCandidate()
         {
             using (var db = new CMSContext())
             {
-                var jobOpenings = await (from jo in db.JobOpenings
+                if (!UserInfo.IsCandidateLogin)
+                    throw new Exception("You do not have access to perform this action!");
+
+                var jobOpenings = await (from cnd in db.Candidates
+                                         join jo in db.JobOpenings on cnd.JobOpeningId equals jo.Id
                                          join cmp in db.Companies on jo.CompanyId equals cmp.Id
-                                         join cnd in db.Candidates on jo.Id equals cnd.JobOpeningId
                                          join usr in db.Users on jo.CreatedBy equals usr.Id
-                                         where cnd.Id == candidateId
-                                         select new GetJobOpeningDto
+                                         where 
+                                         cnd.UserId == UserInfo.UserId
+                                         select new GetCandidateJobOpeningDto
                                          {
-                                             Id = jo.Id,
+                                             UserId = cnd.UserId,
+                                             JobOpeningId = jo.Id,
+                                             CandidateId = cnd.Id,
                                              Title = jo.Title,
                                              Description = jo.Description,
                                              Salary = jo.Salary,
+                                             AppliedOn = cnd.CreatedOn,
                                              Deadline = jo.Deadline,
                                              Company = new CompanySimpleDto
                                              {
@@ -118,6 +128,9 @@ namespace OU.CMS.Web.API.Controllers
                                             }
                                         }).SingleOrDefaultAsync();
 
+                if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != jobOpening.Company.Id)
+                    throw new Exception("You do not have access to perform this action!");
+
                 if (jobOpening == null)
                     throw new Exception("JobOpening does not exist!");
 
@@ -127,6 +140,9 @@ namespace OU.CMS.Web.API.Controllers
 
         public async Task<GetJobOpeningDto> CreateJobOpening(CreateJobOpeningDto dto)
         {
+            if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != dto.CompanyId)
+                throw new Exception("You do not have access to perform this action!");
+
             using (var db = new CMSContext())
             {
                 var checkExistingJobOpening = db.JobOpenings.Any(c => c.Title == dto.Title.Trim());
@@ -158,8 +174,12 @@ namespace OU.CMS.Web.API.Controllers
             using (var db = new CMSContext())
             {
                 var jobOpening = await db.JobOpenings.SingleOrDefaultAsync(c => c.Id == dto.Id);
+
                 if (jobOpening == null)
                     throw new Exception("JobOpening with Id not found!");
+
+                if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != jobOpening.CompanyId)
+                    throw new Exception("You do not have access to perform this action!");
 
                 var checkExistingJobOpening = db.JobOpenings.Any(c => c.Title == dto.Title.Trim() && c.Id != dto.Id);
                 if (checkExistingJobOpening)
@@ -184,6 +204,9 @@ namespace OU.CMS.Web.API.Controllers
 
                 if (jobOpening == null)
                     throw new Exception("JobOpening with Id not found!");
+
+                if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != jobOpening.CompanyId)
+                    throw new Exception("You do not have access to perform this action!");
 
                 var candidatesForJobOpening = await db.Candidates.Where(c => c.JobOpeningId == jobOpeningId).ToListAsync();
 
