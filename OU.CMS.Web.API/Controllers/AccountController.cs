@@ -19,7 +19,6 @@ namespace OU.CMS.Web.API.Controllers
 {
     public class AccountController : ApiController
     {
-
         [HttpPost]
         [AllowAnonymous]
         public async Task<UserInfo> Login(SignInDto loginDto)

@@ -14,11 +14,8 @@ using Microsoft.AspNet.Identity;
 
 namespace OU.CMS.Web.API.Controllers
 {
-    public class TestController : ApiController
+    public class TestController : BaseSecureController
     {
-        private Guid myUserId = new Guid("1ff58b86-28a7-4324-bc40-518c29135f86");
-        //private string myEmail = "oubale@gmail.com";
-
         #region Test
         public async Task<IEnumerable<GetTestDto>> GetAllTests()
         {
@@ -95,7 +92,7 @@ namespace OU.CMS.Web.API.Controllers
                 {
                     Id = Guid.NewGuid(),
                     Title = dto.Title.Trim(),
-                    CreatedBy = myUserId, //TODO: Change to identityUser.UserId
+                    CreatedBy = UserInfo.UserId,
                     CreatedOn = DateTime.UtcNow
                 };
 

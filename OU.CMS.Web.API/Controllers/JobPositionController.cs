@@ -15,11 +15,8 @@ using System.Xml;
 
 namespace OU.CMS.Web.API.Controllers
 {
-    public class JobPositionController : ApiController
+    public class JobPositionController : BaseSecureController
     {
-        private Guid myUserId = new Guid("1ff58b86-28a7-4324-bc40-518c29135f86");
-        //private string myEmail = "oubale@gmail.com";
-
         #region JobOpening
         public async Task<List<GetJobOpeningCompanyDto>> GetAllJobOpeningsForCompany(Guid companyId)
         {
@@ -144,7 +141,7 @@ namespace OU.CMS.Web.API.Controllers
                     Salary = dto.Salary,
                     Deadline = dto.Deadline,
                     CompanyId = dto.CompanyId,
-                    CreatedBy = myUserId, //TODO: Change to identityUser.UserId
+                    CreatedBy = UserInfo.UserId,
                     CreatedOn = DateTime.UtcNow
                 };
 

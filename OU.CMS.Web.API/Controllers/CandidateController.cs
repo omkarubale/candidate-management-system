@@ -18,10 +18,8 @@ using System.ComponentModel;
 
 namespace OU.CMS.Web.API.Controllers
 {
-    public class CandidateController : ApiController
+    public class CandidateController : BaseSecureController
     {
-        private Guid myUserId = new Guid("1ff58b86-28a7-4324-bc40-518c29135f86");
-
         #region Candidate
         private async Task<List<GetCandidateDto>> GetAllCandidates(Guid? candidateId = null, Guid? companyId = null, Guid? jobOpeningId = null, Guid? userId = null)
         {
@@ -132,7 +130,7 @@ namespace OU.CMS.Web.API.Controllers
                     UserId = dto.UserId,
                     CompanyId = dto.CompanyId,
                     JobOpeningId = dto.JobOpeningId,
-                    CreatedBy = myUserId, //TODO: Change to identityUser.UserId
+                    CreatedBy = UserInfo.UserId,
                     CreatedOn = DateTime.UtcNow
                 };
 
