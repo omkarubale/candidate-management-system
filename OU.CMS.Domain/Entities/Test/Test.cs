@@ -11,6 +11,11 @@ namespace OU.CMS.Domain.Entities
     {
         public string Title { get; set; }
 
+        public Guid CompanyId { get; set; }
+
+        [ForeignKey(nameof(CompanyId))]
+        public Company Company { get; set; }
+
         public IList<TestScore> TestScores { get; set; }
 
         public IList<CandidateTest> CandidateTests { get; set; }
