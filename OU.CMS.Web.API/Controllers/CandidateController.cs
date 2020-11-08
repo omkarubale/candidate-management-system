@@ -15,6 +15,7 @@ using OU.CMS.Models.Models.Company;
 using OU.CMS.Models.Models.JobOpening;
 using System.Security.Cryptography;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace OU.CMS.Web.API.Controllers
 {
@@ -77,7 +78,7 @@ namespace OU.CMS.Web.API.Controllers
         {
             using (var db = new CMSContext())
             {
-                var candidate = (await GetAllCandidates(candidateId: candidateId)).SingleOrDefault();
+                var candidate = (await GetAllCandidates(candidateId: candidateId, companyId: !UserInfo.IsCandidateLogin ? UserInfo.CompanyId : null, userId: UserInfo.IsCandidateLogin ? (Guid?)UserInfo.UserId : null)).SingleOrDefault();
 
                 if (candidate == null)
                     throw new Exception("Candidate does not exist!");
@@ -88,6 +89,9 @@ namespace OU.CMS.Web.API.Controllers
 
         public async Task<List<GetCandidateDto>> GetCandidatesForCompany(Guid companyId)
         {
+            if (UserInfo.IsCandidateLogin)
+                throw new Exception("You do not have access to perform this action!");
+
             using (var db = new CMSContext())
             {
                 var candidates = await GetAllCandidates(companyId: companyId);
@@ -98,6 +102,9 @@ namespace OU.CMS.Web.API.Controllers
 
         public async Task<List<GetCandidateDto>> GetCandidatesForJobOpening(Guid jobOpeningId)
         {
+            if (UserInfo.IsCandidateLogin)
+                throw new Exception("You do not have access to perform this action!");
+
             using (var db = new CMSContext())
             {
                 var candidates = await GetAllCandidates(jobOpeningId: jobOpeningId);
@@ -108,6 +115,9 @@ namespace OU.CMS.Web.API.Controllers
 
         public async Task<List<GetCandidateDto>> GetCandidatesForUser(Guid userId)
         {
+            if (!UserInfo.IsCandidateLogin)
+                throw new Exception("You do not have access to perform this action!");
+
             using (var db = new CMSContext())
             {
                 var candidates = await GetAllCandidates(userId: userId);
@@ -118,6 +128,9 @@ namespace OU.CMS.Web.API.Controllers
 
         public async Task<GetCandidateDto> CreateCandidate(CreateCandidateDto dto)
         {
+            if (!UserInfo.IsCandidateLogin || UserInfo.UserId != dto.UserId)
+                throw new Exception("You do not have access to perform this action!");
+
             using (var db = new CMSContext())
             {
                 var checkExistingCandidate = db.Candidates.Any(c => c.UserId == dto.UserId && c.JobOpeningId == dto.JobOpeningId);
@@ -148,10 +161,15 @@ namespace OU.CMS.Web.API.Controllers
             {
                 var candidate = await db.Candidates.SingleOrDefaultAsync(c => c.Id == candidateId);
 
+                if ((!UserInfo.IsCandidateLogin && UserInfo.CompanyId != candidate.CompanyId) || (UserInfo.IsCandidateLogin && UserInfo.UserId != candidate.UserId))
+                    throw new Exception("You do not have access to perform this action!");
+
                 if (candidate == null)
                     throw new Exception("Candidate with Id not found!");
 
-                var candidateTests = await db.CandidateTests.Include(ct => ct.CandidateTestScores).Where(ct => ct.CandidateId == candidateId).ToListAsync();
+                var candidateTests = await db.CandidateTests
+                    .Include(ct => ct.CandidateTestScores)
+                    .Where(ct => ct.CandidateId == candidateId).ToListAsync();
 
                 db.CandidateTestScores.RemoveRange(candidateTests.SelectMany(ct => ct.CandidateTestScores));
                 db.CandidateTests.RemoveRange(candidateTests);
@@ -167,6 +185,10 @@ namespace OU.CMS.Web.API.Controllers
         {
             using (var db = new CMSContext())
             {
+                var candidate = await db.Candidates.SingleOrDefaultAsync(c => c.Id == dto.CandidateId);
+                if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != candidate.CompanyId)
+                    throw new Exception("You do not have access to perform this action!");
+
                 var checkExistingCandidate = db.CandidateTests.Any(c => c.CandidateId == dto.CandidateId && c.TestId == dto.TestId);
                 if (checkExistingCandidate)
                     throw new Exception("Candidate already has this Test in his profile!");
@@ -198,35 +220,57 @@ namespace OU.CMS.Web.API.Controllers
 
                 await db.SaveChangesAsync();
 
-                return await GetCandidateTest(candidateTest.CandidateId, candidateTest.TestId);
+                return await GetCandidateTestAsCompanyManager(candidateTest.CandidateId, candidateTest.TestId);
             }
         }
 
-        public async Task<CandidateTestDto> GetCandidateTest(Guid candidateId, Guid testId)
+        public async Task<CandidateTestDto> GetCandidateTestAsCompanyManager(Guid candidateId, Guid testId)
         {
             using (var db = new CMSContext())
             {
-                var candidateTest = (from cnd in db.Candidates
-                                     join cdt in db.CandidateTests on cnd.Id equals cdt.CandidateId
-                                     join tst in db.Tests on cdt.TestId equals tst.Id
-                                     join cdts in db.CandidateTestScores on cdt.Id equals cdts.CandidateTestId
-                                     join tsts in db.TestScores on cdts.TestScoreId equals tsts.Id
-                                     where
-                                     cnd.Id == candidateId &&
-                                     tst.Id == testId
-                                     select new
-                                     {
-                                         CandidateId = cnd.Id,
-                                         TestTitle = tst.Title,
+                var candidate = await db.Candidates.SingleOrDefaultAsync(c => c.Id == candidateId);
+                if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != candidate.CompanyId)
+                    throw new Exception("You do not have access to perform this action!");
 
-                                         TestScoreId = tsts.Id,
-                                         TestScoreTitle = tsts.Title,
-                                         TestScoreIsMandatory = tsts.IsMandatory,
+                return await GetCandidateTest(db, candidateId, testId);
+            }
+        }
 
-                                         CandidateTestScoreId = cdts.Id,
-                                         CandidateTestScoreValue = cdts.Value,
-                                         CandidateTestScoreComment = cdts.Comment
-                                     })
+        public async Task<CandidateTestDto> GetCandidateTestAsCandidate(Guid candidateId, Guid testId)
+        {
+            using (var db = new CMSContext())
+            {
+                var candidate = await db.Candidates.SingleOrDefaultAsync(c => c.Id == candidateId);
+                if (!UserInfo.IsCandidateLogin || UserInfo.UserId != candidate.UserId)
+                    throw new Exception("You do not have access to perform this action!");
+
+                return await GetCandidateTest(db, candidateId, testId);
+            }
+        }
+
+        private async Task<CandidateTestDto> GetCandidateTest(CMSContext db, Guid candidateId, Guid testId)
+        {
+            var candidateTest = (from cnd in db.Candidates
+                                 join cdt in db.CandidateTests on cnd.Id equals cdt.CandidateId
+                                 join tst in db.Tests on cdt.TestId equals tst.Id
+                                 join cdts in db.CandidateTestScores on cdt.Id equals cdts.CandidateTestId
+                                 join tsts in db.TestScores on cdts.TestScoreId equals tsts.Id
+                                 where
+                                 cnd.Id == candidateId &&
+                                 tst.Id == testId
+                                 select new
+                                 {
+                                     CandidateId = cnd.Id,
+                                     TestTitle = tst.Title,
+
+                                     TestScoreId = tsts.Id,
+                                     TestScoreTitle = tsts.Title,
+                                     TestScoreIsMandatory = tsts.IsMandatory,
+
+                                     CandidateTestScoreId = cdts.Id,
+                                     CandidateTestScoreValue = cdts.Value,
+                                     CandidateTestScoreComment = cdts.Comment
+                                 })
                                     .GroupBy(t => new { t.CandidateId, t.TestTitle })
                                     .Select(t => new CandidateTestDto
                                     {
@@ -245,20 +289,26 @@ namespace OU.CMS.Web.API.Controllers
                                         }).ToList()
                                     });
 
-                return await candidateTest.SingleOrDefaultAsync();
-            }
+            return await candidateTest.SingleOrDefaultAsync();
         }
 
         public async Task UpdateCandidateTestScore(UpdateCandidateTestScoreDto dto)
         {
             using (var db = new CMSContext())
             {
-                var candidateTestScore = await db.CandidateTestScores.Include(cts => cts.TestScore).SingleOrDefaultAsync(ts => ts.Id == dto.CandidateTestScoreId);
+                var candidateTestScore = await db.CandidateTestScores
+                    .Include(cts => cts.TestScore)
+                    .Include(cts => cts.CandidateTest)
+                    .SingleOrDefaultAsync(ts => ts.Id == dto.CandidateTestScoreId);
+
+                var candidate = await db.Candidates.SingleOrDefaultAsync(c => c.Id == candidateTestScore.CandidateTest.CandidateId);
+                if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != candidate.CompanyId)
+                    throw new Exception("You do not have access to perform this action!");
 
                 if (candidateTestScore == null)
                     throw new Exception("Candidate Test Score doesn't exist!");
 
-                if(candidateTestScore.TestScore.MinimumScore > dto.Value)
+                if (candidateTestScore.TestScore.MinimumScore > dto.Value)
                     throw new Exception("Test Score has to be more than Minimum Value!");
 
                 if (candidateTestScore.TestScore.MaximumScore < dto.Value)
