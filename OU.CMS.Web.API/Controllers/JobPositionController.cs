@@ -18,6 +18,7 @@ namespace OU.CMS.Web.API.Controllers
     public class JobPositionController : BaseSecureController
     {
         #region JobOpening
+        [HttpGet]
         public async Task<List<GetJobOpeningCompanyDto>> GetAllJobOpeningsForCompany(Guid companyId)
         {
             if (!UserInfo.IsCandidateLogin && UserInfo.CompanyId != companyId)
@@ -57,6 +58,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<List<GetCandidateJobOpeningDto>> GetAllJobOpeningsForCandidate()
         {
             using (var db = new CMSContext())
@@ -98,6 +100,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<GetJobOpeningDto> GetJobOpening(Guid jobOpeningId)
         {
             using (var db = new CMSContext())
@@ -138,6 +141,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpPost]
         public async Task<GetJobOpeningDto> CreateJobOpening(CreateJobOpeningDto dto)
         {
             if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != dto.CompanyId)
@@ -169,6 +173,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpPost]
         public async Task<GetJobOpeningDto> UpdateJobOpening(UpdateJobOpeningDto dto)
         {
             using (var db = new CMSContext())
@@ -196,6 +201,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpDelete]
         public async Task DeleteJobOpening(Guid jobOpeningId)
         {
             using (var db = new CMSContext())

@@ -13,6 +13,9 @@ import { CompaniesListComponent } from './components/company/companies-list/comp
 import { CompanyService } from './shared/api/company.service';
 import { AccountService } from './shared/api/account.service';
 import { CommonService } from './shared/api/common.service';
+import { CandidateService } from './shared/api/candidate.service';
+import { JobOpeningService } from './shared/api/job-opening.service';
+import { TestService } from './shared/api/test.service';
 import { AuthInterceptorProvider } from './shared/interceptors/auth.interceptor';
 import { ErrorInterceptorProvider } from './shared/interceptors/error.interceptor';
 import { CompanyEditComponent } from './components/company/company-edit/company-edit.component';
@@ -72,6 +75,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CompanyService,
     AccountService,
     CommonService,
+    CandidateService,
+    JobOpeningService,
+    TestService,
     AuthInterceptorProvider,
     ErrorInterceptorProvider
   ],

@@ -18,6 +18,7 @@ namespace OU.CMS.Web.API.Controllers
     public class TestController : BaseSecureController
     {
         #region Test
+        [HttpGet]
         public async Task<IEnumerable<GetTestDto>> GetAllTestsAsCandidate()
         {
             if (!UserInfo.IsCandidateLogin)
@@ -55,6 +56,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IEnumerable<GetTestDto>> GetAllTestsAsCompanyManager()
         {
             if (UserInfo.IsCandidateLogin)
@@ -90,6 +92,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<GetTestDto> GetTestAsCandidate(Guid testId)
         {
             if (!UserInfo.IsCandidateLogin)
@@ -144,6 +147,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<GetTestDto> GetTestAsCompanyManager(Guid testId)
         {
             if (UserInfo.IsCandidateLogin)
@@ -195,6 +199,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpPost]
         public async Task<GetTestDto> CreateTest(CreateTestDto dto)
         {
             if (UserInfo.IsCandidateLogin)
@@ -223,6 +228,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpPost]
         public async Task<GetTestDto> UpdateTest(UpdateTestDto dto)
         {
             if (UserInfo.IsCandidateLogin)
@@ -246,6 +252,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpDelete]
         public async Task DeleteTest(Guid testId)
         {
             if (UserInfo.IsCandidateLogin)
@@ -269,6 +276,7 @@ namespace OU.CMS.Web.API.Controllers
         #endregion
 
         #region TestScores
+        [HttpPost]
         public async Task<TestScoreDto> CreateTestScore(CreateTestScoreDto dto)
         {
             if (UserInfo.IsCandidateLogin)
@@ -307,6 +315,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpPost]
         public async Task<TestScoreDto> UpdateTestScore(UpdateTestScoreDto dto)
         {
             if (UserInfo.IsCandidateLogin)
@@ -339,6 +348,26 @@ namespace OU.CMS.Web.API.Controllers
                     MaximumScore = testScore.MaximumScore,
                     CutoffScore = testScore.CutoffScore
                 };
+            }
+        }
+
+        [HttpDelete]
+        public async Task DeleteTestScore(Guid testScoreId)
+        {
+            if (UserInfo.IsCandidateLogin)
+                throw new Exception("You do not have access to perform this action!");
+
+            using (var db = new CMSContext())
+            {
+                var testScore = await db.TestScores.Include(ts => ts.Test).SingleOrDefaultAsync(ts => ts.Id == testScoreId && ts.Test.CompanyId == UserInfo.CompanyId);
+                if (testScore == null)
+                    throw new Exception("Test with Id not found!");
+
+                db.TestScores.Remove(testScore);
+
+                await db.SaveChangesAsync();
+
+                return;
             }
         }
         #endregion

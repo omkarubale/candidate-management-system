@@ -74,6 +74,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<GetCandidateDto> GetCandidate(Guid candidateId)
         {
             using (var db = new CMSContext())
@@ -87,6 +88,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<List<GetCandidateDto>> GetCandidatesForCompany(Guid companyId)
         {
             if (UserInfo.IsCandidateLogin)
@@ -100,6 +102,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<List<GetCandidateDto>> GetCandidatesForJobOpening(Guid jobOpeningId)
         {
             if (UserInfo.IsCandidateLogin)
@@ -113,6 +116,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<List<GetCandidateDto>> GetCandidatesForUser(Guid userId)
         {
             if (!UserInfo.IsCandidateLogin)
@@ -126,6 +130,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpPost]
         public async Task<GetCandidateDto> CreateCandidate(CreateCandidateDto dto)
         {
             if (!UserInfo.IsCandidateLogin || UserInfo.UserId != dto.UserId)
@@ -155,6 +160,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpDelete]
         public async Task DeleteCandidate(Guid candidateId)
         {
             using (var db = new CMSContext())
@@ -181,6 +187,7 @@ namespace OU.CMS.Web.API.Controllers
         #endregion
 
         #region CandidateTests
+        [HttpPost]
         public async Task<CandidateTestDto> CreateCandidateTest(CreateCandidateTestDto dto)
         {
             using (var db = new CMSContext())
@@ -224,6 +231,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<CandidateTestDto> GetCandidateTestAsCompanyManager(Guid candidateId, Guid testId)
         {
             using (var db = new CMSContext())
@@ -236,6 +244,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<CandidateTestDto> GetCandidateTestAsCandidate(Guid candidateId, Guid testId)
         {
             using (var db = new CMSContext())
@@ -248,6 +257,7 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        [HttpGet]
         private async Task<CandidateTestDto> GetCandidateTest(CMSContext db, Guid candidateId, Guid testId)
         {
             var candidateTest = (from cnd in db.Candidates
@@ -292,6 +302,7 @@ namespace OU.CMS.Web.API.Controllers
             return await candidateTest.SingleOrDefaultAsync();
         }
 
+        [HttpPost]
         public async Task UpdateCandidateTestScore(UpdateCandidateTestScoreDto dto)
         {
             using (var db = new CMSContext())
