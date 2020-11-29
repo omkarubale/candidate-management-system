@@ -1,0 +1,140 @@
+<div class="page-container">
+  <div class="row pt-15 m-0">
+    <div class="col-4">
+      <div class="position-details-container content-container col-12">
+        <div class="content-header">
+          <h2>Position Details</h2>
+        </div>
+        <div class="content-details">
+          <div class="row">
+            <!-- Position Form -->
+            <div class="col-sm-12">
+              <form
+                #positionEditForm="ngForm"
+                (ngSubmit)="editPosition(positionEditForm.value)"
+                autocomplete="off"
+              >
+                <input
+                  type="hidden"
+                  name="Id"
+                  [(ngModel)]="positionDetails.Id"
+                />
+                <!-- Title -->
+                <div class="form-group">
+                  <div class="input-field">
+                    <input
+                      name="Title"
+                      #Title="ngModel"
+                      class="form-control"
+                      placeholder="Title"
+                      [(ngModel)]="positionDetails.Title"
+                      required
+                    />
+                  </div>
+                  <div class="validation-error mt-2">
+                    <div
+                      class="validation-error-text"
+                      *ngIf="Title.invalid && Title.touched"
+                    >
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                  <div class="input-field">
+                    <input
+                      name="Description"
+                      #Description="ngModel"
+                      class="form-control"
+                      placeholder="Description"
+                      [(ngModel)]="positionDetails.Description"
+                      required
+                    />
+                  </div>
+                  <div class="validation-error mt-2">
+                    <div
+                      class="validation-error-text"
+                      *ngIf="Description.invalid && Description.touched"
+                    >
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Salary -->
+                <div class="form-group">
+                  <div class="input-field">
+                    <input
+                      name="Salary"
+                      #Salary="ngModel"
+                      class="form-control"
+                      type="number"
+                      placeholder="Salary"
+                      [(ngModel)]="positionDetails.Salary"
+                      required
+                    />
+                  </div>
+                  <div class="validation-error mt-2">
+                    <div
+                      class="validation-error-text"
+                      *ngIf="Salary.invalid && Salary.touched"
+                    >
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Deadline -->
+                <div class="form-group">
+                  <div class="input-field">
+                    <input
+                      name="Deadline"
+                      #Deadline="ngModel"
+                      class="form-control"
+                      type="date"
+                      placeholder="Deadline"
+                      [ngModel]="positionDetails.Deadline | date:'yyyy-MM-dd'"
+                      required
+                    />
+                  </div>
+                  <div class="validation-error mt-2">
+                    <div
+                      class="validation-error-text"
+                      *ngIf="Deadline.invalid && Deadline.touched"
+                    >
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-submit">
+                  <button
+                    class="btn btn-primary submit-button"
+                    color="primary"
+                    type="submit"
+                    [disabled]="!positionEditForm.form.valid"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-8 pl-0">
+      <div class="position-candidates-container content-container col-12">
+        <div class="content-header">
+          <h2>Applications</h2>
+        </div>
+        <div class="content-details">
+          coming soon!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

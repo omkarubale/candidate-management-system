@@ -28,8 +28,10 @@ namespace OU.CMS.Web.API.Controllers
             {
                 var jobOpenings = await (from jo in db.JobOpenings
                                          join cmp in db.Companies on jo.CompanyId equals cmp.Id
-                                         join cnd in db.Candidates on jo.Id equals cnd.JobOpeningId
-                                         join usr in db.Users on jo.CreatedBy equals usr.Id
+                                         join cnd in db.Candidates on jo.Id equals cnd.JobOpeningId into candidateTemp
+                                         from cnd in candidateTemp.DefaultIfEmpty()
+                                         join usr in db.Users on jo.CreatedBy equals usr.Id into candidateUserTemp
+                                         from usr in candidateUserTemp.DefaultIfEmpty()
                                          where cmp.Id == companyId
                                          group cnd by new { jo.Id, jo.Title, jo.Description, jo.Salary, jo.Deadline, jo.CreatedOn, CompanyId = cmp.Id, cmp.Name, UserId = usr.Id, usr.FullName, usr.ShortName } into jo
                                          select new GetJobOpeningCompanyDto
@@ -51,7 +53,7 @@ namespace OU.CMS.Web.API.Controllers
                                                  ShortName = jo.Key.ShortName,
                                                  CreatedOn = jo.Key.CreatedOn
                                              },
-                                             CandidateCount = jo.Count()
+                                             CandidateCount = jo.Count(j => j.UserId != null)
                                          }).ToListAsync();
 
                 return jobOpenings;

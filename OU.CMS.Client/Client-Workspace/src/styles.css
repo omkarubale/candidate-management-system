@@ -26,6 +26,11 @@ input .ng-touched.ng-invalid {
   border-color: #dc3545;
 }
 
+.table > thead > .row > th {
+  border-bottom: 1px;
+  border-top: 0;
+}
+
 div.validation-error {
   width: 100%;
   margin-top: .25 rem;
@@ -58,6 +63,7 @@ div.validation-error {
 .content-details {
   margin-top: 20px;
   margin-left: 20px;
+  margin-right: 20px;
 }
 
 .input-field {

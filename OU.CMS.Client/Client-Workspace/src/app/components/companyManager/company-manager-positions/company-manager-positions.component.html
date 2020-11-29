@@ -3,14 +3,164 @@
     <div class="col-12">
       <div class="company-positions-container content-container col-12">
         <div class="content-header">
-          <h2>Job Positions</h2>
+          <h2 class="d-inline">Job Positions</h2>
+          <div class="d-inline pl-2 position-add" title="Add New Position">
+            <fa-icon [icon]="addIcon" (click)="openAddPositionModal(content)"></fa-icon>
+          </div>
         </div>
 
         <!-- Positions Index -->
         <div class="content-details">
-
+          <table class="table table-hover table-sm">
+            <thead>
+              <tr class="row">
+                <th class="col-3">Title</th>
+                <th class="col-5">Description</th>
+                <th class="col-2">Deadline</th>
+                <th class="col-2">Applied</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row table-element" *ngFor="let position of this.positions">
+                <td class="col-3" ><a [routerLink]="['/companyManager-positions-position', position.Id]">{{position.Title}}</a></td>
+                <td class="col-5">{{position.Description}}</td>
+                <td class="col-2">{{position.Deadline}}</td>
+                <td class="col-2">{{position.CandidateCount}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">Create New Job Opening</h6>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span> × </span>
+    </button>
+  </div>
+  <form
+      #addJobOpeningForm="ngForm"
+      (ngSubmit)="addJobOpening(addJobOpeningForm.value)"
+      autocomplete="off"
+    >
+    <div class="modal-body">
+      <input
+        type="hidden"
+        name="CompanyId"
+        [(ngModel)]="addPositionForm.CompanyId"
+      />
+      <!-- Title -->
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="Title"
+            class="form-control"
+            placeholder="Title"
+            type="text"
+            name="Title"
+            #Title="ngModel"
+            [(ngModel)]="addPositionForm.Title"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="Title.invalid && Title.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="Description"
+            class="form-control"
+            placeholder="Description"
+            type="text"
+            name="Description"
+            #Description="ngModel"
+            [(ngModel)]="addPositionForm.Description"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="Description.invalid && Description.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Salary -->
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="Salary"
+            class="form-control"
+            placeholder="Salary"
+            type="number"
+            name="Salary"
+            #Salary="ngModel"
+            [(ngModel)]="addPositionForm.Salary"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="Salary.invalid && Salary.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Deadline -->
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="Deadline"
+            class="form-control"
+            placeholder="Deadline"
+            type="date"
+            name="Deadline"
+            #Deadline="ngModel"
+            [(ngModel)]="addPositionForm.Deadline"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="Deadline.invalid && Deadline.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <div class="form-submit">
+        <button
+          class="btn btn-primary submit-button"
+          type="submit"
+          [disabled]="!addJobOpeningForm.form.valid"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

@@ -48,9 +48,8 @@ export class CompanyManagerCompanyComponent implements OnInit {
   addIcon = faPlusSquare;
   envelopeIcon = faEnvelope;
 
-  closeResult = '';
   addManagerForm: CreateCompanyManagementInviteDto;
-  addManagerModel: NgbModalRef;
+  addManagerModal: NgbModalRef;
 
   ngOnInit(): void {
     this.currentUserEmail = this.accountService.userInfo.Email;
@@ -97,7 +96,7 @@ export class CompanyManagerCompanyComponent implements OnInit {
   openAddManagerModal(content) {
     this.addManagerForm.CompanyId = this.accountService.userInfo.CompanyId;
 
-    this.addManagerModel = this.modalService
+    this.addManagerModal = this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
@@ -112,7 +111,7 @@ export class CompanyManagerCompanyComponent implements OnInit {
         this.fetchCompanyManagers();
 
         this.cd.detectChanges();
-        this.addManagerModel.close();
+        this.addManagerModal.close();
       },
       (error) => {
         console.error(error);

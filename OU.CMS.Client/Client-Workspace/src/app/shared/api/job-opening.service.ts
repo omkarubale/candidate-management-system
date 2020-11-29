@@ -12,7 +12,7 @@ import {
 @Injectable()
 export class JobOpeningService {
   public API = 'https://localhost:44305/api';
-  public JOB_OPENING_API = `${this.API}/jobOpening`;
+  public JOB_OPENING_API = `${this.API}/jobPosition`;
 
   constructor(private http: HttpClient) {}
 
