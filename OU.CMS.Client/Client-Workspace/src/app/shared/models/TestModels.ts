@@ -2,7 +2,8 @@ import { CreatedOnDto } from "./CommonModels";
 import { UserSimpleDto } from "./UserModels";
 
 export class CreateTestDto {
-  Name: string;
+  Title: string;
+  Description: string;
 }
 
 export class CreateTestScoreDto {
@@ -17,6 +18,7 @@ export class CreateTestScoreDto {
 export class GetTestDto {
   Id: string;
   Title: string;
+  Description: string;
   CompanyId: string;
   TestScores: TestScoreDto[];
   CreatedDetails: CreatedOnDto;
@@ -34,6 +36,7 @@ export class TestScoreDto {
 export class UpdateTestDto {
   Id: string;
   Title: string;
+  Description: string;
 }
 
 export class UpdateTestScoreDto {

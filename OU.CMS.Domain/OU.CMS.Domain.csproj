@@ -137,6 +137,10 @@
     <Compile Include="Migrations\202011081230388_AddedCompanyIdToTestTable.Designer.cs">
       <DependentUpon>202011081230388_AddedCompanyIdToTestTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011291949085_AddDescriptionToTestTable.cs" />
+    <Compile Include="Migrations\202011291949085_AddDescriptionToTestTable.Designer.cs">
+      <DependentUpon>202011291949085_AddDescriptionToTestTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -199,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011081230388_AddedCompanyIdToTestTable.resx">
       <DependentUpon>202011081230388_AddedCompanyIdToTestTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011291949085_AddDescriptionToTestTable.resx">
+      <DependentUpon>202011291949085_AddDescriptionToTestTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

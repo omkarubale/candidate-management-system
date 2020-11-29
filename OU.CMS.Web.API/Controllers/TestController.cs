@@ -37,6 +37,8 @@ namespace OU.CMS.Web.API.Controllers
                              {
                                  Id = tst.Id,
                                  Title = tst.Title,
+                                 Description = tst.Description,
+
                                  Company = new CompanySimpleDto
                                  {
                                      Id = tst.CompanyId,
@@ -73,6 +75,8 @@ namespace OU.CMS.Web.API.Controllers
                              {
                                  Id = tst.Id,
                                  Title = tst.Title,
+                                 Description = tst.Description,
+
                                  Company = new CompanySimpleDto
                                  {
                                      Id = tst.CompanyId,
@@ -109,11 +113,12 @@ namespace OU.CMS.Web.API.Controllers
                                   where
                                   tst.Id == testId &&
                                   cnd.UserId == UserInfo.UserId
-                                  group tstc by new { tst.Id, tst.Title, tst.CompanyId, CompanyName = cmp.Name, UserId = usr.Id, usr.FullName, usr.ShortName, tst.CreatedOn } into g
+                                  group tstc by new { tst.Id, tst.Title, tst.Description, tst.CompanyId, CompanyName = cmp.Name, UserId = usr.Id, usr.FullName, usr.ShortName, tst.CreatedOn } into g
                                   select new GetTestDto
                                   {
                                       Id = g.Key.Id,
                                       Title = g.Key.Title,
+                                      Description = g.Key.Description,
 
                                       Company = new CompanySimpleDto
                                       {
@@ -157,15 +162,17 @@ namespace OU.CMS.Web.API.Controllers
             {
                 var test = await (from tst in db.Tests
                                   join cmp in db.Companies on tst.CompanyId equals cmp.Id
-                                  join tstc in db.TestScores on tst.Id equals tstc.TestId
                                   join usr in db.Users on tst.CreatedBy equals usr.Id
+                                  join tstc in db.TestScores on tst.Id equals tstc.TestId into testScoresTemp
+                                  from tstc in testScoresTemp.DefaultIfEmpty()
                                   where tst.Id == testId &&
                                   tst.CompanyId == (Guid)UserInfo.CompanyId
-                                  group tstc by new { tst.Id, tst.Title, tst.CompanyId, CompanyName = cmp.Name, UserId = usr.Id, usr.FullName, usr.ShortName, tst.CreatedOn } into g
+                                  group tstc by new { tst.Id, tst.Title, tst.Description, tst.CompanyId, CompanyName = cmp.Name, UserId = usr.Id, usr.FullName, usr.ShortName, tst.CreatedOn } into g
                                   select new GetTestDto
                                   {
                                       Id = g.Key.Id,
                                       Title = g.Key.Title,
+                                      Description = g.Key.Description,
 
                                       Company = new CompanySimpleDto
                                       {
@@ -215,6 +222,7 @@ namespace OU.CMS.Web.API.Controllers
                 {
                     Id = Guid.NewGuid(),
                     Title = dto.Title.Trim(),
+                    Description = dto.Description.Trim(),
                     CompanyId = (Guid)UserInfo.CompanyId,
                     CreatedBy = UserInfo.UserId,
                     CreatedOn = DateTime.UtcNow,
@@ -245,6 +253,7 @@ namespace OU.CMS.Web.API.Controllers
                     throw new Exception("Test with this title already exists!");
 
                 test.Title = dto.Title;
+                test.Description = dto.Description;
 
                 await db.SaveChangesAsync();
 

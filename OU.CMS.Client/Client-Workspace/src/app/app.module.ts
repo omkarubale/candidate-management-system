@@ -51,6 +51,7 @@ import { CompanyManagerSigninComponent } from './components/companyManager/compa
 import { CompanyManagerSignupComponent } from './components/companyManager/company-manager-signup/company-manager-signup.component';
 import { CompanyManagerPositionsPositionComponent } from './components/companyManager/company-manager-positions-position/company-manager-positions-position.component';
 import { CompanyManagerPositionsCandidateComponent } from './components/companyManager/company-manager-positions-candidate/company-manager-positions-candidate.component';
+import { CompanyManagerAssessmentsAssessmentComponent } from './components/companyManager/company-manager-assessments-assessment/company-manager-assessments-assessment.component';
 //#endregion
 
 @NgModule({
@@ -81,6 +82,7 @@ import { CompanyManagerPositionsCandidateComponent } from './components/companyM
     CompanyManagerDrivesComponent,
     CompanyManagerPositionsPositionComponent,
     CompanyManagerPositionsCandidateComponent,
+    CompanyManagerAssessmentsAssessmentComponent,
   ],
   imports: [
     BrowserModule,

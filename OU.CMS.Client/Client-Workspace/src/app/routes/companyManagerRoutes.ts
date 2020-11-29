@@ -7,6 +7,7 @@ import { CompanyManagerAssessmentsComponent } from '../components/companyManager
 import { CompanyManagerDrivesComponent } from '../components/companyManager/company-manager-drives/company-manager-drives.component';
 import { CompanyManagerPositionsPositionComponent } from '../components/companyManager/company-manager-positions-position/company-manager-positions-position.component';
 import { CompanyManagerPositionsCandidateComponent } from '../components/companyManager/company-manager-positions-candidate/company-manager-positions-candidate.component';
+import { CompanyManagerAssessmentsAssessmentComponent } from '../components/companyManager/company-manager-assessments-assessment/company-manager-assessments-assessment.component';
 
 
 export const companyManagerRouterConfig = [
@@ -44,6 +45,10 @@ export const companyManagerRouterConfig = [
   {
     path: 'companyManager-assessments',
     component: CompanyManagerAssessmentsComponent
+  },
+  {
+    path: 'companyManager-assessments-assessment/:id',
+    component: CompanyManagerAssessmentsAssessmentComponent
   },
   // Drives
   {

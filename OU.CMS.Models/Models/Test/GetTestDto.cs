@@ -14,6 +14,8 @@ namespace OU.CMS.Models.Models.Test
 
         public string Title { get; set; }
 
+        public string Description { get; set; }
+
         public CompanySimpleDto Company { get; set; }
 
         public List<TestScoreDto> TestScores { get; set; }

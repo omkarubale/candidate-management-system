@@ -15,6 +15,10 @@ namespace OU.CMS.Domain.EntityConfigurations
             Property(v => v.Title)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            Property(v => v.Description)
+                .IsRequired()
+                .HasMaxLength(500);
         }
     }
 }

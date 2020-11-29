@@ -11,6 +11,8 @@ namespace OU.CMS.Domain.Entities
     {
         public string Title { get; set; }
 
+        public string Description { get; set; }
+
         public Guid CompanyId { get; set; }
 
         [ForeignKey(nameof(CompanyId))]
