@@ -24,7 +24,7 @@
               <tr class="row table-element" *ngFor="let position of this.positions">
                 <td class="col-3" ><a [routerLink]="['/companyManager-positions-position', position.Id]">{{position.Title}}</a></td>
                 <td class="col-5">{{position.Description}}</td>
-                <td class="col-2">{{position.Deadline}}</td>
+                <td class="col-2">{{position.Deadline | date:'dd-MMM-yyyy'}}</td>
                 <td class="col-2">{{position.CandidateCount}}</td>
               </tr>
             </tbody>
