@@ -22,6 +22,7 @@ export class GetTestDto {
   CompanyId: string;
   TestScores: TestScoreDto[];
   CreatedDetails: CreatedOnDto;
+  TakersCount: number;
 }
 
 export class TestScoreDto {

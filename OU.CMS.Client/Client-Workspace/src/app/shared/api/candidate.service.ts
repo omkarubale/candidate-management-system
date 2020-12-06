@@ -67,6 +67,14 @@ export class CandidateService {
     );
   }
 
+  getCandidateTestsAsCompanyManager(
+    testId: string
+  ): Observable<CandidateTestDto[]> {
+    return this.http.get<CandidateTestDto[]>(
+      `${this.CANDIDATE_API}/GetCandidateTestsAsCompanyManager?testId=${testId}`
+    );
+  }
+
   getCandidateTestAsCompanyManager(
     candidateId: string,
     testId: string

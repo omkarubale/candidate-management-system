@@ -53,8 +53,8 @@ export class CompanyManagerAssessmentsComponent implements OnInit {
     this.testService.createTest(form).subscribe(
       (result) => {
         this.toastr.success(
-          'The Test was created successfully.',
-          'Test Created!'
+          'The Assessment was created successfully.',
+          'Assessment Created!'
         );
 
         this.fetchTests();
@@ -66,7 +66,7 @@ export class CompanyManagerAssessmentsComponent implements OnInit {
         console.error(error);
         this.toastr.error(
           error.ExceptionMessage,
-          'There was an error creating this test!'
+          'There was an error creating this assessment!'
         );
       }
     );

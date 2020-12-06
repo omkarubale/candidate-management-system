@@ -60,6 +60,11 @@ div.validation-error {
   margin-left: 20px;
 }
 
+.content-header-add-button {
+  cursor: pointer;
+  color: rgb(0, 145, 0);
+}
+
 .content-details {
   margin-top: 20px;
   margin-left: 20px;

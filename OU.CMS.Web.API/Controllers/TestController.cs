@@ -66,33 +66,53 @@ namespace OU.CMS.Web.API.Controllers
 
             using (var db = new CMSContext())
             {
-                var tests = (from tst in db.Tests
-                             join cmp in db.Companies on tst.CompanyId equals cmp.Id
-                             join usr in db.Users on tst.CreatedBy equals usr.Id
-                             where
-                             tst.CompanyId == (Guid)UserInfo.CompanyId
-                             select new GetTestDto
-                             {
-                                 Id = tst.Id,
-                                 Title = tst.Title,
-                                 Description = tst.Description,
+                var testsQuery = (from tst in db.Tests
+                                  join cmp in db.Companies on tst.CompanyId equals cmp.Id
+                                  join usr in db.Users on tst.CreatedBy equals usr.Id
+                                  join cdt in db.CandidateTests on tst.Id equals cdt.TestId into candidateTestTemp
+                                  from cdt in candidateTestTemp.DefaultIfEmpty()
+                                  where
+                                  tst.CompanyId == (Guid)UserInfo.CompanyId
+                                  select new
+                                  {
+                                      Id = tst.Id,
+                                      Title = tst.Title,
+                                      Description = tst.Description,
 
-                                 Company = new CompanySimpleDto
-                                 {
-                                     Id = tst.CompanyId,
-                                     Name = cmp.Name,
-                                 },
+                                      CompanyId = tst.CompanyId,
+                                      CompanyName = cmp.Name,
 
-                                 CreatedDetails = new CreatedOnDto
-                                 {
-                                     UserId = usr.Id,
-                                     FullName = usr.FullName,
-                                     ShortName = usr.ShortName,
-                                     CreatedOn = tst.CreatedOn
-                                 }
-                             });
+                                      UserId = usr.Id,
+                                      UserFullName = usr.FullName,
+                                      UserShortName = usr.ShortName,
+                                      UserCreatedOn = tst.CreatedOn,
 
-                return await tests.ToListAsync();
+                                      CandidateTestId = cdt != null ? (Guid?)cdt.Id : null
+                                  });
+
+                var tests = await testsQuery.GroupBy(t => new { t.Id, t.Title, t.Description, t.CompanyId, t.CompanyName, t.UserId, t.UserFullName, t.UserShortName, t.UserCreatedOn }).Select(t => new GetTestDto
+                {
+                    Id = t.Key.Id,
+                    Title = t.Key.Title,
+                    Description = t.Key.Description,
+
+                    Company = new CompanySimpleDto
+                    {
+                        Id = t.Key.CompanyId,
+                        Name = t.Key.CompanyName,
+                    },
+
+                    CreatedDetails = new CreatedOnDto
+                    {
+                        UserId = t.Key.UserId,
+                        FullName = t.Key.UserFullName,
+                        ShortName = t.Key.UserShortName,
+                        CreatedOn = t.Key.UserCreatedOn
+                    },
+                    TakersCount = t.Count(ct => ct.CandidateTestId != null)
+                }).ToListAsync();
+
+                return tests;
             }
         }
 
@@ -163,44 +183,46 @@ namespace OU.CMS.Web.API.Controllers
                 var test = await (from tst in db.Tests
                                   join cmp in db.Companies on tst.CompanyId equals cmp.Id
                                   join usr in db.Users on tst.CreatedBy equals usr.Id
-                                  join tstc in db.TestScores on tst.Id equals tstc.TestId into testScoresTemp
-                                  from tstc in testScoresTemp.DefaultIfEmpty()
                                   where tst.Id == testId &&
                                   tst.CompanyId == (Guid)UserInfo.CompanyId
-                                  group tstc by new { tst.Id, tst.Title, tst.Description, tst.CompanyId, CompanyName = cmp.Name, UserId = usr.Id, usr.FullName, usr.ShortName, tst.CreatedOn } into g
                                   select new GetTestDto
                                   {
-                                      Id = g.Key.Id,
-                                      Title = g.Key.Title,
-                                      Description = g.Key.Description,
+                                      Id = tst.Id,
+                                      Title = tst.Title,
+                                      Description = tst.Description,
 
                                       Company = new CompanySimpleDto
                                       {
-                                          Id = g.Key.CompanyId,
-                                          Name = g.Key.CompanyName,
+                                          Id = cmp.Id,
+                                          Name = cmp.Name,
                                       },
-
-                                      TestScores = g.Select(t => new TestScoreDto
-                                      {
-                                          Id = t.Id,
-                                          Title = t.Title,
-                                          IsMandatory = t.IsMandatory,
-                                          MinimumScore = t.MinimumScore,
-                                          MaximumScore = t.MaximumScore,
-                                          CutoffScore = t.CutoffScore
-                                      }).ToList(),
 
                                       CreatedDetails = new CreatedOnDto
                                       {
-                                          UserId = g.Key.Id,
-                                          FullName = g.Key.FullName,
-                                          ShortName = g.Key.ShortName,
-                                          CreatedOn = g.Key.CreatedOn
+                                          UserId = usr.Id,
+                                          FullName = usr.FullName,
+                                          ShortName = usr.ShortName,
+                                          CreatedOn = tst.CreatedOn
                                       }
                                   }).SingleOrDefaultAsync();
 
+                var testScores = await (from tstc in db.TestScores
+                                        where
+                                        tstc.TestId == testId
+                                        select new TestScoreDto
+                                        {
+                                            Id = tstc.Id,
+                                            Title = tstc.Title,
+                                            IsMandatory = tstc.IsMandatory,
+                                            MinimumScore = tstc.MinimumScore,
+                                            MaximumScore = tstc.MaximumScore,
+                                            CutoffScore = tstc.CutoffScore
+                                        }).ToListAsync();
+
                 if (test == null)
                     throw new Exception("Test does not exist!");
+
+                test.TestScores = testScores;
 
                 return test;
             }

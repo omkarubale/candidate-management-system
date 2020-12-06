@@ -4,8 +4,8 @@ import { JobOpeningSimpleDto } from "./JobOpeningModels";
 import { CompanySimpleDto } from "./CompanyModels";
 
 export class CandidateTestDto {
-  CandidateId: string;
   Title: string;
+  Candidate: GetCandidateDto;
   CandidateTestScores: CandidateTestScoreDto[];
 }
 
@@ -30,6 +30,7 @@ export class CreateCandidateTestDto {
 }
 
 export class GetCandidateDto {
+  CandidateId: string;
   User: UserSimpleDto;
   Company: CompanySimpleDto;
   JobOpening: JobOpeningSimpleDto;

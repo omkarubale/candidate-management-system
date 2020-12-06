@@ -21,5 +21,7 @@ namespace OU.CMS.Models.Models.Test
         public List<TestScoreDto> TestScores { get; set; }
 
         public CreatedOnDto CreatedDetails { get; set; }
+
+        public int TakersCount { get; set; }
     }
 }

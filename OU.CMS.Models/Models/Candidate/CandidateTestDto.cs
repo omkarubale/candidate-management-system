@@ -9,9 +9,9 @@ namespace OU.CMS.Models.Models.Candidate
 {
     public class CandidateTestDto
     {
-        public Guid CandidateId { get; set; }
-
         public string Title { get; set; }
+
+        public GetCandidateDto Candidate { get; set; }
 
         public List<CandidateTestScoreDto> CandidateTestScores { get; set; }
     }

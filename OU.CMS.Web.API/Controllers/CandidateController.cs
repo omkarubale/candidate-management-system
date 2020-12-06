@@ -231,6 +231,113 @@ namespace OU.CMS.Web.API.Controllers
             }
         }
 
+        private async Task<List<CandidateTestDto>> GetCandidatesForTest(CMSContext db, Guid testId, Guid? candidateId = null)
+        {
+            var isCandidateFilter = candidateId != null && candidateId != Guid.Empty;
+
+            var candidates = await (from cdt in db.CandidateTests
+                                    join cnd in db.Candidates on cdt.CandidateId equals cnd.Id
+                                    join usr in db.Users on cnd.UserId equals usr.Id
+                                    join cmp in db.Companies on cnd.CompanyId equals cmp.Id
+                                    join jo in db.JobOpenings on cnd.JobOpeningId equals jo.Id
+                                    join lc in db.Users on cnd.CreatedBy equals lc.Id
+                                    where
+                                    cdt.TestId == testId &&
+                                    (!isCandidateFilter || cnd.Id == candidateId) 
+                                    select new CandidateTestDto
+                                    {
+                                        Candidate = new GetCandidateDto
+                                        {
+                                            CandidateId = cnd.Id,
+                                            User = new UserSimpleDto
+                                            {
+                                                UserId = usr.Id,
+                                                FullName = usr.FullName,
+                                                ShortName = usr.ShortName,
+                                                Email = usr.Email
+                                            },
+                                            Company = new CompanySimpleDto
+                                            {
+                                                Id = cmp.Id,
+                                                Name = cmp.Name
+                                            },
+                                            JobOpening = new JobOpeningSimpleDto
+                                            {
+                                                Id = jo.Id,
+                                                Title = jo.Title,
+                                                Description = jo.Description,
+                                            },
+                                            CreatedDetails = new CreatedOnDto
+                                            {
+                                                UserId = lc.Id,
+                                                FullName = lc.FullName,
+                                                ShortName = lc.ShortName,
+                                                CreatedOn = cnd.CreatedOn
+                                            }
+                                        }
+                                    }).ToListAsync();
+
+            var candidateTestsScores = (from cdt in db.CandidateTests
+                                        join tst in db.Tests on cdt.TestId equals tst.Id
+                                        join cdts in db.CandidateTestScores on cdt.Id equals cdts.CandidateTestId
+                                        join tsts in db.TestScores on cdts.TestScoreId equals tsts.Id
+                                        where
+                                        cdt.TestId == testId &&
+                                        (!isCandidateFilter || cdt.CandidateId == candidateId)
+                                        select new
+                                        {
+                                            CandidateId = cdt.CandidateId,
+                                            TestTitle = tst.Title,
+
+                                            TestScoreId = tsts.Id,
+                                            TestScoreTitle = tsts.Title,
+                                            TestScoreIsMandatory = tsts.IsMandatory,
+
+                                            CandidateTestScoreId = cdts.Id,
+                                            CandidateTestScoreValue = cdts.Value,
+                                            CandidateTestScoreComment = cdts.Comment
+                                        })
+                                        .GroupBy(t => new { t.CandidateId, t.TestTitle })
+                                        .Select(t => new
+                                        {
+                                            CandidateId = t.Key.CandidateId,
+                                            Title = t.Key.TestTitle,
+
+                                            CandidateTestScores = t.Select(ts => new CandidateTestScoreDto
+                                            {
+                                                CandidateTestScoreId = ts.CandidateTestScoreId,
+                                                TestScoreId = ts.TestScoreId,
+                                                Title = ts.TestScoreTitle,
+                                                IsMandatory = ts.TestScoreIsMandatory,
+
+                                                Value = ts.CandidateTestScoreValue,
+                                                Comment = ts.CandidateTestScoreComment
+                                            }).ToList()
+                                        });
+
+            foreach (var candidate in candidates)
+            {
+                var candidateTestsScore = candidateTestsScores.SingleOrDefault(cts => cts.CandidateId == candidate.Candidate.CandidateId);
+                candidate.Title = candidateTestsScore.Title;
+                candidate.CandidateTestScores = candidateTestsScore.CandidateTestScores;
+            }
+
+            return candidates;
+        }
+
+        [HttpGet]
+        public async Task<List<CandidateTestDto>> GetCandidateTestsAsCompanyManager(Guid testId)
+        {
+            using (var db = new CMSContext())
+            {
+                var test = await db.Tests.SingleOrDefaultAsync(t => t.Id == testId);
+                if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != test.CompanyId)
+                    throw new Exception("You do not have access to perform this action!");
+
+                return await GetCandidatesForTest(db, testId);
+            }
+        }
+
         [HttpGet]
         public async Task<CandidateTestDto> GetCandidateTestAsCompanyManager(Guid candidateId, Guid testId)
         {
@@ -240,7 +347,7 @@ namespace OU.CMS.Web.API.Controllers
                 if (UserInfo.IsCandidateLogin || UserInfo.CompanyId != candidate.CompanyId)
                     throw new Exception("You do not have access to perform this action!");
 
-                return await GetCandidateTest(db, candidateId, testId);
+                return (await GetCandidatesForTest(db, testId, candidateId)).SingleOrDefault();
             }
         }
 
@@ -253,53 +360,8 @@ namespace OU.CMS.Web.API.Controllers
                 if (!UserInfo.IsCandidateLogin || UserInfo.UserId != candidate.UserId)
                     throw new Exception("You do not have access to perform this action!");
 
-                return await GetCandidateTest(db, candidateId, testId);
+                return (await GetCandidatesForTest(db, testId, candidateId)).SingleOrDefault();
             }
-        }
-
-        [HttpGet]
-        private async Task<CandidateTestDto> GetCandidateTest(CMSContext db, Guid candidateId, Guid testId)
-        {
-            var candidateTest = (from cnd in db.Candidates
-                                 join cdt in db.CandidateTests on cnd.Id equals cdt.CandidateId
-                                 join tst in db.Tests on cdt.TestId equals tst.Id
-                                 join cdts in db.CandidateTestScores on cdt.Id equals cdts.CandidateTestId
-                                 join tsts in db.TestScores on cdts.TestScoreId equals tsts.Id
-                                 where
-                                 cnd.Id == candidateId &&
-                                 tst.Id == testId
-                                 select new
-                                 {
-                                     CandidateId = cnd.Id,
-                                     TestTitle = tst.Title,
-
-                                     TestScoreId = tsts.Id,
-                                     TestScoreTitle = tsts.Title,
-                                     TestScoreIsMandatory = tsts.IsMandatory,
-
-                                     CandidateTestScoreId = cdts.Id,
-                                     CandidateTestScoreValue = cdts.Value,
-                                     CandidateTestScoreComment = cdts.Comment
-                                 })
-                                    .GroupBy(t => new { t.CandidateId, t.TestTitle })
-                                    .Select(t => new CandidateTestDto
-                                    {
-                                        CandidateId = t.Key.CandidateId,
-                                        Title = t.Key.TestTitle,
-
-                                        CandidateTestScores = t.Select(ts => new CandidateTestScoreDto
-                                        {
-                                            CandidateTestScoreId = ts.CandidateTestScoreId,
-                                            TestScoreId = ts.TestScoreId,
-                                            Title = ts.TestScoreTitle,
-                                            IsMandatory = ts.TestScoreIsMandatory,
-
-                                            Value = ts.CandidateTestScoreValue,
-                                            Comment = ts.CandidateTestScoreComment
-                                        }).ToList()
-                                    });
-
-            return await candidateTest.SingleOrDefaultAsync();
         }
 
         [HttpPost]

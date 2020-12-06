@@ -1,1 +1,257 @@
-<p>company-manager-assessments-assessment works!</p>
+<div class="page-container">
+  <div class="row pt-15 m-0">
+    <div class="col-4">
+      <div class="assessment-details-container content-container col-12">
+        <div class="content-header">
+          <h2>Assessment Details</h2>
+        </div>
+        <div class="content-details">
+          <div class="row">
+            <!-- Assessment Form -->
+            <div class="col-sm-12">
+              <form
+                #assessmentEditForm="ngForm"
+                (ngSubmit)="editAssessment(assessmentEditForm.value)"
+                autocomplete="off"
+              >
+                <input
+                  type="hidden"
+                  name="Id"
+                  [(ngModel)]="assessmentDetails.Id"
+                />
+                <!-- Title -->
+                <div class="form-group">
+                  <div class="input-field">
+                    <input
+                      name="Title"
+                      #Title="ngModel"
+                      class="form-control"
+                      placeholder="Title"
+                      [(ngModel)]="assessmentDetails.Title"
+                      required
+                    />
+                  </div>
+                  <div class="validation-error mt-2">
+                    <div
+                      class="validation-error-text"
+                      *ngIf="Title.invalid && Title.touched"
+                    >
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                  <div class="input-field">
+                    <input
+                      name="Description"
+                      #Description="ngModel"
+                      class="form-control"
+                      placeholder="Description"
+                      [(ngModel)]="assessmentDetails.Description"
+                      required
+                    />
+                  </div>
+                  <div class="validation-error mt-2">
+                    <div
+                      class="validation-error-text"
+                      *ngIf="Description.invalid && Description.touched"
+                    >
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-submit">
+                  <button
+                    class="btn btn-primary submit-button"
+                    color="primary"
+                    type="submit"
+                    [disabled]="!assessmentEditForm.form.valid"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Assessment Scores -->
+            <div class="col-sm-12">
+              <div class="assessment-scores-label-container">
+                <div class="assessment-scores-label d-inline">
+                  Assessment Scores
+                </div>
+                <div class="d-inline pl-2 content-header-add-button" title="Add New Position">
+                  <fa-icon [icon]="addIcon" (click)="openAddAssessmentScoreModal(content)"></fa-icon>
+                </div>
+              </div>
+              <div class="assessment-score row" *ngFor="let testScore of this.assessmentDetails.TestScores">
+                <div class="col-5">{{testScore.Title}}</div>
+                <div class="col-4 text-right">
+                  <div *ngIf="testScore.CutoffScore">{{testScore.CutoffScore}} to Qualify</div>
+                </div>
+                <div class="col-3 text-right">{{testScore.MinimumScore}} to {{testScore.MaximumScore}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-8 pl-0">
+      <div class="assessment-candidates-container content-container col-12">
+        <div class="content-header">
+          <h2>Test Takers</h2>
+        </div>
+        <div class="content-details">
+          coming soon!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">Create New Assessment Score</h6>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span> × </span>
+    </button>
+  </div>
+  <form
+      #addTestScoreForm="ngForm"
+      (ngSubmit)="addAssessmentScore(addTestScoreForm.value)"
+      autocomplete="off"
+    >
+    <div class="modal-body">
+      <input
+        type="hidden"
+        name="TestId"
+        [(ngModel)]="currentAssessmentId"
+      />
+      <!-- Title -->
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="Title"
+            class="form-control"
+            placeholder="Title"
+            type="text"
+            name="Title"
+            #Title="ngModel"
+            [(ngModel)]="addAssessmentScoreForm.Title"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="Title.invalid && Title.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- MinimumScore -->
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="MinimumScore"
+            class="form-control"
+            placeholder="Minimum Score"
+            type="number"
+            name="MinimumScore"
+            #MinimumScore="ngModel"
+            [(ngModel)]="addAssessmentScoreForm.MinimumScore"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="MinimumScore.invalid && MinimumScore.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- MaximumScore -->
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="MaximumScore"
+            class="form-control"
+            placeholder="Maximum Score"
+            type="number"
+            name="MaximumScore"
+            #MaximumScore="ngModel"
+            [(ngModel)]="addAssessmentScoreForm.MaximumScore"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="MaximumScore.invalid && MaximumScore.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- CutoffScore -->
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="CutoffScore"
+            class="form-control"
+            placeholder="Cutoff Score"
+            type="number"
+            name="CutoffScore"
+            #CutoffScore="ngModel"
+            [(ngModel)]="addAssessmentScoreForm.CutoffScore"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="CutoffScore.invalid && CutoffScore.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- IsMandatory -->
+      <div class="form-group">
+        <div class="">
+          <input
+            id="IsMandatory"
+            class=""
+            type="checkbox"
+            name="IsMandatory"
+            #IsMandatory="ngModel"
+            [(ngModel)]="addAssessmentScoreForm.IsMandatory"
+          /> Is Mandatory
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <div class="form-submit">
+        <button
+          class="btn btn-primary submit-button"
+          type="submit"
+          [disabled]="!addTestScoreForm.form.valid"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

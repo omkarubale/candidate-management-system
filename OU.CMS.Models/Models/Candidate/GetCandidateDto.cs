@@ -12,6 +12,8 @@ namespace OU.CMS.Models.Models.Candidate
 {
     public class GetCandidateDto
     {
+        public Guid CandidateId { get; set; }
+
         public UserSimpleDto User { get; set; }
 
         public CompanySimpleDto Company { get; set; }
