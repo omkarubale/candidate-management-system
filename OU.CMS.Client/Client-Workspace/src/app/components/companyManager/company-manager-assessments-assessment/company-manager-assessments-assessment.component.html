@@ -82,16 +82,29 @@
                 <div class="assessment-scores-label d-inline">
                   Assessment Scores
                 </div>
-                <div class="d-inline pl-2 content-header-add-button" title="Add New Position">
-                  <fa-icon [icon]="addIcon" (click)="openAddAssessmentScoreModal(content)"></fa-icon>
+                <div
+                  class="d-inline pl-2 content-header-add-button"
+                  title="Add New Position"
+                >
+                  <fa-icon
+                    [icon]="addIcon"
+                    (click)="openAddAssessmentScoreModal(content)"
+                  ></fa-icon>
                 </div>
               </div>
-              <div class="assessment-score row" *ngFor="let testScore of this.assessmentDetails.TestScores">
-                <div class="col-5">{{testScore.Title}}</div>
+              <div
+                class="assessment-score row"
+                *ngFor="let testScore of this.assessmentDetails.TestScores"
+              >
+                <div class="col-5">{{ testScore.Title }}</div>
                 <div class="col-4 text-right">
-                  <div *ngIf="testScore.CutoffScore">{{testScore.CutoffScore}} to Qualify</div>
+                  <div *ngIf="testScore.CutoffScore">
+                    {{ testScore.CutoffScore }} to Qualify
+                  </div>
                 </div>
-                <div class="col-3 text-right">{{testScore.MinimumScore}} to {{testScore.MaximumScore}}</div>
+                <div class="col-3 text-right">
+                  {{ testScore.MinimumScore }} to {{ testScore.MaximumScore }}
+                </div>
               </div>
             </div>
           </div>
@@ -105,7 +118,10 @@
           <h2>Test Takers</h2>
         </div>
         <div class="content-details">
-          <app-company-manager-assessment-candidate-list [candidateList]="assessmentCandidates"></app-company-manager-assessment-candidate-list>
+          <app-company-manager-assessment-candidate-list
+            [candidateList]="assessmentCandidates"
+            [testScores]="assessmentDetails.TestScores"
+          ></app-company-manager-assessment-candidate-list>
         </div>
       </div>
     </div>
@@ -114,7 +130,9 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h6 class="modal-title" id="modal-basic-title">Create New Assessment Score</h6>
+    <h6 class="modal-title" id="modal-basic-title">
+      Create New Assessment Score
+    </h6>
     <button
       type="button"
       class="close"
@@ -125,16 +143,12 @@
     </button>
   </div>
   <form
-      #addTestScoreForm="ngForm"
-      (ngSubmit)="addAssessmentScore(addTestScoreForm.value)"
-      autocomplete="off"
-    >
+    #addTestScoreForm="ngForm"
+    (ngSubmit)="addAssessmentScore(addTestScoreForm.value)"
+    autocomplete="off"
+  >
     <div class="modal-body">
-      <input
-        type="hidden"
-        name="TestId"
-        [(ngModel)]="currentAssessmentId"
-      />
+      <input type="hidden" name="TestId" [(ngModel)]="currentAssessmentId" />
       <!-- Title -->
       <div class="form-group">
         <div class="input-field">
@@ -237,10 +251,10 @@
             name="IsMandatory"
             #IsMandatory="ngModel"
             [(ngModel)]="addAssessmentScoreForm.IsMandatory"
-          /> Is Mandatory
+          />
+          Is Mandatory
         </div>
       </div>
-
     </div>
     <div class="modal-footer">
       <div class="form-submit">

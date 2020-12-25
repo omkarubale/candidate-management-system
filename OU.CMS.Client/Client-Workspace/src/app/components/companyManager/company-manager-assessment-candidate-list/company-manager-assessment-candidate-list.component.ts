@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CandidateTestDto } from 'src/app/shared/models/CandidateModels';
+import { TestScoreDto } from 'src/app/shared/models/TestModels';
 
 @Component({
   selector: 'app-company-manager-assessment-candidate-list',
@@ -9,8 +11,12 @@ import { CandidateTestDto } from 'src/app/shared/models/CandidateModels';
 export class CompanyManagerAssessmentCandidateListComponent implements OnInit {
 
   @Input() candidateList: CandidateTestDto[];
+  @Input() testScores: TestScoreDto[];
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
   }

@@ -16,6 +16,7 @@ using OU.CMS.Models.Models.JobOpening;
 using System.Security.Cryptography;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using OU.Utility.Extensions;
 
 namespace OU.CMS.Web.API.Controllers
 {
@@ -277,7 +278,7 @@ namespace OU.CMS.Web.API.Controllers
                                         }
                                     }).ToListAsync();
 
-            var candidateTestsScores = (from cdt in db.CandidateTests
+            var candidateTestsScores = (await (from cdt in db.CandidateTests
                                         join tst in db.Tests on cdt.TestId equals tst.Id
                                         join cdts in db.CandidateTestScores on cdt.Id equals cdts.CandidateTestId
                                         join tsts in db.TestScores on cdts.TestScoreId equals tsts.Id
@@ -296,7 +297,7 @@ namespace OU.CMS.Web.API.Controllers
                                             CandidateTestScoreId = cdts.Id,
                                             CandidateTestScoreValue = cdts.Value,
                                             CandidateTestScoreComment = cdts.Comment
-                                        })
+                                        }).ToListAsync())
                                         .GroupBy(t => new { t.CandidateId, t.TestTitle })
                                         .Select(t => new
                                         {
@@ -312,14 +313,19 @@ namespace OU.CMS.Web.API.Controllers
 
                                                 Value = ts.CandidateTestScoreValue,
                                                 Comment = ts.CandidateTestScoreComment
-                                            }).ToList()
-                                        });
+                                            }).OrderBy(ts => ts.Title).ToList()
+                                        }).ToList();
+
+            var sortedTotalScores = candidateTestsScores.Select(cdsts => (double?)cdsts.CandidateTestScores.Select(cdts => cdts.Value)?.Sum() ?? 0d).ToList();
+            sortedTotalScores.Sort();
 
             foreach (var candidate in candidates)
             {
                 var candidateTestsScore = candidateTestsScores.SingleOrDefault(cts => cts.CandidateId == candidate.Candidate.CandidateId);
                 candidate.Title = candidateTestsScore.Title;
                 candidate.CandidateTestScores = candidateTestsScore.CandidateTestScores;
+                candidate.TotalScore = candidateTestsScore.CandidateTestScores.Select(ts => ts.Value)?.Sum() ?? 0;
+                candidate.Percentile = (decimal)sortedTotalScores.GetPercentile((double)candidate.TotalScore);
             }
 
             return candidates;

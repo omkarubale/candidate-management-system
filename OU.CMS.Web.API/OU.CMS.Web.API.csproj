@@ -348,6 +348,10 @@
       <Project>{0a0e405d-639c-4e1d-9125-dc0e9ef5907e}</Project>
       <Name>OU.CMS.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OU.Utility\OU.Utility.csproj">
+      <Project>{d1b49fdb-6acc-4da4-8364-abba596dc3d0}</Project>
+      <Name>OU.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

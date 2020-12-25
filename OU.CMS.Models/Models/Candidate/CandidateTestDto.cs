@@ -14,5 +14,9 @@ namespace OU.CMS.Models.Models.Candidate
         public GetCandidateDto Candidate { get; set; }
 
         public List<CandidateTestScoreDto> CandidateTestScores { get; set; }
+
+        public decimal TotalScore { get; set; }
+
+        public decimal Percentile { get; set; }
     }
 }

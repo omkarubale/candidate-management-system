@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OU.CMS.Core", "OU.CMS.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OU.CMS.Web.API", "OU.CMS.Web.API\OU.CMS.Web.API.csproj", "{F64956D6-26C7-415F-BFD2-01DCBCF0D93D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OU.Utility", "OU.Utility\OU.Utility.csproj", "{D1B49FDB-6ACC-4DA4-8364-ABBA596DC3D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F64956D6-26C7-415F-BFD2-01DCBCF0D93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F64956D6-26C7-415F-BFD2-01DCBCF0D93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F64956D6-26C7-415F-BFD2-01DCBCF0D93D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1B49FDB-6ACC-4DA4-8364-ABBA596DC3D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1B49FDB-6ACC-4DA4-8364-ABBA596DC3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1B49FDB-6ACC-4DA4-8364-ABBA596DC3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1B49FDB-6ACC-4DA4-8364-ABBA596DC3D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

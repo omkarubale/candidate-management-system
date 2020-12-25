@@ -7,6 +7,8 @@ export class CandidateTestDto {
   Title: string;
   Candidate: GetCandidateDto;
   CandidateTestScores: CandidateTestScoreDto[];
+  TotalScore: number;
+  Percentile: number;
 }
 
 export class CandidateTestScoreDto {
