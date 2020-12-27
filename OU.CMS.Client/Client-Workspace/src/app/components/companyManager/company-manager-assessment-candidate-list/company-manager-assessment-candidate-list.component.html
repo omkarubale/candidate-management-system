@@ -5,13 +5,15 @@
     <th *ngFor="let score of this.testScores" class="col border-top-0">
       {{ score.Title }}
     </th>
-    <th class="col-1 border-top-0">Average</th>
-    <th class="col-1 border-top-0">Variation</th>
+    <th class="col-2 border-top-0">Total Score</th>
+    <th class="col-1 border-top-0">Percentile</th>
   </tr>
 
   <tr class="manager row" *ngFor="let candidateTest of this.candidateList">
     <td class="candidate-name col-2">
-      {{ candidateTest.Candidate.User.FullName }}
+      <a [routerLink]="['/companyManager-positions-candidate', candidateTest.Candidate.JobOpening.Id, candidateTest.Candidate.CandidateId]">
+        {{ candidateTest.Candidate.User.FullName }}
+      </a>
     </td>
 
     <td class="candidate-applied-date col-2">
@@ -26,7 +28,7 @@
       {{ candidateTest.TotalScore }}
     </td>
 
-    <td class="candidate-name col-2">
+    <td class="candidate-name col-1">
       {{ candidateTest.Percentile }}
     </td>
   </tr>

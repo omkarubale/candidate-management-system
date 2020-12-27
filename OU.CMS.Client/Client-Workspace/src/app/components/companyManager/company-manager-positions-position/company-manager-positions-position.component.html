@@ -127,12 +127,14 @@
     </div>
 
     <div class="col-8 pl-0">
-      <div class="position-candidates-container content-container col-12">
+      <div class="content-container col-12">
         <div class="content-header">
           <h2>Applications</h2>
         </div>
-        <div class="content-details">
-          coming soon!
+        <div class="content-details px-2">
+          <app-company-manager-position-candidate-list
+            [candidateList]="positionCandidates"
+          ></app-company-manager-position-candidate-list>
         </div>
       </div>
     </div>

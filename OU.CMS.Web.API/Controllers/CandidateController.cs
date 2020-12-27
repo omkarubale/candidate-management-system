@@ -32,46 +32,76 @@ namespace OU.CMS.Web.API.Controllers
                 var isJobOpeningFilter = jobOpeningId != null && jobOpeningId != Guid.Empty;
                 var isUserFilter = userId != null && userId != Guid.Empty;
 
-                var candidates = (from cnd in db.Candidates
-                                  join usr in db.Users on cnd.UserId equals usr.Id
-                                  join cmp in db.Companies on cnd.CompanyId equals cmp.Id
-                                  join jo in db.JobOpenings on cnd.JobOpeningId equals jo.Id
-                                  join lc in db.Users on cnd.CreatedBy equals lc.Id
-                                  where
-                                  (!isCandidateFilter || cnd.Id == candidateId) &&
-                                  (!isCompanyFilter || cnd.CompanyId == companyId) &&
-                                  (!isJobOpeningFilter || cnd.JobOpeningId == jobOpeningId) &&
-                                  (!isUserFilter || cnd.UserId == userId)
-                                  select new GetCandidateDto
-                                  {
-                                      User = new UserSimpleDto
+                var candidatesQuery = from cnd in db.Candidates
+                                      join usr in db.Users on cnd.UserId equals usr.Id
+                                      join cmp in db.Companies on cnd.CompanyId equals cmp.Id
+                                      join jo in db.JobOpenings on cnd.JobOpeningId equals jo.Id
+                                      join lc in db.Users on cnd.CreatedBy equals lc.Id
+                                      select new
                                       {
-                                          UserId = usr.Id,
-                                          FullName = usr.FullName,
-                                          ShortName = usr.ShortName,
-                                          Email = usr.Email
-                                      },
-                                      Company = new CompanySimpleDto
-                                      {
-                                          Id = cmp.Id,
-                                          Name = cmp.Name
-                                      },
-                                      JobOpening = new JobOpeningSimpleDto
-                                      {
-                                          Id = jo.Id,
-                                          Title = jo.Title,
-                                          Description = jo.Description,
-                                      },
-                                      CreatedDetails = new CreatedOnDto
-                                      {
-                                          UserId = lc.Id,
-                                          FullName = lc.FullName,
-                                          ShortName = lc.ShortName,
-                                          CreatedOn = cnd.CreatedOn
-                                      }
-                                  });
+                                          CandidateId = cnd.Id,
 
-                return await candidates.ToListAsync();
+                                          UserId = usr.Id,
+                                          UserFullName = usr.FullName,
+                                          UserShortName = usr.ShortName,
+                                          UserEmail = usr.Email,
+
+                                          CompanyId = cmp.Id,
+                                          CompanyName = cmp.Name,
+
+                                          JobOpeningId = jo.Id,
+                                          JobOpeningTitle = jo.Title,
+                                          JobOpeningDescription = jo.Description,
+
+                                          CreatedDetailsUserId = lc.Id,
+                                          CreatedDetailsFullName = lc.FullName,
+                                          CreatedDetailsShortName = lc.ShortName,
+                                          CreatedDetailsCreatedOn = cnd.CreatedOn
+                                      };
+
+                if (isCandidateFilter)
+                    candidatesQuery = candidatesQuery.Where(c => c.CandidateId == candidateId);
+
+                if (isCompanyFilter)
+                    candidatesQuery = candidatesQuery.Where(c => c.CompanyId == companyId);
+
+                if (isJobOpeningFilter)
+                    candidatesQuery = candidatesQuery.Where(c => c.JobOpeningId == jobOpeningId);
+
+                if (isUserFilter)
+                    candidatesQuery = candidatesQuery.Where(c => c.UserId == userId);
+
+                var candidates = await candidatesQuery.Select(c => new GetCandidateDto
+                {
+                    CandidateId = c.CandidateId,
+                    User = new UserSimpleDto
+                    {
+                        UserId = c.UserId,
+                        FullName = c.UserFullName,
+                        ShortName = c.UserShortName,
+                        Email = c.UserEmail
+                    },
+                    Company = new CompanySimpleDto
+                    {
+                        Id = c.CompanyId,
+                        Name = c.CompanyName
+                    },
+                    JobOpening = new JobOpeningSimpleDto
+                    {
+                        Id = c.JobOpeningId,
+                        Title = c.JobOpeningTitle,
+                        Description = c.JobOpeningDescription,
+                    },
+                    CreatedDetails = new CreatedOnDto
+                    {
+                        UserId = c.CreatedDetailsUserId,
+                        FullName = c.CreatedDetailsFullName,
+                        ShortName = c.CreatedDetailsShortName,
+                        CreatedOn = c.CreatedDetailsCreatedOn
+                    }
+                }).ToListAsync();
+
+                return candidates;
             }
         }
 
@@ -244,7 +274,7 @@ namespace OU.CMS.Web.API.Controllers
                                     join lc in db.Users on cnd.CreatedBy equals lc.Id
                                     where
                                     cdt.TestId == testId &&
-                                    (!isCandidateFilter || cnd.Id == candidateId) 
+                                    (!isCandidateFilter || cnd.Id == candidateId)
                                     select new CandidateTestDto
                                     {
                                         Candidate = new GetCandidateDto
@@ -279,25 +309,25 @@ namespace OU.CMS.Web.API.Controllers
                                     }).ToListAsync();
 
             var candidateTestsScores = (await (from cdt in db.CandidateTests
-                                        join tst in db.Tests on cdt.TestId equals tst.Id
-                                        join cdts in db.CandidateTestScores on cdt.Id equals cdts.CandidateTestId
-                                        join tsts in db.TestScores on cdts.TestScoreId equals tsts.Id
-                                        where
-                                        cdt.TestId == testId &&
-                                        (!isCandidateFilter || cdt.CandidateId == candidateId)
-                                        select new
-                                        {
-                                            CandidateId = cdt.CandidateId,
-                                            TestTitle = tst.Title,
+                                               join tst in db.Tests on cdt.TestId equals tst.Id
+                                               join cdts in db.CandidateTestScores on cdt.Id equals cdts.CandidateTestId
+                                               join tsts in db.TestScores on cdts.TestScoreId equals tsts.Id
+                                               where
+                                               cdt.TestId == testId &&
+                                               (!isCandidateFilter || cdt.CandidateId == candidateId)
+                                               select new
+                                               {
+                                                   CandidateId = cdt.CandidateId,
+                                                   TestTitle = tst.Title,
 
-                                            TestScoreId = tsts.Id,
-                                            TestScoreTitle = tsts.Title,
-                                            TestScoreIsMandatory = tsts.IsMandatory,
+                                                   TestScoreId = tsts.Id,
+                                                   TestScoreTitle = tsts.Title,
+                                                   TestScoreIsMandatory = tsts.IsMandatory,
 
-                                            CandidateTestScoreId = cdts.Id,
-                                            CandidateTestScoreValue = cdts.Value,
-                                            CandidateTestScoreComment = cdts.Comment
-                                        }).ToListAsync())
+                                                   CandidateTestScoreId = cdts.Id,
+                                                   CandidateTestScoreValue = cdts.Value,
+                                                   CandidateTestScoreComment = cdts.Comment
+                                               }).ToListAsync())
                                         .GroupBy(t => new { t.CandidateId, t.TestTitle })
                                         .Select(t => new
                                         {

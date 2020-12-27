@@ -1,0 +1,23 @@
+<table class="table table-sm candidate-list">
+  <tr class="row">
+    <th class="col-5 border-top-0">Name</th>
+    <th class="col-5 border-top-0">Email</th>
+    <th class="col-2 border-top-0">Applied Date</th>
+  </tr>
+
+  <tr class="manager row" *ngFor="let candidate of this.candidateList">
+    <td class="candidate-name col-5">
+      <a [routerLink]="['/companyManager-positions-candidate', candidate.JobOpening.Id, candidate.CandidateId]">
+        {{ candidate.User.FullName }}
+      </a>
+    </td>
+
+        <td class="candidate-name col-5">
+          {{ candidate.User.Email }}
+        </td>
+
+    <td class="candidate-applied-date col-2">
+      {{ candidate.CreatedDetails.CreatedOn }}
+    </td>
+  </tr>
+</table>
