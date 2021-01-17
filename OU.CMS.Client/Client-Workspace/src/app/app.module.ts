@@ -19,6 +19,7 @@ import { CommonService } from './shared/api/common.service';
 import { CandidateService } from './shared/api/candidate.service';
 import { JobOpeningService } from './shared/api/job-opening.service';
 import { TestService } from './shared/api/test.service';
+import { UserService } from './shared/api/user.service';
 //#endregion
 
 //#region Providers
@@ -106,6 +107,7 @@ import { CompanyManagerPositionCandidateListComponent } from './components/compa
     CandidateService,
     JobOpeningService,
     TestService,
+    UserService,
 
     //Providers
     AuthInterceptorProvider,

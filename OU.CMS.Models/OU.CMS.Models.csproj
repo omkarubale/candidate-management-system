@@ -74,6 +74,7 @@
     <Compile Include="Models\Test\TestScoreDto.cs" />
     <Compile Include="Models\Test\UpdateTestDto.cs" />
     <Compile Include="Models\Test\UpdateTestScoreDto.cs" />
+    <Compile Include="Models\User\UserDto.cs" />
     <Compile Include="Models\User\UserSimpleDto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

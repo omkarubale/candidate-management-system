@@ -6,14 +6,121 @@
           <h2>My Profile</h2>
         </div>
         <div class="content-details">
-          <div class="">Coming soon!</div>
+          <!-- User Details Form -->
+          <div class="col-md-6 col-sm-12">
+            <form
+              #userEditForm="ngForm"
+              (ngSubmit)="editUser(userEditForm.value)"
+              autocomplete="off"
+            >
+              <div class="form-group">
+                <div class="input-field">
+                  <input
+                    name="FirstName"
+                    #FirstName="ngModel"
+                    class="form-control"
+                    placeholder="First Name"
+                    [(ngModel)]="userDetails.FirstName"
+                    required
+                  />
+                </div>
+                <div class="validation-error mt-2">
+                  <div
+                    class="validation-error-text"
+                    *ngIf="FirstName.invalid && FirstName.touched"
+                  >
+                    This field is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <input
+                    name="LastName"
+                    #LastName="ngModel"
+                    class="form-control"
+                    placeholder="Last Name"
+                    [(ngModel)]="userDetails.LastName"
+                    required
+                  />
+                </div>
+                <div class="validation-error mt-2">
+                  <div
+                    class="validation-error-text"
+                    *ngIf="LastName.invalid && LastName.touched"
+                  >
+                    This field is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <input
+                    name="FullName"
+                    #FullName="ngModel"
+                    class="form-control"
+                    placeholder="Full Name"
+                    [(ngModel)]="userDetails.FirstName + ' ' + userDetails.LastName"
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <input
+                    name="ShortName"
+                    #ShortName="ngModel"
+                    class="form-control"
+                    placeholder="Short Name"
+                    [ngModel]="getShortName()"
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <input
+                    name="Email"
+                    #Email="ngModel"
+                    class="form-control"
+                    placeholder="Email"
+                    [(ngModel)]="userDetails.Email"
+                    required
+                  />
+                </div>
+                <div class="validation-error mt-2">
+                  <div
+                    class="validation-error-text"
+                    *ngIf="Email.invalid && Email.touched"
+                  >
+                    This field is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-submit">
+                <button
+                  class="btn btn-primary submit-button"
+                  color="primary"
+                  type="submit"
+                  [disabled]="!userEditForm.form.valid"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
     <div class="col-4 pl-0">
       <div class="content-container col-12">
         <div class="content-header">
-          <h2>Notifications</h2>
+          <h2>Offers</h2>
         </div>
         <div class="content-details">
           <div class="">Coming soon!</div>
