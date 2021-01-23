@@ -3,10 +3,34 @@
     <div class="col-12">
       <div class="content-container col-12">
         <div class="content-header">
-          <h2>Jobs</h2>
+          <h2 class="d-inline">Jobs</h2>
         </div>
+
+        <!-- Jobs Index -->
         <div class="content-details">
-          <div class="">Coming soon!</div>
+          <table class="table table-hover table-sm">
+            <thead>
+              <tr class="row">
+                <th class="col-2">Title</th>
+                <th class="col-4">Description</th>
+                <th class="col-2">Deadline</th>
+                <th class="col-2">Salary</th>
+                <th class="col-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row table-element" *ngFor="let job of this.jobs">
+                <td class="col-2" ><a [routerLink]="['/candidate-jobs-job', job.JobOpeningId]">{{job.Title}}</a></td>
+                <td class="col-4">{{job.Description}}</td>
+                <td class="col-2">{{job.Deadline | date:'dd-MMM-yyyy'}}</td>
+                <td class="col-2">{{job.Salary | currency:'INR'}}</td>
+                <td class="col-2">
+                  <button *ngIf="job.CandidateId != null" class="btn btn-primary btn-sm py-0 applied-button" disabled>Applied on {{job.AppliedOn | date:'dd-MMM-yyyy'}}</button>
+                  <button *ngIf="job.CandidateId == null" class="btn btn-primary btn-sm py-0 apply-button" (click)="this.applyForJob(job.JobOpeningId, job.Company.Id)">Apply</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

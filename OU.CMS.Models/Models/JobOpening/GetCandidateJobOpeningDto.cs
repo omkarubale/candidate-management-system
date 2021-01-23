@@ -10,11 +10,8 @@ namespace OU.CMS.Models.Models.JobOpening
 {
     public class GetCandidateJobOpeningDto
     {
-        public Guid UserId { get; set; }
-
+        // Job Opening
         public Guid JobOpeningId { get; set; }
-
-        public Guid CandidateId { get; set; }
 
         public string Title { get; set; }
 
@@ -24,10 +21,13 @@ namespace OU.CMS.Models.Models.JobOpening
 
         public DateTime Deadline { get; set; }
 
-        public DateTime AppliedOn { get; set; }
-
         public CompanySimpleDto Company { get; set; }
 
         public CreatedOnDto CreatedDetails { get; set; }
+
+        // Candidate
+        public Guid? CandidateId { get; set; }
+
+        public DateTime? AppliedOn { get; set; }
     }
 }

@@ -17,7 +17,7 @@
         </td>
 
     <td class="candidate-applied-date col-2">
-      {{ candidate.CreatedDetails.CreatedOn }}
+      {{ candidate.CreatedDetails.CreatedOn | date:'dd-MMM-yyyy' }}
     </td>
   </tr>
 </table>

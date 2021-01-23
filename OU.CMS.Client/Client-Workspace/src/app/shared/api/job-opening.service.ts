@@ -31,6 +31,12 @@ export class JobOpeningService {
     );
   }
 
+  getJobOpeningForCandidate(jobOpeningId: string): Observable<GetCandidateJobOpeningDto> {
+    return this.http.get<GetCandidateJobOpeningDto>(
+      `${this.JOB_OPENING_API}/GetJobOpeningForCandidate?jobOpeningId=${jobOpeningId}`
+    );
+  }
+
   getJobOpening(jobOpeningId: string): Observable<GetJobOpeningDto> {
     return this.http.get<GetJobOpeningDto>(
       `${this.JOB_OPENING_API}/GetJobOpening?jobOpeningId=${jobOpeningId}`

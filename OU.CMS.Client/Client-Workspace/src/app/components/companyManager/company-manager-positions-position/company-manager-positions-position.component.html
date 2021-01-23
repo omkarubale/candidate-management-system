@@ -17,7 +17,8 @@
                 <input
                   type="hidden"
                   name="Id"
-                  [(ngModel)]="positionDetails.Id"
+                  value="positionDetails.Id"
+
                 />
                 <!-- Title -->
                 <div class="form-group">
@@ -72,7 +73,7 @@
                       class="form-control"
                       type="number"
                       placeholder="Salary"
-                      [(ngModel)]="positionDetails.Salary"
+                      [ngModel]="positionDetails.Salary"
                       required
                     />
                   </div>

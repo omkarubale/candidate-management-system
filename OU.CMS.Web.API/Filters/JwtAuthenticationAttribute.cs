@@ -69,7 +69,7 @@ namespace OU.CMS.Web.API.Filters
             userDetails.LastName = identity.FindFirst(CustomClaimTypes.LastName)?.Value;
             userDetails.FullName = identity.FindFirst(CustomClaimTypes.FullName)?.Value;
             userDetails.ShortName = identity.FindFirst(CustomClaimTypes.ShortName)?.Value;
-            userDetails.IsCandidateLogin = identity.FindFirst(CustomClaimTypes.IsCandidateLogin)?.Value == "true";
+            userDetails.IsCandidateLogin = identity.FindFirst(CustomClaimTypes.IsCandidateLogin)?.Value == "True";
 
             var companyId = identity.FindFirst(CustomClaimTypes.CompanyId)?.Value;
 

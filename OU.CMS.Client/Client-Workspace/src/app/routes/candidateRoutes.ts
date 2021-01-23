@@ -3,6 +3,7 @@ import { CandidateSignupComponent } from '../components/candidate/candidate-sign
 import { CandidateDashboardComponent } from '../components/candidate/candidate-dashboard/candidate-dashboard.component';
 import { CandidateMyProfileComponent } from '../components/candidate/candidate-my-profile/candidate-my-profile.component';
 import { CandidateJobsComponent } from '../components/candidate/candidate-jobs/candidate-jobs.component';
+import { CandidateJobsJobComponent } from '../components/candidate/candidate-jobs-job/candidate-jobs-job.component';
 
 export const candidateRouterConfig = [
   {
@@ -24,5 +25,9 @@ export const candidateRouterConfig = [
   {
     path: 'candidate-jobs',
     component: CandidateJobsComponent
+  },
+  {
+    path: 'candidate-jobs-job/:jobOpeningId',
+    component: CandidateJobsJobComponent
   }
 ]

@@ -26,7 +26,8 @@ namespace OU.CMS.Web.API
                 new Claim(CustomClaimTypes.LastName, user.LastName),
                 new Claim(CustomClaimTypes.FullName, user.FullName),
                 new Claim(CustomClaimTypes.ShortName, user.ShortName),
-                new Claim(CustomClaimTypes.IsCandidateLogin, companyId == null ?  false.ToString() : true.ToString()),
+                new Claim(CustomClaimTypes.UserType, user.UserType.ToString()),
+                new Claim(CustomClaimTypes.IsCandidateLogin, companyId == null ? true.ToString() : false.ToString()),
                 new Claim(CustomClaimTypes.CompanyId, companyId.ToString()),
             };
 

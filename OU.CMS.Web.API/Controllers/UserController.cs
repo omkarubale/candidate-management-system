@@ -48,7 +48,7 @@ namespace OU.CMS.Web.API.Controllers
 
                 user.FirstName = dto.FirstName.Trim();
                 user.LastName = dto.LastName.Trim();
-                user.Email= dto.Email.Trim();
+                user.Email = dto.Email.Trim();
 
                 await db.SaveChangesAsync();
 

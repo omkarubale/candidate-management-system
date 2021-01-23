@@ -61,28 +61,28 @@ namespace OU.CMS.Web.API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<GetCandidateJobOpeningDto>> GetAllJobOpeningsForCandidate()
+        private async Task<List<GetCandidateJobOpeningDto>> GetJobOpeningsForCandidate(Guid? jobOpeningId = null)
         {
             using (var db = new CMSContext())
             {
                 if (!UserInfo.IsCandidateLogin)
                     throw new Exception("You do not have access to perform this action!");
 
-                var jobOpenings = await (from cnd in db.Candidates
-                                         join jo in db.JobOpenings on cnd.JobOpeningId equals jo.Id
+                var jobOpeningsQuery = (from jo in db.JobOpenings
                                          join cmp in db.Companies on jo.CompanyId equals cmp.Id
                                          join usr in db.Users on jo.CreatedBy equals usr.Id
-                                         where 
-                                         cnd.UserId == UserInfo.UserId
+                                         join cnd in db.Candidates on jo.Id equals cnd.JobOpeningId into candidateTemp
+                                         from cnd in candidateTemp.DefaultIfEmpty()
+                                         where
+                                         jo.Deadline > DateTime.UtcNow &&
+                                         (cnd.Id == null || cnd.UserId == UserInfo.UserId)
                                          select new GetCandidateJobOpeningDto
                                          {
-                                             UserId = cnd.UserId,
+                                             // Job Opening
                                              JobOpeningId = jo.Id,
-                                             CandidateId = cnd.Id,
                                              Title = jo.Title,
                                              Description = jo.Description,
                                              Salary = jo.Salary,
-                                             AppliedOn = cnd.CreatedOn,
                                              Deadline = jo.Deadline,
                                              Company = new CompanySimpleDto
                                              {
@@ -95,11 +95,28 @@ namespace OU.CMS.Web.API.Controllers
                                                  FullName = usr.FullName,
                                                  ShortName = usr.ShortName,
                                                  CreatedOn = jo.CreatedOn
-                                             }
-                                         }).ToListAsync();
+                                             },
 
-                return jobOpenings;
+                                             // Candidate
+                                             CandidateId = cnd.Id != null ? (Guid?)cnd.Id : null,
+                                             AppliedOn = cnd.Id != null ? (DateTime?)cnd.CreatedOn : null,
+                                         });
+
+                if (jobOpeningId != null)
+                    jobOpeningsQuery = jobOpeningsQuery.Where(j => j.JobOpeningId == jobOpeningId);
+
+                return await jobOpeningsQuery.ToListAsync();
             }
+        }
+
+        public async Task<List<GetCandidateJobOpeningDto>> GetAllJobOpeningsForCandidate()
+        {
+            return await GetJobOpeningsForCandidate();
+        }
+
+        public async Task<GetCandidateJobOpeningDto> GetJobOpeningForCandidate(Guid jobOpeningId)
+        {
+            return (await GetJobOpeningsForCandidate(jobOpeningId)).SingleOrDefault();
         }
 
         [HttpGet]

@@ -1,0 +1,11 @@
+.apply-button {
+  background-color: #79B953;
+  border-color: darkgreen;
+  cursor: pointer;
+}
+
+.applied-button {
+  background-color: #343a40;
+  border-color: black;
+  cursor: not-allowed;
+}
