@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 import { CandidateService } from 'src/app/shared/api/candidate.service';
 import { TestService } from 'src/app/shared/api/test.service';
-import { CandidateTestDto, GetCandidateDto } from 'src/app/shared/models/CandidateModels';
+import { CandidateTestDto } from 'src/app/shared/models/CandidateModels';
 import { CreateTestScoreDto, GetTestDto, UpdateTestDto } from 'src/app/shared/models/TestModels';
 
 @Component({

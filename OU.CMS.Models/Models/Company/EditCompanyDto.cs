@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OU.CMS.Models.Models.Company
 {
-    public class SaveCompanyDto
+    public class EditCompanyDto
     {
         public Guid Id { get; set; }
 

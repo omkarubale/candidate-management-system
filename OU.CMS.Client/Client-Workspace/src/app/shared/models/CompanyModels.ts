@@ -32,7 +32,7 @@ export class RevokeCompanyManagementInviteDto {
   Email: string;
 }
 
-export class SaveCompanyDto {
+export class EditCompanyDto {
   Id: string;
   Name: string;
 }

@@ -33,7 +33,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.9.4.0\lib\net461\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,11 +53,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\Candidates\Companies\Queries\GetAllCompaniesQuery.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Companies\Commands\CreateCompanyCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Companies\Commands\DeleteCompanyCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Companies\Commands\EditCompanyCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Companies\Queries\GetCompanyQuery.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Commands\AcceptCompanyManagementInviteCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Commands\CreateCompanyManagementInviteCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Commands\DeleteCompanyManagementCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Commands\RevokeCompanyManagementInviteCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Queries\GetCompanyManagementQuery.cs" />
+    <Compile Include="BusinessLogic\_Base\BaseCommand.cs" />
+    <Compile Include="BusinessLogic\_Base\BaseQuery.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OU.CMS.Common\OU.CMS.Common.csproj">
@@ -64,7 +87,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BusinessLogic\" />
+    <Folder Include="BusinessLogic\Candidates\Companies\Commands\" />
+    <Folder Include="BusinessLogic\Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,29 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import {
-  SaveCompanyDto,
+  EditCompanyDto,
   GetCompanyDto,
   DeleteCompanyManagementDto,
   CreateCompanyManagementInviteDto,
   AcceptCompanyManagementInviteDto,
   RevokeCompanyManagementInviteDto,
   GetCompanyManagementDto,
-} from '../models/CompanyModels';
+} from '../../models/CompanyModels';
 
 @Injectable()
-export class CompanyService {
+export class ManagerCompanyService {
   public API = 'https://localhost:44305/api';
-  public COMPANIES_API = `${this.API}/company`;
+  public COMPANIES_API = `${this.API}/managerCompany`;
 
   constructor(private http: HttpClient) {}
-
-  getAllCompanies(): Observable<Array<GetCompanyDto>> {
-    var url = `${this.COMPANIES_API}/GetAllCompanies`;
-    console.log('getAllCompanies HIT: ' + url);
-    var result = this.http.get<Array<GetCompanyDto>>(url);
-    console.log(result);
-    return result;
-  }
 
   getCompany(companyId: string): Observable<GetCompanyDto> {
     return this.http.get<GetCompanyDto>(
@@ -32,9 +24,9 @@ export class CompanyService {
     );
   }
 
-  saveCompany(company: SaveCompanyDto): Observable<GetCompanyDto> {
+  editCompany(company: EditCompanyDto): Observable<GetCompanyDto> {
     return this.http.post<GetCompanyDto>(
-      `${this.COMPANIES_API}/SaveCompany`,
+      `${this.COMPANIES_API}/EditCompany`,
       company
     );
   }

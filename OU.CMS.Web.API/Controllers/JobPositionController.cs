@@ -15,7 +15,7 @@ using System.Xml;
 
 namespace OU.CMS.Web.API.Controllers
 {
-    public class JobPositionController : BaseSecureController
+    public partial class JobPositionController : BaseSecureController
     {
         #region JobOpening
         [HttpGet]

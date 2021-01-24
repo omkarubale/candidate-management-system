@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
-import { CompanyService } from 'src/app/shared/api/company.service';
+import { ManagerCompanyService } from 'src/app/shared/api/manager/managerCompany.service';
 import {
   CompanyManagerDto,
   CreateCompanyManagementInviteDto,
@@ -9,7 +9,7 @@ import {
   GetCompanyDto,
   GetCompanyManagementDto,
   RevokeCompanyManagementInviteDto,
-  SaveCompanyDto,
+  EditCompanyDto,
 } from 'src/app/shared/models/CompanyModels';
 import {
   faEnvelope,
@@ -29,15 +29,15 @@ import { Router } from '@angular/router';
 export class CompanyManagerCompanyComponent implements OnInit {
   constructor(
     private accountService: AccountService,
-    private companyService: CompanyService,
+    private companyService: ManagerCompanyService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal,
     private router: Router
   ) {}
 
-  companyDetails: GetCompanyDto;
-  companyManagers: GetCompanyManagementDto;
+  companyDetails: GetCompanyDto = new GetCompanyDto;
+  companyManagers: GetCompanyManagementDto = new GetCompanyManagementDto;
 
   currentUserEmail: string;
 
@@ -66,8 +66,8 @@ export class CompanyManagerCompanyComponent implements OnInit {
   }
 
   // Company
-  editCompany(form: SaveCompanyDto) {
-    this.companyService.saveCompany(form).subscribe(
+  editCompany(form: EditCompanyDto) {
+    this.companyService.editCompany(form).subscribe(
       (result) => {
         this.toastr.success(
           'The company was saved successfully.',

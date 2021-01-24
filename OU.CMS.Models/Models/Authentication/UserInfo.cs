@@ -1,11 +1,11 @@
-﻿using System;
+﻿using OU.CMS.Domain.Lookups;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Microsoft.IdentityModel.Tokens;
-using OU.CMS.Domain.Lookups;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace OU.CMS.Web.API.Models.Authentication
+namespace OU.CMS.Models.Authentication
 {
     public class UserInfo
     {

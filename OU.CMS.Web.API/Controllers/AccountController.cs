@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using OU.CMS.Domain.Contexts;
 using OU.CMS.Models.Models.Account;
-using OU.CMS.Web.API.Models.Authentication;
+using OU.CMS.Models.Authentication;
 using OU.CMS.Domain.Lookups;
 using OU.CMS.Common;
 using System.Collections.Generic;

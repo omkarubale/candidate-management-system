@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Models\Account\SignInDto.cs" />
     <Compile Include="Models\Account\SignUpDto.cs" />
+    <Compile Include="Models\Authentication\UserInfo.cs" />
     <Compile Include="Models\Candidate\CandidateTestDto.cs" />
     <Compile Include="Models\Candidate\CandidateTestScoreDto.cs" />
     <Compile Include="Models\Candidate\CreateCandidateDto.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="Models\Company\GetCompanyDto.cs" />
     <Compile Include="Models\Company\GetCompanyManagementDto.cs" />
     <Compile Include="Models\Company\RevokeCompanyManagementInviteDto.cs" />
-    <Compile Include="Models\Company\SaveCompanyDto.cs" />
+    <Compile Include="Models\Company\EditCompanyDto.cs" />
     <Compile Include="Models\JobOpening\CreateJobOpeningDto.cs" />
     <Compile Include="Models\JobOpening\GetCandidateJobOpeningDto.cs" />
     <Compile Include="Models\JobOpening\GetJobOpeningCompanyDto.cs" />

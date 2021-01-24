@@ -1,11 +1,6 @@
-﻿using OU.CMS.Web.API.Extensions;
+﻿using OU.CMS.Models.Authentication;
+using OU.CMS.Web.API.Extensions;
 using OU.CMS.Web.API.Filters;
-using OU.CMS.Web.API.Models.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace OU.CMS.Web.API.Controllers
