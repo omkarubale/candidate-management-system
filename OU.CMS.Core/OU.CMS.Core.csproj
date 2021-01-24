@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\Candidates\Companies\Queries\GetAllCompaniesQuery.cs" />
+    <Compile Include="BusinessLogic\Candidates\Jobs\Queries\GetJobOpeningsForCandidateQuery.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Companies\Commands\CreateCompanyCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Companies\Commands\DeleteCompanyCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Companies\Commands\EditCompanyCommand.cs" />
@@ -63,6 +64,11 @@
     <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Commands\DeleteCompanyManagementCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Commands\RevokeCompanyManagementInviteCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Queries\GetCompanyManagementQuery.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Jobs\Commands\CreateJobOpeningCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Jobs\Commands\DeleteJobOpeningCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Jobs\Commands\UpdateJobOpeningCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Jobs\Queries\GetJobOpeningQuery.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Jobs\Queries\GetJobOpeningsQuery.cs" />
     <Compile Include="BusinessLogic\_Base\BaseCommand.cs" />
     <Compile Include="BusinessLogic\_Base\BaseQuery.cs" />
     <Compile Include="Program.cs" />

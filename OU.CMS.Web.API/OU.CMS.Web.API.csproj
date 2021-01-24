@@ -227,9 +227,10 @@
     <Compile Include="Controllers\BaseSecureController.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\Candidates\CandidateCompanyController.cs" />
+    <Compile Include="Controllers\Candidates\CandidateJobController.cs" />
     <Compile Include="Controllers\CompanyManagers\ManagerCompanyController.cs" />
+    <Compile Include="Controllers\CompanyManagers\ManagerJobController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\JobPositionController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extensions\Extensions.Identity.cs" />

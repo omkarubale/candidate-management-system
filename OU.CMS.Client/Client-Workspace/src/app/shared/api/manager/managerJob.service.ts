@@ -7,33 +7,19 @@ import {
   GetJobOpeningCompanyDto,
   GetJobOpeningDto,
   UpdateJobOpeningDto,
-} from '../models/JobOpeningModels';
+} from '../../models/JobOpeningModels';
 
 @Injectable()
-export class JobOpeningService {
+export class ManagerJobService {
   public API = 'https://localhost:44305/api';
-  public JOB_OPENING_API = `${this.API}/jobPosition`;
+  public JOB_OPENING_API = `${this.API}/managerJob`;
 
   constructor(private http: HttpClient) {}
 
   //#region JobOpening
-  getAllJobOpeningsForCompany(
-    companyId: string
-  ): Observable<GetJobOpeningCompanyDto[]> {
+  getJobOpenings(): Observable<GetJobOpeningCompanyDto[]> {
     return this.http.get<GetJobOpeningCompanyDto[]>(
-      `${this.JOB_OPENING_API}/GetAllJobOpeningsForCompany?companyId=${companyId}`
-    );
-  }
-
-  getAllJobOpeningsForCandidate(): Observable<GetCandidateJobOpeningDto[]> {
-    return this.http.get<GetCandidateJobOpeningDto[]>(
-      `${this.JOB_OPENING_API}/GetAllJobOpeningsForCandidate`
-    );
-  }
-
-  getJobOpeningForCandidate(jobOpeningId: string): Observable<GetCandidateJobOpeningDto> {
-    return this.http.get<GetCandidateJobOpeningDto>(
-      `${this.JOB_OPENING_API}/GetJobOpeningForCandidate?jobOpeningId=${jobOpeningId}`
+      `${this.JOB_OPENING_API}/GetJobOpenings`
     );
   }
 
@@ -58,6 +44,12 @@ export class JobOpeningService {
     return this.http.post<GetJobOpeningDto>(
       `${this.JOB_OPENING_API}/UpdateJobOpening`,
       jobOpening
+    );
+  }
+
+  deleteJobOpening(jobOpeningId: string) {
+    return this.http.delete(
+      `${this.JOB_OPENING_API}/DeleteJobOpening?jobOpeningId=${jobOpeningId}`
     );
   }
   //#endregion

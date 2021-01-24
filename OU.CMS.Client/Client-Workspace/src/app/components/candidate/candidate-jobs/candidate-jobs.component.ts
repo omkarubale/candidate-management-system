@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 import { CandidateService } from 'src/app/shared/api/candidate.service';
-import { JobOpeningService } from 'src/app/shared/api/job-opening.service';
+import { CandidateJobService } from 'src/app/shared/api/candidate/candidateJob.service';
 import { UserInfo } from 'src/app/shared/models/AuthenticationModels';
 import { CreateCandidateDto } from 'src/app/shared/models/CandidateModels';
 import { GetCandidateJobOpeningDto } from 'src/app/shared/models/JobOpeningModels';
@@ -16,7 +16,7 @@ import { GetCandidateJobOpeningDto } from 'src/app/shared/models/JobOpeningModel
 export class CandidateJobsComponent implements OnInit {
   constructor(
     private accountService: AccountService,
-    private jobOpeningService: JobOpeningService,
+    private candidateJobService: CandidateJobService,
     private candidateService: CandidateService,
     private toastr: ToastrService,
     private router: Router
@@ -29,7 +29,7 @@ export class CandidateJobsComponent implements OnInit {
   }
 
   fetchJobs() {
-    this.jobOpeningService.getAllJobOpeningsForCandidate().subscribe((data) => {
+    this.candidateJobService.getAllJobOpeningsForCandidate().subscribe((data) => {
       this.jobs = data;
     });
   }

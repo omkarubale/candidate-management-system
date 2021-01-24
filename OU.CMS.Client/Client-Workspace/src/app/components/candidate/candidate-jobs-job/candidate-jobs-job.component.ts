@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JobOpeningService } from 'src/app/shared/api/job-opening.service';
+import { CandidateJobService } from 'src/app/shared/api/candidate/candidateJob.service';
 import { GetCandidateJobOpeningDto } from 'src/app/shared/models/JobOpeningModels';
 
 @Component({
@@ -11,7 +11,7 @@ import { GetCandidateJobOpeningDto } from 'src/app/shared/models/JobOpeningModel
 export class CandidateJobsJobComponent implements OnInit {
 
   constructor(
-    private jobOpeningService: JobOpeningService,
+    private candidateJobService: CandidateJobService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -28,7 +28,7 @@ export class CandidateJobsJobComponent implements OnInit {
       this.currentJobId = params['jobOpeningId'];
 
       if (this.currentJobId) {
-        this.jobOpeningService
+        this.candidateJobService
           .getJobOpeningForCandidate(this.currentJobId)
           .subscribe((data) => {
             if (data) {

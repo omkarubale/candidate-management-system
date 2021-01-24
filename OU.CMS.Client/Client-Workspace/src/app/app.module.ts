@@ -16,17 +16,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AccountService } from './shared/api/account.service';
 import { CommonService } from './shared/api/common.service';
 import { CandidateService } from './shared/api/candidate.service';
-import { JobOpeningService } from './shared/api/job-opening.service';
 import { TestService } from './shared/api/test.service';
 import { UserService } from './shared/api/user.service';
 //#endregion
 
 //#region Candidate Services
 import { CandidateCompanyService } from './shared/api/candidate/candidateCompany.service';
+import { CandidateJobService } from './shared/api/candidate/candidateJob.service';
 //#endregion
 
 //#region Manager Services
 import { ManagerCompanyService } from './shared/api/manager/managerCompany.service';
+import { ManagerJobService } from './shared/api/manager/managerJob.service';
 //#endregion
 
 //#region Providers
@@ -113,15 +114,16 @@ import { CandidateJobsJobComponent } from './components/candidate/candidate-jobs
     CommonService,
     AccountService,
     CandidateService,
-    JobOpeningService,
     TestService,
     UserService,
 
     // Candidate Services
     CandidateCompanyService,
+    CandidateJobService,
 
     // Manager Services
     ManagerCompanyService,
+    ManagerJobService,
 
     //Providers
     AuthInterceptorProvider,

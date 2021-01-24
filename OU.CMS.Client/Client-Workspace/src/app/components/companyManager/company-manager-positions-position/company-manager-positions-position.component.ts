@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 import { CandidateService } from 'src/app/shared/api/candidate.service';
-import { JobOpeningService } from 'src/app/shared/api/job-opening.service';
+import { ManagerJobService } from 'src/app/shared/api/manager/managerJob.service';
 import { GetCandidateDto } from 'src/app/shared/models/CandidateModels';
 import { GetJobOpeningDto, UpdateJobOpeningDto } from 'src/app/shared/models/JobOpeningModels';
 
@@ -15,7 +15,7 @@ import { GetJobOpeningDto, UpdateJobOpeningDto } from 'src/app/shared/models/Job
 export class CompanyManagerPositionsPositionComponent implements OnInit {
   constructor(
     private accountService: AccountService,
-    private jobOpeningService: JobOpeningService,
+    private managerJobService: ManagerJobService,
     private candidateService: CandidateService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
@@ -32,7 +32,7 @@ export class CompanyManagerPositionsPositionComponent implements OnInit {
       this.currentPositionId = params['id'];
 
       if (this.currentPositionId) {
-        this.jobOpeningService
+        this.managerJobService
           .getJobOpening(this.currentPositionId)
           .subscribe((data) => {
             if (data) {
@@ -54,7 +54,7 @@ export class CompanyManagerPositionsPositionComponent implements OnInit {
 
   // Position
   editPosition(form: UpdateJobOpeningDto) {
-    this.jobOpeningService.updateJobOpening(form).subscribe(
+    this.managerJobService.updateJobOpening(form).subscribe(
       (result) => {
         this.toastr.success(
           'The job position was saved successfully.',

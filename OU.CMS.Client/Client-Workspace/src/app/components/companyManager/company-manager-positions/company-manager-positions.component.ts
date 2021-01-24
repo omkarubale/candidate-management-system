@@ -4,7 +4,7 @@ import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
-import { JobOpeningService } from 'src/app/shared/api/job-opening.service';
+import { ManagerJobService } from 'src/app/shared/api/manager/managerJob.service';
 import { CreateJobOpeningDto, GetJobOpeningCompanyDto } from 'src/app/shared/models/JobOpeningModels';
 
 @Component({
@@ -16,7 +16,7 @@ export class CompanyManagerPositionsComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private jobOpeningService: JobOpeningService,
+    private managerJobService: ManagerJobService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal,
@@ -38,8 +38,8 @@ export class CompanyManagerPositionsComponent implements OnInit {
   }
 
   fetchPositions() {
-    this.jobOpeningService
-    .getAllJobOpeningsForCompany(this.accountService.userInfo.CompanyId)
+    this.managerJobService
+    .getJobOpenings()
     .subscribe((data) => {
       this.positions = data;
     });
@@ -53,7 +53,7 @@ export class CompanyManagerPositionsComponent implements OnInit {
   }
 
   addJobOpening(form: CreateJobOpeningDto) {
-    this.jobOpeningService.createJobOpening(form).subscribe(
+    this.managerJobService.createJobOpening(form).subscribe(
       (result) => {
         this.toastr.success(
           'The Job Opening was created successfully.',
