@@ -14,22 +14,19 @@
                 (ngSubmit)="editAssessment(assessmentEditForm.value)"
                 autocomplete="off"
               >
-                <input
-                  type="hidden"
-                  name="Id"
-                  value="assessmentDetails.Id"
-                />
+                <input type="hidden" name="Id" value="assessmentDetails.Id" />
                 <!-- Title -->
                 <div class="form-group">
                   <div class="input-field">
-                    <input
-                      name="Title"
-                      #Title="ngModel"
-                      class="form-control"
-                      placeholder="Title"
-                      [(ngModel)]="assessmentDetails.Title"
-                      required
-                    />
+                    <label class="input-label">Title</label>
+                      <input
+                        name="Title"
+                        #Title="ngModel"
+                        class="form-control"
+                        placeholder="Title"
+                        [(ngModel)]="assessmentDetails.Title"
+                        required
+                      />
                   </div>
                   <div class="validation-error mt-2">
                     <div
@@ -44,6 +41,7 @@
                 <!-- Description -->
                 <div class="form-group">
                   <div class="input-field">
+                    <label class="input-label">Description</label>
                     <input
                       name="Description"
                       #Description="ngModel"

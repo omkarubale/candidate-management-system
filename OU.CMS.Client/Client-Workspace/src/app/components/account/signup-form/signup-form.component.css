@@ -22,6 +22,14 @@
   border-bottom: 1px solid white;
 }
 
+  .textbox .input-label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 0;
+    color: white;
+    text-align: left;
+  }
+
 .textbox:focus-within {
   border-bottom: 1px solid #79B953;
 }
@@ -41,13 +49,8 @@
   box-shadow: none;
 }
 
-.validation-error {
-  height: 20px;
-  text-align: left;
-}
-
 .signin-form-submit {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .signin-button {

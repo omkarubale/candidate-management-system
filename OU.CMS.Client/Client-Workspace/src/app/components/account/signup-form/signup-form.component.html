@@ -21,6 +21,7 @@
         />
         <div class="form-group">
           <div class="textbox">
+            <label class="input-label">Email</label>
             <input
               name="Email"
               #Email="ngModel"
@@ -41,6 +42,7 @@
         </div>
         <div class="form-group">
           <div class="textbox">
+            <label class="input-label">Password</label>
             <input
               name="Password"
               type="password"
@@ -63,6 +65,7 @@
         </div>
         <div class="form-group">
           <div class="textbox">
+            <label class="input-label">Confirm Password</label>
             <input
               name="ConfirmPassword"
               type="password"
@@ -88,6 +91,7 @@
       <div class="signin-form-inputs" [hidden]="!takingDetails">
         <div class="form-group">
           <div class="textbox">
+            <label class="input-label">First Name</label>
             <input
               name="FirstName"
               #FirstName="ngModel"
@@ -108,6 +112,7 @@
         </div>
         <div class="form-group">
           <div class="textbox">
+            <label class="input-label">Last Name</label>
             <input
               name="LastName"
               #LastName="ngModel"
@@ -128,6 +133,7 @@
         </div>
         <div class="form-group" *ngIf="!signUpCredentials.IsCandidateLogin">
           <div class="textbox">
+            <label class="input-label">Company Name</label>
             <input
               name="CompanyName"
               #CompanyName="ngModel"
