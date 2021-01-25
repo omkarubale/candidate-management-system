@@ -1,28 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { CreateTestDto, CreateTestScoreDto, GetTestDto, TestScoreDto, UpdateTestDto, UpdateTestScoreDto } from '../models/TestModels';
+import { CreateTestDto, CreateTestScoreDto, GetTestDto, TestScoreDto, UpdateTestDto, UpdateTestScoreDto } from '../../models/TestModels';
 
 @Injectable()
-export class TestService {
+export class ManagerTestService {
   public API = 'https://localhost:44305/api';
-  public TEST_API = `${this.API}/test`;
+  public TEST_API = `${this.API}/managerTest`;
 
   constructor(
     private http: HttpClient
   ) { }
 
   //#region Test
-  getAllTestsAsCandidate(): Observable<GetTestDto[]> {
-    return this.http.get<GetTestDto[]>(`${this.TEST_API}/GetAllTestsAsCandidate`);
-  }
-
-  getAllTestsAsCompanyManager(): Observable<GetTestDto[]> {
-    return this.http.get<GetTestDto[]>(`${this.TEST_API}/GetAllTestsAsCompanyManager`);
-  }
-
-  getTestAsCandidate(testId: string): Observable<GetTestDto> {
-    return this.http.get<GetTestDto>(`${this.TEST_API}/GetTestAsCandidate?testId=${testId}`);
+  getTestsAsCompanyManager(): Observable<GetTestDto[]> {
+    return this.http.get<GetTestDto[]>(`${this.TEST_API}/GetTestsAsCompanyManager`);
   }
 
   getTestAsCompanyManager(testId: string): Observable<GetTestDto> {

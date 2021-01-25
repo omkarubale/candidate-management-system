@@ -5,7 +5,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 import { CandidateService } from 'src/app/shared/api/candidate.service';
-import { TestService } from 'src/app/shared/api/test.service';
+import { ManagerTestService } from 'src/app/shared/api/manager/managerTest.service';
 import { CandidateTestDto } from 'src/app/shared/models/CandidateModels';
 import { CreateTestScoreDto, GetTestDto, UpdateTestDto } from 'src/app/shared/models/TestModels';
 
@@ -18,7 +18,7 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private testService: TestService,
+    private managerTestService: ManagerTestService,
     private candidateService: CandidateService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
@@ -31,7 +31,7 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
   addIcon = faPlusSquare;
 
   currentAssessmentId: string;
-  assessmentDetails: GetTestDto;
+  assessmentDetails: GetTestDto = new GetTestDto;
   assessmentCandidates: CandidateTestDto[];
 
   addAssessmentScoreModal: NgbModalRef;
@@ -54,7 +54,7 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
 
     // Assessment
     fetchAssessment() {
-      this.testService
+      this.managerTestService
         .getTestAsCompanyManager(this.currentAssessmentId)
         .subscribe((data) => {
           if (data) {
@@ -69,7 +69,7 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
     }
 
     editAssessment(form: UpdateTestDto) {
-      this.testService.updateTest(form).subscribe(
+      this.managerTestService.updateTest(form).subscribe(
         (result) => {
           this.toastr.success(
             'The assessment was saved successfully.',
@@ -97,7 +97,7 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
     }
 
     addAssessmentScore(form: CreateTestScoreDto) {
-      this.testService.createTestScore(form).subscribe(
+      this.managerTestService.createTestScore(form).subscribe(
         (result) => {
           this.toastr.success(
             'The Assessment Score was created successfully.',

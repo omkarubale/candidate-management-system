@@ -24,7 +24,7 @@ export class CompanyManagerPositionsPositionComponent implements OnInit {
   ) {}
 
   currentPositionId: string;
-  positionDetails: GetJobOpeningDto;
+  positionDetails: GetJobOpeningDto = new GetJobOpeningDto;
   positionCandidates: GetCandidateDto[];
 
   ngOnInit(): void {

@@ -12,54 +12,15 @@ using OU.CMS.Models.Models.Common;
 using OU.CMS.Domain.Entities;
 using Microsoft.AspNet.Identity;
 using OU.CMS.Models.Models.Company;
+using OU.CMS.Core.BusinessLogic.Candidates.Tests.Queries;
 
-namespace OU.CMS.Web.API.Controllers
+namespace OU.CMS.Web.API.Controllers.CompanyManagers
 {
-    public class TestController : BaseSecureController
+    public class ManagerTestController : BaseSecureController
     {
         #region Test
         [HttpGet]
-        public async Task<IEnumerable<GetTestDto>> GetAllTestsAsCandidate()
-        {
-            if (!UserInfo.IsCandidateLogin)
-                throw new Exception("You do not have access to perform this action!");
-
-            using (var db = new CMSContext())
-            {
-                var tests = (from cnd in db.Candidates
-                             join pst in db.CandidateTests on cnd.Id equals pst.CandidateId
-                             join tst in db.Tests on pst.TestId equals tst.Id
-                             join cmp in db.Companies on tst.CompanyId equals cmp.Id
-                             join usr in db.Users on tst.CreatedBy equals usr.Id
-                             where
-                             cnd.UserId == UserInfo.UserId
-                             select new GetTestDto
-                             {
-                                 Id = tst.Id,
-                                 Title = tst.Title,
-                                 Description = tst.Description,
-
-                                 Company = new CompanySimpleDto
-                                 {
-                                     Id = tst.CompanyId,
-                                     Name = cmp.Name,
-                                 },
-
-                                 CreatedDetails = new CreatedOnDto
-                                 {
-                                     UserId = usr.Id,
-                                     FullName = usr.FullName,
-                                     ShortName = usr.ShortName,
-                                     CreatedOn = tst.CreatedOn
-                                 }
-                             });
-
-                return await tests.ToListAsync();
-            }
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<GetTestDto>> GetAllTestsAsCompanyManager()
+        public async Task<List<GetTestDto>> GetTestsAsCompanyManager()
         {
             if (UserInfo.IsCandidateLogin)
                 throw new Exception("You do not have access to perform this action!");
@@ -113,62 +74,6 @@ namespace OU.CMS.Web.API.Controllers
                 }).ToListAsync();
 
                 return tests;
-            }
-        }
-
-        [HttpGet]
-        public async Task<GetTestDto> GetTestAsCandidate(Guid testId)
-        {
-            if (!UserInfo.IsCandidateLogin)
-                throw new Exception("You do not have access to perform this action!");
-
-            using (var db = new CMSContext())
-            {
-                var test = await (from cnd in db.Candidates
-                                  join pst in db.CandidateTests on cnd.Id equals pst.CandidateId
-                                  join tst in db.Tests on pst.TestId equals tst.Id
-                                  join cmp in db.Companies on tst.CompanyId equals cmp.Id
-                                  join tstc in db.TestScores on tst.Id equals tstc.TestId
-                                  join usr in db.Users on tst.CreatedBy equals usr.Id
-                                  where
-                                  tst.Id == testId &&
-                                  cnd.UserId == UserInfo.UserId
-                                  group tstc by new { tst.Id, tst.Title, tst.Description, tst.CompanyId, CompanyName = cmp.Name, UserId = usr.Id, usr.FullName, usr.ShortName, tst.CreatedOn } into g
-                                  select new GetTestDto
-                                  {
-                                      Id = g.Key.Id,
-                                      Title = g.Key.Title,
-                                      Description = g.Key.Description,
-
-                                      Company = new CompanySimpleDto
-                                      {
-                                          Id = g.Key.CompanyId,
-                                          Name = g.Key.CompanyName,
-                                      },
-
-                                      TestScores = g.Select(t => new TestScoreDto
-                                      {
-                                          Id = t.Id,
-                                          Title = t.Title,
-                                          IsMandatory = t.IsMandatory,
-                                          MinimumScore = t.MinimumScore,
-                                          MaximumScore = t.MaximumScore,
-                                          CutoffScore = t.CutoffScore
-                                      }).ToList(),
-
-                                      CreatedDetails = new CreatedOnDto
-                                      {
-                                          UserId = g.Key.Id,
-                                          FullName = g.Key.FullName,
-                                          ShortName = g.Key.ShortName,
-                                          CreatedOn = g.Key.CreatedOn
-                                      }
-                                  }).SingleOrDefaultAsync();
-
-                if (test == null)
-                    throw new Exception("Test does not exist!");
-
-                return test;
             }
         }
 

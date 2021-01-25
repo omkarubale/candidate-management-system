@@ -4,7 +4,7 @@ import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
-import { TestService } from 'src/app/shared/api/test.service';
+import { ManagerTestService } from 'src/app/shared/api/manager/managerTest.service';
 import { CreateTestDto, GetTestDto } from 'src/app/shared/models/TestModels';
 
 @Component({
@@ -16,7 +16,7 @@ export class CompanyManagerAssessmentsComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private testService: TestService,
+    private managerTestService: ManagerTestService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal,
@@ -37,8 +37,8 @@ export class CompanyManagerAssessmentsComponent implements OnInit {
   }
 
   fetchTests() {
-    this.testService
-    .getAllTestsAsCompanyManager()
+    this.managerTestService
+    .getTestsAsCompanyManager()
     .subscribe((data) => {
       this.assessments = data;
     });
@@ -50,7 +50,7 @@ export class CompanyManagerAssessmentsComponent implements OnInit {
   }
 
   addAssessment(form: CreateTestDto) {
-    this.testService.createTest(form).subscribe(
+    this.managerTestService.createTest(form).subscribe(
       (result) => {
         this.toastr.success(
           'The Assessment was created successfully.',

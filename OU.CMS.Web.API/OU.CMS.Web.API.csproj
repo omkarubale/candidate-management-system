@@ -223,17 +223,18 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AccountSecureController.cs" />
-    <Compile Include="Controllers\BaseSecureController.cs" />
+    <Compile Include="Controllers\Common\AccountController.cs" />
+    <Compile Include="Controllers\Common\AccountSecureController.cs" />
+    <Compile Include="Controllers\Base\BaseSecureController.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\Candidates\CandidateCompanyController.cs" />
     <Compile Include="Controllers\Candidates\CandidateJobController.cs" />
+    <Compile Include="Controllers\Candidates\CandidateTestController.cs" />
     <Compile Include="Controllers\CompanyManagers\ManagerCompanyController.cs" />
     <Compile Include="Controllers\CompanyManagers\ManagerJobController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\CompanyManagers\ManagerTestController.cs" />
+    <Compile Include="Controllers\Common\HomeController.cs" />
+    <Compile Include="Controllers\Common\UserController.cs" />
     <Compile Include="Extensions\Extensions.Identity.cs" />
     <Compile Include="Filters\AddChallengeOnUnauthorizedResult.cs" />
     <Compile Include="Filters\AuthenticationFailureResult.cs" />
@@ -305,6 +306,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AccountSecure\" />
+    <Folder Include="Views\CandidateTest\" />
+    <Folder Include="Views\ManagerTest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
