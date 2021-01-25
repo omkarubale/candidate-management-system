@@ -29,6 +29,7 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Companies.Commands
         {
             public Validator()
             {
+                RuleFor(i => i.Dto.Id).NotNull().NotEmpty();
                 RuleFor(i => i.Dto.Name).NotNull().NotEmpty();
             }
         }

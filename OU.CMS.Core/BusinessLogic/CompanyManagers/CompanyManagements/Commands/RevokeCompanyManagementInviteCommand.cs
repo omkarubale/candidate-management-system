@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using OU.CMS.Core.BusinessLogic.Base;
 using OU.CMS.Domain.Contexts;
 using OU.CMS.Models.Authentication;
 using OU.CMS.Models.Models.Company;
@@ -6,7 +7,6 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using OU.CMS.Core.BusinessLogic.Base;
 
 namespace OU.CMS.Core.BusinessLogic.CompanyManagers.CompanyManagements.Commands
 {

@@ -30,7 +30,6 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Jobs.Commands
         {
             public Validator()
             {
-                RuleFor(i => i.Dto.CompanyId).NotNull().NotEmpty();
                 RuleFor(i => i.Dto.Title).NotNull().NotEmpty();
                 RuleFor(i => i.Dto.Description).NotNull().NotEmpty();
                 RuleFor(i => i.Dto.Salary).NotNull().NotEmpty();
@@ -40,7 +39,7 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Jobs.Commands
 
         public async Task<GetJobOpeningDto> CreateJobOpening(UserInfo userInfo)
         {
-            if (userInfo.IsCandidateLogin || userInfo.CompanyId != Dto.CompanyId)
+            if (userInfo.IsCandidateLogin)
                 throw new Exception("You do not have access to perform this action!");
 
             using (var db = new CMSContext())
@@ -49,7 +48,7 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Jobs.Commands
                 if (checkExistingJobOpening)
                     throw new Exception("JobOpening with this title already exists!");
 
-                var comanyManagementAccess = db.CompanyManagements.Any(cm => cm.UserId == userInfo.UserId && cm.CompanyId == Dto.CompanyId && cm.IsAdmin);
+                var comanyManagementAccess = db.CompanyManagements.Any(cm => cm.UserId == userInfo.UserId && cm.CompanyId == userInfo.CompanyId && cm.IsAdmin);
                 if (comanyManagementAccess)
                     throw new Exception("You do not have access to perform this action!");
 
@@ -60,7 +59,7 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Jobs.Commands
                     Description = Dto.Description.Trim(),
                     Salary = Dto.Salary,
                     Deadline = Dto.Deadline,
-                    CompanyId = Dto.CompanyId,
+                    CompanyId = (Guid)userInfo.CompanyId,
                     CreatedBy = userInfo.UserId,
                     CreatedOn = DateTime.UtcNow
                 };

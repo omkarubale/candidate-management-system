@@ -32,7 +32,6 @@ namespace OU.CMS.Core.BusinessLogic.Candidates.Jobs.Queries
         {
             public Validator()
             {
-                RuleFor(i => i.JobOpeningId).NotEmpty().When(i => i.JobOpeningId != null);
             }
         }
 

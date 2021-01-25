@@ -7,7 +7,6 @@ export class CreateJobOpeningDto {
   Description: string;
   Salary: number;
   Deadline: Date;
-  CompanyId: string;
 }
 
 export class GetCandidateJobOpeningDto {

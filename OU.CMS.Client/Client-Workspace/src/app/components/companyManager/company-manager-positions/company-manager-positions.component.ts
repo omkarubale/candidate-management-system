@@ -32,7 +32,6 @@ export class CompanyManagerPositionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.addPositionForm = new CreateJobOpeningDto();
-    this.addPositionForm.CompanyId = this.accountService.userInfo.CompanyId;
 
     this.fetchPositions();
   }
@@ -46,8 +45,6 @@ export class CompanyManagerPositionsComponent implements OnInit {
   }
 
   openAddPositionModal(content) {
-    this.addPositionForm.CompanyId = this.accountService.userInfo.CompanyId;
-
     this.addPositionModal = this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
