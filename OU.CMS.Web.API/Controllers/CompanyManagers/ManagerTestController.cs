@@ -1,18 +1,11 @@
-﻿using System;
+﻿using OU.CMS.Core.BusinessLogic.CompanyManagers.Tests.Commands;
+using OU.CMS.Core.BusinessLogic.CompanyManagers.Tests.Queries;
+using OU.CMS.Core.BusinessLogic.CompanyManagers.TestScores.Commands;
+using OU.CMS.Models.Models.Test;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using OU.CMS.Domain.Contexts;
-using OU.CMS.Models.Models.Test;
-using OU.CMS.Models.Models.Common;
-using OU.CMS.Domain.Entities;
-using Microsoft.AspNet.Identity;
-using OU.CMS.Models.Models.Company;
-using OU.CMS.Core.BusinessLogic.Candidates.Tests.Queries;
 
 namespace OU.CMS.Web.API.Controllers.CompanyManagers
 {
@@ -22,192 +15,31 @@ namespace OU.CMS.Web.API.Controllers.CompanyManagers
         [HttpGet]
         public async Task<List<GetTestDto>> GetTestsAsCompanyManager()
         {
-            if (UserInfo.IsCandidateLogin)
-                throw new Exception("You do not have access to perform this action!");
-
-            using (var db = new CMSContext())
-            {
-                var testsQuery = (from tst in db.Tests
-                                  join cmp in db.Companies on tst.CompanyId equals cmp.Id
-                                  join usr in db.Users on tst.CreatedBy equals usr.Id
-                                  join cdt in db.CandidateTests on tst.Id equals cdt.TestId into candidateTestTemp
-                                  from cdt in candidateTestTemp.DefaultIfEmpty()
-                                  where
-                                  tst.CompanyId == (Guid)UserInfo.CompanyId
-                                  select new
-                                  {
-                                      Id = tst.Id,
-                                      Title = tst.Title,
-                                      Description = tst.Description,
-
-                                      CompanyId = tst.CompanyId,
-                                      CompanyName = cmp.Name,
-
-                                      UserId = usr.Id,
-                                      UserFullName = usr.FullName,
-                                      UserShortName = usr.ShortName,
-                                      UserCreatedOn = tst.CreatedOn,
-
-                                      CandidateTestId = cdt != null ? (Guid?)cdt.Id : null
-                                  });
-
-                var tests = await testsQuery.GroupBy(t => new { t.Id, t.Title, t.Description, t.CompanyId, t.CompanyName, t.UserId, t.UserFullName, t.UserShortName, t.UserCreatedOn }).Select(t => new GetTestDto
-                {
-                    Id = t.Key.Id,
-                    Title = t.Key.Title,
-                    Description = t.Key.Description,
-
-                    Company = new CompanySimpleDto
-                    {
-                        Id = t.Key.CompanyId,
-                        Name = t.Key.CompanyName,
-                    },
-
-                    CreatedDetails = new CreatedOnDto
-                    {
-                        UserId = t.Key.UserId,
-                        FullName = t.Key.UserFullName,
-                        ShortName = t.Key.UserShortName,
-                        CreatedOn = t.Key.UserCreatedOn
-                    },
-                    TakersCount = t.Count(ct => ct.CandidateTestId != null)
-                }).ToListAsync();
-
-                return tests;
-            }
+            return await new GetTestsAsCompanyManagerQuery().GetTestsAsCompanyManager(UserInfo);
         }
 
         [HttpGet]
         public async Task<GetTestDto> GetTestAsCompanyManager(Guid testId)
         {
-            if (UserInfo.IsCandidateLogin)
-                throw new Exception("You do not have access to perform this action!");
-
-            using (var db = new CMSContext())
-            {
-                var test = await (from tst in db.Tests
-                                  join cmp in db.Companies on tst.CompanyId equals cmp.Id
-                                  join usr in db.Users on tst.CreatedBy equals usr.Id
-                                  where tst.Id == testId &&
-                                  tst.CompanyId == (Guid)UserInfo.CompanyId
-                                  select new GetTestDto
-                                  {
-                                      Id = tst.Id,
-                                      Title = tst.Title,
-                                      Description = tst.Description,
-
-                                      Company = new CompanySimpleDto
-                                      {
-                                          Id = cmp.Id,
-                                          Name = cmp.Name,
-                                      },
-
-                                      CreatedDetails = new CreatedOnDto
-                                      {
-                                          UserId = usr.Id,
-                                          FullName = usr.FullName,
-                                          ShortName = usr.ShortName,
-                                          CreatedOn = tst.CreatedOn
-                                      }
-                                  }).SingleOrDefaultAsync();
-
-                var testScores = await (from tstc in db.TestScores
-                                        where
-                                        tstc.TestId == testId
-                                        select new TestScoreDto
-                                        {
-                                            Id = tstc.Id,
-                                            Title = tstc.Title,
-                                            IsMandatory = tstc.IsMandatory,
-                                            MinimumScore = tstc.MinimumScore,
-                                            MaximumScore = tstc.MaximumScore,
-                                            CutoffScore = tstc.CutoffScore
-                                        }).ToListAsync();
-
-                if (test == null)
-                    throw new Exception("Test does not exist!");
-
-                test.TestScores = testScores;
-
-                return test;
-            }
+            return await new GetTestAsCompanyManagerQuery(testId).GetTestAsCompanyManager(UserInfo);
         }
 
         [HttpPost]
         public async Task<GetTestDto> CreateTest(CreateTestDto dto)
         {
-            if (UserInfo.IsCandidateLogin)
-                throw new Exception("You do not have access to perform this action!");
-
-            using (var db = new CMSContext())
-            {
-                var checkExistingTest = db.Tests.Any(c => c.Title == dto.Title.Trim() && c.CompanyId == UserInfo.CompanyId);
-                if (checkExistingTest)
-                    throw new Exception("Test with this name already exists!");
-
-                var test = new Test
-                {
-                    Id = Guid.NewGuid(),
-                    Title = dto.Title.Trim(),
-                    Description = dto.Description.Trim(),
-                    CompanyId = (Guid)UserInfo.CompanyId,
-                    CreatedBy = UserInfo.UserId,
-                    CreatedOn = DateTime.UtcNow,
-                };
-
-                db.Tests.Add(test);
-
-                await db.SaveChangesAsync();
-
-                return await GetTestAsCompanyManager(test.Id);
-            }
+            return await new CreateTestCommand(dto).CreateTest(UserInfo);
         }
 
         [HttpPost]
         public async Task<GetTestDto> UpdateTest(UpdateTestDto dto)
         {
-            if (UserInfo.IsCandidateLogin)
-                throw new Exception("You do not have access to perform this action!");
-
-            using (var db = new CMSContext())
-            {
-                var test = await db.Tests.SingleOrDefaultAsync(c => c.Id == dto.Id && c.CompanyId == UserInfo.CompanyId);
-                if (test == null)
-                    throw new Exception("Test with Id not found!");
-
-                var checkExistingTest = db.Tests.Any(c => c.Title == dto.Title.Trim() && c.CompanyId == UserInfo.CompanyId && c.Id != dto.Id);
-                if (checkExistingTest)
-                    throw new Exception("Test with this title already exists!");
-
-                test.Title = dto.Title;
-                test.Description = dto.Description;
-
-                await db.SaveChangesAsync();
-
-                return await GetTestAsCompanyManager(test.Id);
-            }
+            return await new UpdateTestCommand(dto).UpdateTest(UserInfo);
         }
 
         [HttpDelete]
         public async Task DeleteTest(Guid testId)
         {
-            if (UserInfo.IsCandidateLogin)
-                throw new Exception("You do not have access to perform this action!");
-
-            using (var db = new CMSContext())
-            {
-                var test = await db.Tests.SingleOrDefaultAsync(c => c.Id == testId && c.CompanyId == UserInfo.CompanyId);
-
-                if (test == null)
-                    throw new Exception("Test with Id not found!");
-
-                db.CandidateTestScores.RemoveRange(test.CandidateTests.SelectMany(cd => cd.CandidateTestScores));
-                db.CandidateTests.RemoveRange(test.CandidateTests);
-                db.TestScores.RemoveRange(test.TestScores);
-                db.Tests.Remove(test);
-
-                await db.SaveChangesAsync();
-            }
+            await new DeleteTestCommand(testId).DeleteTest(UserInfo);
         }
         #endregion
 
@@ -215,96 +47,19 @@ namespace OU.CMS.Web.API.Controllers.CompanyManagers
         [HttpPost]
         public async Task<TestScoreDto> CreateTestScore(CreateTestScoreDto dto)
         {
-            if (UserInfo.IsCandidateLogin)
-                throw new Exception("You do not have access to perform this action!");
-
-            using (var db = new CMSContext())
-            {
-                var checkExistingTest = db.TestScores.Include(ts => ts.Test).Any(ts => ts.Title == dto.Title.Trim() && ts.TestId == dto.TestId && ts.Test.CompanyId == UserInfo.CompanyId);
-                if (checkExistingTest)
-                    throw new Exception("Test Score with this title already exists in this Test!");
-
-                var testScore = new TestScore
-                {
-                    Id = Guid.NewGuid(),
-                    TestId = dto.TestId,
-                    Title = dto.Title.Trim(),
-                    IsMandatory = dto.IsMandatory,
-                    MinimumScore = dto.MinimumScore,
-                    MaximumScore = dto.MaximumScore,
-                    CutoffScore = dto.CutoffScore
-                };
-
-                db.TestScores.Add(testScore);
-
-                await db.SaveChangesAsync();
-
-                return new TestScoreDto()
-                {
-                    Id = testScore.Id,
-                    Title = testScore.Title,
-                    IsMandatory = testScore.IsMandatory,
-                    MinimumScore = testScore.MinimumScore,
-                    MaximumScore = testScore.MaximumScore,
-                    CutoffScore = testScore.CutoffScore
-                };
-            }
+            return await new CreateTestScoreCommand(dto).CreateTestScore(UserInfo);
         }
 
         [HttpPost]
         public async Task<TestScoreDto> UpdateTestScore(UpdateTestScoreDto dto)
         {
-            if (UserInfo.IsCandidateLogin)
-                throw new Exception("You do not have access to perform this action!");
-
-            using (var db = new CMSContext())
-            {
-                var testScore = await db.TestScores.Include(ts => ts.Test).SingleOrDefaultAsync(ts => ts.Id == dto.Id && ts.Test.CompanyId == UserInfo.CompanyId);
-                if (testScore == null)
-                    throw new Exception("Test with Id not found!");
-
-                var checkExistingTestScore = db.TestScores.Include(ts => ts.Test).Any(ts => ts.Title == dto.Title.Trim() && ts.TestId == dto.TestId && ts.Test.CompanyId == UserInfo.CompanyId && ts.Id != dto.Id);
-                if (checkExistingTestScore)
-                    throw new Exception("Test with this title already exists!");
-
-                testScore.Title = dto.Title;
-                testScore.IsMandatory = dto.IsMandatory;
-                testScore.MinimumScore = dto.MinimumScore;
-                testScore.MaximumScore = dto.MaximumScore;
-                testScore.CutoffScore = dto.CutoffScore;
-
-                await db.SaveChangesAsync();
-
-                return new TestScoreDto()
-                {
-                    Id = testScore.Id,
-                    Title = testScore.Title,
-                    IsMandatory = testScore.IsMandatory,
-                    MinimumScore = testScore.MinimumScore,
-                    MaximumScore = testScore.MaximumScore,
-                    CutoffScore = testScore.CutoffScore
-                };
-            }
+            return await new UpdateTestScoreCommand(dto).UpdateTestScore(UserInfo);
         }
 
         [HttpDelete]
         public async Task DeleteTestScore(Guid testScoreId)
         {
-            if (UserInfo.IsCandidateLogin)
-                throw new Exception("You do not have access to perform this action!");
-
-            using (var db = new CMSContext())
-            {
-                var testScore = await db.TestScores.Include(ts => ts.Test).SingleOrDefaultAsync(ts => ts.Id == testScoreId && ts.Test.CompanyId == UserInfo.CompanyId);
-                if (testScore == null)
-                    throw new Exception("Test with Id not found!");
-
-                db.TestScores.Remove(testScore);
-
-                await db.SaveChangesAsync();
-
-                return;
-            }
+            await new DeleteTestScoreCommand(testScoreId).DeleteTestScore(UserInfo);
         }
         #endregion
     }

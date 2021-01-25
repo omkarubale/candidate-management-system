@@ -78,6 +78,14 @@
     <Compile Include="BusinessLogic\CompanyManagers\Jobs\Commands\UpdateJobOpeningCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Jobs\Queries\GetJobOpeningQuery.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Jobs\Queries\GetJobOpeningsQuery.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\TestScores\Commands\CreateTestScoreCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\TestScores\Commands\DeleteTestScoreCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\TestScores\Commands\UpdateTestScoreCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Tests\Commands\CreateTestCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Tests\Commands\DeleteTestCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Tests\Commands\UpdateTestCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Tests\Queries\GetTestAsCompanyManagerQuery.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Tests\Queries\GetTestsAsCompanyManagerQuery.cs" />
     <Compile Include="BusinessLogic\_Base\BaseCommand.cs" />
     <Compile Include="BusinessLogic\_Base\BaseQuery.cs" />
     <Compile Include="Program.cs" />
@@ -108,8 +116,7 @@
   <ItemGroup>
     <Folder Include="BusinessLogic\Candidates\Companies\Commands\" />
     <Folder Include="BusinessLogic\Candidates\Tests\Commands\" />
-    <Folder Include="BusinessLogic\CompanyManagers\Tests\Commands\" />
-    <Folder Include="BusinessLogic\CompanyManagers\Tests\Queries\" />
+    <Folder Include="BusinessLogic\CompanyManagers\TestScores\Queries\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

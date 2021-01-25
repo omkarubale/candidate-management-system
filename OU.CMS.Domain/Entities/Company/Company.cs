@@ -21,5 +21,6 @@ namespace OU.CMS.Domain.Entities
         public IList<Candidate> Candidates { get; set; }
         public IList<JobOpening> JobOpenings { get; set; }
         public IList<User> UsersWithDefaultCompany { get; set; }
+        public IList<Test> Tests { get; set; }
     }
 }
