@@ -60,6 +60,8 @@
     <Compile Include="BusinessLogic\Common\Account\Commands\RegisterCommand.cs" />
     <Compile Include="BusinessLogic\Common\Account\Commands\UpdatePasswordCommand.cs" />
     <Compile Include="BusinessLogic\Common\Account\Queries\GetRegisterByInvitePageQuery.cs" />
+    <Compile Include="BusinessLogic\Common\User\Commands\SaveIdentityUserCommand.cs" />
+    <Compile Include="BusinessLogic\Common\User\Queries\GetIdentityUserQuery.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Companies\Commands\CreateCompanyCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Companies\Commands\DeleteCompanyCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Companies\Commands\EditCompanyCommand.cs" />
