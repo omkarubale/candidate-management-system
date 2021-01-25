@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
-import { CandidateService } from 'src/app/shared/api/candidate.service';
 import { ManagerJobService } from 'src/app/shared/api/manager/managerJob.service';
 import { GetCandidateDto } from 'src/app/shared/models/CandidateModels';
 import { GetJobOpeningDto, UpdateJobOpeningDto } from 'src/app/shared/models/JobOpeningModels';
@@ -16,7 +15,6 @@ export class CompanyManagerPositionsPositionComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private managerJobService: ManagerJobService,
-    private candidateService: CandidateService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
     private router: Router,
@@ -77,7 +75,7 @@ export class CompanyManagerPositionsPositionComponent implements OnInit {
 
   // Position Candidates
   fetchPositionCandidates() {
-    this.candidateService
+    this.managerJobService
     .getCandidatesForJobOpening(this.currentPositionId)
     .subscribe((data) => {
       this.positionCandidates = data;

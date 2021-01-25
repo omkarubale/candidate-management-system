@@ -4,7 +4,7 @@ import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
-import { CandidateService } from 'src/app/shared/api/candidate.service';
+import { ManagerJobService } from 'src/app/shared/api/manager/managerJob.service';
 import { ManagerTestService } from 'src/app/shared/api/manager/managerTest.service';
 import { CandidateTestDto } from 'src/app/shared/models/CandidateModels';
 import { CreateTestScoreDto, GetTestDto, UpdateTestDto } from 'src/app/shared/models/TestModels';
@@ -19,7 +19,7 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private managerTestService: ManagerTestService,
-    private candidateService: CandidateService,
+    private managerJobService: ManagerJobService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal,
@@ -121,7 +121,7 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
 
     // Assessment Candidates
     fetchAssessmentCandidates() {
-      this.candidateService
+      this.managerJobService
       .getCandidateTestsAsCompanyManager(this.currentAssessmentId)
       .subscribe((data) => {
         this.assessmentCandidates = data;

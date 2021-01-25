@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
-import { CandidateService } from 'src/app/shared/api/candidate.service';
 import { CandidateJobService } from 'src/app/shared/api/candidate/candidateJob.service';
 import { UserInfo } from 'src/app/shared/models/AuthenticationModels';
 import { CreateCandidateDto } from 'src/app/shared/models/CandidateModels';
@@ -17,7 +16,6 @@ export class CandidateJobsComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private candidateJobService: CandidateJobService,
-    private candidateService: CandidateService,
     private toastr: ToastrService,
     private router: Router
   ) {}
@@ -41,7 +39,7 @@ export class CandidateJobsComponent implements OnInit {
       CompanyId: companyId,
     };
 
-    this.candidateService.createCandidate(dto).subscribe(
+    this.candidateJobService.createCandidate(dto).subscribe(
       (result) => {
         this.toastr.success(
           'You have applied for this Job successfully.',

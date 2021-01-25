@@ -14,8 +14,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 //#region Custom Services
 import { AccountService } from './shared/api/account.service';
-import { CommonService } from './shared/api/common.service';
-import { CandidateService } from './shared/api/candidate.service';
 import { UserService } from './shared/api/user.service';
 //#endregion
 
@@ -112,9 +110,7 @@ import { CandidateJobsJobComponent } from './components/candidate/candidate-jobs
   ],
   providers: [
     // Custom Services
-    CommonService,
     AccountService,
-    CandidateService,
     UserService,
 
     // Candidate Services

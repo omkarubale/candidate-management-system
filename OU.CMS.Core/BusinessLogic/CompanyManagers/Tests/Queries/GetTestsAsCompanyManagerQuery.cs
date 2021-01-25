@@ -24,7 +24,7 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Tests.Queries
             {
                 var testsQuery = (from tst in db.Tests
                                   join cmp in db.Companies on tst.CompanyId equals cmp.Id
-                                  join cm in db.CompanyManagements on cmp.Id equals cm.UserId
+                                  join cm in db.CompanyManagements on cmp.Id equals cm.CompanyId
                                   join usr in db.Users on tst.CreatedBy equals usr.Id
                                   join cdt in db.CandidateTests on tst.Id equals cdt.TestId into candidateTestTemp
                                   from cdt in candidateTestTemp.DefaultIfEmpty()
@@ -47,6 +47,8 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Tests.Queries
 
                                       CandidateTestId = cdt != null ? (Guid?)cdt.Id : null
                                   });
+
+                var x = await testsQuery.ToListAsync();
 
                 var tests = await testsQuery.GroupBy(t => new { t.Id, t.Title, t.Description, t.CompanyId, t.CompanyName, t.UserId, t.UserFullName, t.UserShortName, t.UserCreatedOn }).Select(t => new GetTestDto
                 {

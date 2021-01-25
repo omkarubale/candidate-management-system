@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\Candidates\Companies\Queries\GetAllCompaniesQuery.cs" />
+    <Compile Include="BusinessLogic\Candidates\Jobs\Commands\CreateCandidateCommand.cs" />
+    <Compile Include="BusinessLogic\Common\Jobs\Commands\DeleteCandidateCommand.cs" />
     <Compile Include="BusinessLogic\Candidates\Jobs\Queries\GetJobOpeningsForCandidateQuery.cs" />
     <Compile Include="BusinessLogic\Candidates\Tests\Queries\GetTestsAsCandidateQuery.cs" />
     <Compile Include="BusinessLogic\Candidates\Tests\Queries\GetTestAsCandidateQuery.cs" />
@@ -62,6 +64,8 @@
     <Compile Include="BusinessLogic\Common\Account\Commands\RegisterCommand.cs" />
     <Compile Include="BusinessLogic\Common\Account\Commands\UpdatePasswordCommand.cs" />
     <Compile Include="BusinessLogic\Common\Account\Queries\GetRegisterByInvitePageQuery.cs" />
+    <Compile Include="BusinessLogic\Common\Jobs\Queries\GetCandidatesInternalQuery.cs" />
+    <Compile Include="BusinessLogic\Common\Jobs\Queries\GetCandidateTestsInternalQuery.cs" />
     <Compile Include="BusinessLogic\Common\User\Commands\SaveIdentityUserCommand.cs" />
     <Compile Include="BusinessLogic\Common\User\Queries\GetIdentityUserQuery.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Companies\Commands\CreateCompanyCommand.cs" />
@@ -73,8 +77,10 @@
     <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Commands\DeleteCompanyManagementCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Commands\RevokeCompanyManagementInviteCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\CompanyManagements\Queries\GetCompanyManagementQuery.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Jobs\Commands\CreateCandidateTestCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Jobs\Commands\CreateJobOpeningCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Jobs\Commands\DeleteJobOpeningCommand.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Jobs\Commands\UpdateCandidateTestScoreCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Jobs\Commands\UpdateJobOpeningCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Jobs\Queries\GetJobOpeningQuery.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Jobs\Queries\GetJobOpeningsQuery.cs" />

@@ -226,7 +226,6 @@
     <Compile Include="Controllers\Common\AccountController.cs" />
     <Compile Include="Controllers\Common\AccountSecureController.cs" />
     <Compile Include="Controllers\Base\BaseSecureController.cs" />
-    <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\Candidates\CandidateCompanyController.cs" />
     <Compile Include="Controllers\Candidates\CandidateJobController.cs" />
     <Compile Include="Controllers\Candidates\CandidateTestController.cs" />

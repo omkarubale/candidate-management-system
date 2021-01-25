@@ -1,9 +1,7 @@
 ﻿using FluentValidation;
 using OU.CMS.Core.BusinessLogic.Base;
-using OU.CMS.Core.BusinessLogic.CompanyManagers.Jobs.Queries;
 using OU.CMS.Domain.Contexts;
 using OU.CMS.Models.Authentication;
-using OU.CMS.Models.Models.JobOpening;
 using System;
 using System.Data.Entity;
 using System.Linq;
