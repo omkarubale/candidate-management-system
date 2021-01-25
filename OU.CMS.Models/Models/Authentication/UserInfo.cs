@@ -30,6 +30,6 @@ namespace OU.CMS.Models.Authentication
 
         public Guid? CompanyId { get; set; }
 
-        //TODO: Add more fields to UserInfo
+        public DateTime ExpiresOn { get; set; }
     }
 }

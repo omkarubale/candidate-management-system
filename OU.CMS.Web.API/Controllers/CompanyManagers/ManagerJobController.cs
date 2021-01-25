@@ -1,14 +1,8 @@
 ﻿using OU.CMS.Core.BusinessLogic.CompanyManagers.Jobs.Commands;
 using OU.CMS.Core.BusinessLogic.CompanyManagers.Jobs.Queries;
-using OU.CMS.Domain.Contexts;
-using OU.CMS.Domain.Entities;
-using OU.CMS.Models.Models.Common;
-using OU.CMS.Models.Models.Company;
 using OU.CMS.Models.Models.JobOpening;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 

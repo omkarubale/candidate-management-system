@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Account\RegisterByInvitePageDto.cs" />
     <Compile Include="Models\Account\SignInDto.cs" />
+    <Compile Include="Models\Account\SignUpByManagerInviteDto.cs" />
     <Compile Include="Models\Account\SignUpDto.cs" />
+    <Compile Include="Models\Account\UpdatePasswordDto.cs" />
     <Compile Include="Models\Authentication\UserInfo.cs" />
     <Compile Include="Models\Candidate\CandidateTestDto.cs" />
     <Compile Include="Models\Candidate\CandidateTestScoreDto.cs" />

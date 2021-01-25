@@ -30,20 +30,20 @@ export class ManagerJobService {
   }
 
   createJobOpening(
-    jobOpening: CreateJobOpeningDto
+    dto: CreateJobOpeningDto
   ): Observable<GetJobOpeningDto> {
     return this.http.post<GetJobOpeningDto>(
       `${this.JOB_OPENING_API}/CreateJobOpening`,
-      jobOpening
+      dto
     );
   }
 
   updateJobOpening(
-    jobOpening: UpdateJobOpeningDto
+    dto: UpdateJobOpeningDto
   ): Observable<GetJobOpeningDto> {
     return this.http.post<GetJobOpeningDto>(
       `${this.JOB_OPENING_API}/UpdateJobOpening`,
-      jobOpening
+      dto
     );
   }
 

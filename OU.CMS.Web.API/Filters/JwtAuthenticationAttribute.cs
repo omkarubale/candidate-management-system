@@ -70,6 +70,7 @@ namespace OU.CMS.Web.API.Filters
             userDetails.FullName = identity.FindFirst(CustomClaimTypes.FullName)?.Value;
             userDetails.ShortName = identity.FindFirst(CustomClaimTypes.ShortName)?.Value;
             userDetails.IsCandidateLogin = identity.FindFirst(CustomClaimTypes.IsCandidateLogin)?.Value == "True";
+            userDetails.ExpiresOn = DateTime.Parse(identity.FindFirst(CustomClaimTypes.ExpiresOn)?.Value);
 
             var companyId = identity.FindFirst(CustomClaimTypes.CompanyId)?.Value;
 
@@ -95,6 +96,7 @@ namespace OU.CMS.Web.API.Filters
                     new Claim(CustomClaimTypes.ShortName, userDetails.ShortName),
                     new Claim(CustomClaimTypes.IsCandidateLogin, userDetails.IsCandidateLogin.ToString()),
                     new Claim(CustomClaimTypes.CompanyId, userDetails.CompanyId.ToString()),
+                    new Claim(CustomClaimTypes.ExpiresOn, userDetails.ExpiresOn.ToString()),
                 };
 
                 var identity = new ClaimsIdentity(claims, "Jwt");

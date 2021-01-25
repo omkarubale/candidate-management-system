@@ -24,5 +24,7 @@ namespace OU.CMS.Web.API.Models.Authentication
         public bool IsCandidateLogin { get; set; }
 
         public Guid? CompanyId { get; set; }
+
+        public DateTime ExpiresOn { get; set; }
     }
 }

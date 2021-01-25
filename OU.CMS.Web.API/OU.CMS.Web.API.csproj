@@ -224,6 +224,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountSecureController.cs" />
     <Compile Include="Controllers\BaseSecureController.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\Candidates\CandidateCompanyController.cs" />
@@ -303,6 +304,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AccountSecure\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

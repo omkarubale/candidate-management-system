@@ -10,9 +10,27 @@ export class SignUpDto {
   ConfirmPassword: string;
   FirstName: string;
   LastName: string;
-  FullName: string;
-  ShortName: string;
   IsCandidateLogin: boolean;
   CompanyName: string;
-  IsPasswordMatch: boolean;
+}
+
+export class SignUpByManagerInviteDto {
+  Email: string;
+  Password: string;
+  ConfirmPassword: string;
+  FirstName: string;
+  LastName: string;
+  CompanyId: string;
+}
+
+export class RegisterByInvitePageDto {
+  Email: string;
+  CompanyId: string;
+  CompanyName: string;
+  InvitedByUserName: string;
+}
+
+export class UpdatePasswordDto {
+  Password: string;
+  ConfirmPassword: string;
 }

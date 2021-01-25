@@ -17,5 +17,6 @@ namespace OU.CMS.Common
         public const string UserType = "UserType";
         public const string IsCandidateLogin = "IsCandidateLogin";
         public const string CompanyId = "CompanyId";
+        public const string ExpiresOn = "ExpiresOn";
     }
 }

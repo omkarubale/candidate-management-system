@@ -9,4 +9,5 @@ export class UserInfo {
   UserType: number;
   IsCandidateLogin: boolean;
   CompanyId: string;
+  ExpiresOn: Date;
 }
