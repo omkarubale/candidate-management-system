@@ -4,6 +4,7 @@ import { CandidateDashboardComponent } from '../components/candidate/candidate-d
 import { CandidateMyProfileComponent } from '../components/candidate/candidate-my-profile/candidate-my-profile.component';
 import { CandidateJobsComponent } from '../components/candidate/candidate-jobs/candidate-jobs.component';
 import { CandidateJobsJobComponent } from '../components/candidate/candidate-jobs-job/candidate-jobs-job.component';
+import { AuthGuard } from '../shared/guards/auth.guard';
 
 export const candidateRouterConfig = [
   {
@@ -16,18 +17,22 @@ export const candidateRouterConfig = [
   },
   {
     path: 'candidate-dashboard',
-    component: CandidateDashboardComponent
+    component: CandidateDashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'candidate-myProfile',
-    component: CandidateMyProfileComponent
+    component: CandidateMyProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'candidate-jobs',
-    component: CandidateJobsComponent
+    component: CandidateJobsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'candidate-jobs-job/:jobOpeningId',
-    component: CandidateJobsJobComponent
+    component: CandidateJobsJobComponent,
+    canActivate: [AuthGuard]
   }
 ]

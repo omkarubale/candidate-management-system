@@ -8,7 +8,7 @@ import { CompanyManagerDrivesComponent } from '../components/companyManager/comp
 import { CompanyManagerPositionsPositionComponent } from '../components/companyManager/company-manager-positions-position/company-manager-positions-position.component';
 import { CompanyManagerPositionsCandidateComponent } from '../components/companyManager/company-manager-positions-candidate/company-manager-positions-candidate.component';
 import { CompanyManagerAssessmentsAssessmentComponent } from '../components/companyManager/company-manager-assessments-assessment/company-manager-assessments-assessment.component';
-
+import { AuthGuard } from '../shared/guards/auth.guard';
 
 export const companyManagerRouterConfig = [
   {
@@ -21,39 +21,47 @@ export const companyManagerRouterConfig = [
   },
   {
     path: 'companyManager-dashboard',
-    component: CompanyManagerDashboardComponent
+    component: CompanyManagerDashboardComponent,
+    canActivate: [AuthGuard]
   },
   // Company
   {
     path: 'companyManager-company',
-    component: CompanyManagerCompanyComponent
+    component: CompanyManagerCompanyComponent,
+    canActivate: [AuthGuard]
   },
   // Postions
   {
     path: 'companyManager-positions',
-    component: CompanyManagerPositionsComponent
+    component: CompanyManagerPositionsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'companyManager-positions-position/:id',
-    component: CompanyManagerPositionsPositionComponent
+    component: CompanyManagerPositionsPositionComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'companyManager-positions-candidate/:id/:candidateId',
-    component: CompanyManagerPositionsCandidateComponent
+    component: CompanyManagerPositionsCandidateComponent,
+    canActivate: [AuthGuard]
   },
   // Assessments
   {
     path: 'companyManager-assessments',
-    component: CompanyManagerAssessmentsComponent
+    component: CompanyManagerAssessmentsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'companyManager-assessments-assessment/:id',
-    component: CompanyManagerAssessmentsAssessmentComponent
+    component: CompanyManagerAssessmentsAssessmentComponent,
+    canActivate: [AuthGuard]
   },
   // Drives
   {
     path: 'companyManager-drives',
-    component: CompanyManagerDrivesComponent
+    component: CompanyManagerDrivesComponent,
+    canActivate: [AuthGuard]
   },
 
 ]

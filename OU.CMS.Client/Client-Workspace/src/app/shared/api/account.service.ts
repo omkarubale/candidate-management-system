@@ -32,6 +32,7 @@ export class AccountService {
   constructor(private http: HttpClient) {
     var token = localStorage.getItem('token');
     this.isAuthenticated = localStorage.getItem('token') !== null;
+
     if (this.isAuthenticated) {
       var userInfo = this.getUserInfo();
       this.userInfo = userInfo;
@@ -63,10 +64,7 @@ export class AccountService {
   }
 
   registerByManagerInvite(dto: SignUpByManagerInviteDto) {
-    return this.http.post(
-      `${this.ACCOUNT_API}/RegisterByManagerInvite`,
-      dto
-    );
+    return this.http.post(`${this.ACCOUNT_API}/RegisterByManagerInvite`, dto);
   }
 
   getRegisterByInvitePage(
@@ -94,10 +92,7 @@ export class AccountService {
   }
 
   updatePassword(dto: UpdatePasswordDto) {
-    return this.http.post(
-      `${this.ACCOUNT_SECURE_API}/UpdatePassword`,
-      dto
-    );
+    return this.http.post(`${this.ACCOUNT_SECURE_API}/UpdatePassword`, dto);
   }
 
   getUserInfo(): any {

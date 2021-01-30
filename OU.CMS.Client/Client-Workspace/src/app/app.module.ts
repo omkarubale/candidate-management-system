@@ -63,6 +63,7 @@ import { CompanyManagerAssessmentsAssessmentComponent } from './components/compa
 import { CompanyManagerAssessmentCandidateListComponent } from './components/companyManager/company-manager-assessment-candidate-list/company-manager-assessment-candidate-list.component';
 import { CompanyManagerPositionCandidateListComponent } from './components/companyManager/company-manager-position-candidate-list/company-manager-position-candidate-list.component';
 import { CandidateJobsJobComponent } from './components/candidate/candidate-jobs-job/candidate-jobs-job.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 //#endregion
 
 @NgModule({
@@ -126,6 +127,9 @@ import { CandidateJobsJobComponent } from './components/candidate/candidate-jobs
     //Providers
     AuthInterceptorProvider,
     ErrorInterceptorProvider,
+
+    // Guards
+    AuthGuard
   ],
   bootstrap: [AppComponent],
 })
