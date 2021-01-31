@@ -27,6 +27,10 @@ import { CandidateTestService } from './shared/api/candidate/candidateTest.servi
 import { ManagerCompanyService } from './shared/api/manager/managerCompany.service';
 import { ManagerJobService } from './shared/api/manager/managerJob.service';
 import { ManagerTestService } from './shared/api/manager/managerTest.service';
+
+//#region Front end only Services
+import { NavbarService } from './shared/services/navbar.service';
+//#endregion
 //#endregion
 
 //#region Providers
@@ -123,6 +127,9 @@ import { AuthGuard } from './shared/guards/auth.guard';
     ManagerCompanyService,
     ManagerJobService,
     ManagerTestService,
+
+    // Front end only Services
+    NavbarService,
 
     //Providers
     AuthInterceptorProvider,

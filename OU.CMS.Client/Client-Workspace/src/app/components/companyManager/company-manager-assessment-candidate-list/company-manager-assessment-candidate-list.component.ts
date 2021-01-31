@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { NavbarTabs } from 'src/app/shared/enums/NavbarTabs';
 import { CandidateTestDto } from 'src/app/shared/models/CandidateModels';
 import { TestScoreDto } from 'src/app/shared/models/TestModels';
+import { NavbarService } from 'src/app/shared/services/navbar.service';
 
 @Component({
   selector: 'app-company-manager-assessment-candidate-list',
@@ -14,11 +15,11 @@ export class CompanyManagerAssessmentCandidateListComponent implements OnInit {
   @Input() testScores: TestScoreDto[];
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute
+    private navbarService: NavbarService
   ) { }
 
   ngOnInit(): void {
+    this.navbarService.setCurrentTab(NavbarTabs.Assessments);
   }
 
 }

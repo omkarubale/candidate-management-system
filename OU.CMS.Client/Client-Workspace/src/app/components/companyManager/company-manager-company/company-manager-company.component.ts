@@ -20,6 +20,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { NavbarService } from 'src/app/shared/services/navbar.service';
+import { NavbarTabs } from 'src/app/shared/enums/NavbarTabs';
 
 @Component({
   selector: 'app-company-manager-company',
@@ -30,6 +32,7 @@ export class CompanyManagerCompanyComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private companyService: ManagerCompanyService,
+    private navbarService: NavbarService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal,
@@ -52,6 +55,8 @@ export class CompanyManagerCompanyComponent implements OnInit {
   addManagerModal: NgbModalRef;
 
   ngOnInit(): void {
+    this.navbarService.setCurrentTab(NavbarTabs.Company);
+
     this.currentUserEmail = this.accountService.userInfo.Email;
     this.addManagerForm = new CreateCompanyManagementInviteDto();
     this.addManagerForm.CompanyId = this.accountService.userInfo.CompanyId;

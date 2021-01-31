@@ -3,9 +3,11 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 import { CandidateJobService } from 'src/app/shared/api/candidate/candidateJob.service';
+import { NavbarTabs } from 'src/app/shared/enums/NavbarTabs';
 import { UserInfo } from 'src/app/shared/models/AuthenticationModels';
 import { CreateCandidateDto } from 'src/app/shared/models/CandidateModels';
 import { GetCandidateJobOpeningDto } from 'src/app/shared/models/JobOpeningModels';
+import { NavbarService } from 'src/app/shared/services/navbar.service';
 
 @Component({
   selector: 'app-candidate-jobs',
@@ -16,6 +18,7 @@ export class CandidateJobsComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private candidateJobService: CandidateJobService,
+    private navbarService: NavbarService,
     private toastr: ToastrService,
     private router: Router
   ) {}
@@ -23,6 +26,8 @@ export class CandidateJobsComponent implements OnInit {
   jobs: GetCandidateJobOpeningDto[];
 
   ngOnInit(): void {
+    this.navbarService.setCurrentTab(NavbarTabs.Jobs);
+
     this.fetchJobs();
   }
 

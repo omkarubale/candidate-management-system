@@ -5,7 +5,9 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 import { ManagerTestService } from 'src/app/shared/api/manager/managerTest.service';
+import { NavbarTabs } from 'src/app/shared/enums/NavbarTabs';
 import { CreateTestDto, GetTestDto } from 'src/app/shared/models/TestModels';
+import { NavbarService } from 'src/app/shared/services/navbar.service';
 
 @Component({
   selector: 'app-company-manager-assessments',
@@ -15,7 +17,7 @@ import { CreateTestDto, GetTestDto } from 'src/app/shared/models/TestModels';
 export class CompanyManagerAssessmentsComponent implements OnInit {
 
   constructor(
-    private accountService: AccountService,
+    private navbarService: NavbarService,
     private managerTestService: ManagerTestService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
@@ -32,6 +34,7 @@ export class CompanyManagerAssessmentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.addAssessmentForm = new CreateTestDto();
+    this.navbarService.setCurrentTab(NavbarTabs.Assessments);
 
     this.fetchTests();
   }

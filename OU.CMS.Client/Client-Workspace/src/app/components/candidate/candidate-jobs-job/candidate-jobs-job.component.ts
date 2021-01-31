@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CandidateJobService } from 'src/app/shared/api/candidate/candidateJob.service';
+import { NavbarTabs } from 'src/app/shared/enums/NavbarTabs';
 import { GetCandidateJobOpeningDto } from 'src/app/shared/models/JobOpeningModels';
+import { NavbarService } from 'src/app/shared/services/navbar.service';
 
 @Component({
   selector: 'app-candidate-jobs-job',
@@ -12,6 +14,7 @@ export class CandidateJobsJobComponent implements OnInit {
 
   constructor(
     private candidateJobService: CandidateJobService,
+    private navbarService: NavbarService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -20,6 +23,8 @@ export class CandidateJobsJobComponent implements OnInit {
   job: GetCandidateJobOpeningDto;
 
   ngOnInit(): void {
+    this.navbarService.setCurrentTab(NavbarTabs.Jobs);
+
     this.fetchJob();
   }
 

@@ -6,8 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 import { ManagerJobService } from 'src/app/shared/api/manager/managerJob.service';
 import { ManagerTestService } from 'src/app/shared/api/manager/managerTest.service';
+import { NavbarTabs } from 'src/app/shared/enums/NavbarTabs';
 import { CandidateTestDto } from 'src/app/shared/models/CandidateModels';
 import { CreateTestScoreDto, GetTestDto, UpdateTestDto } from 'src/app/shared/models/TestModels';
+import { NavbarService } from 'src/app/shared/services/navbar.service';
 
 @Component({
   selector: 'app-company-manager-assessments-assessment',
@@ -17,9 +19,9 @@ import { CreateTestScoreDto, GetTestDto, UpdateTestDto } from 'src/app/shared/mo
 export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
 
   constructor(
-    private accountService: AccountService,
     private managerTestService: ManagerTestService,
     private managerJobService: ManagerJobService,
+    private navbarService: NavbarService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal,
@@ -38,6 +40,8 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
   addAssessmentScoreForm: CreateTestScoreDto;
 
   ngOnInit(): void {
+    this.navbarService.setCurrentTab(NavbarTabs.Assessments);
+
     this.route.params.subscribe((params) => {
       this.currentAssessmentId = params['id'];
 

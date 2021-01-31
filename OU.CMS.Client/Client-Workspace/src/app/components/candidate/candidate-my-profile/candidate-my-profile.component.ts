@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { AccountService } from 'src/app/shared/api/account.service';
 import { UserService } from 'src/app/shared/api/user.service';
+import { NavbarTabs } from 'src/app/shared/enums/NavbarTabs';
 import { UserInfo } from 'src/app/shared/models/AuthenticationModels';
 import { UserDto } from 'src/app/shared/models/UserModels';
+import { NavbarService } from 'src/app/shared/services/navbar.service';
 
 @Component({
   selector: 'app-candidate-my-profile',
@@ -14,7 +15,7 @@ import { UserDto } from 'src/app/shared/models/UserModels';
 })
 export class CandidateMyProfileComponent implements OnInit {
   constructor(
-    private accountService: AccountService,
+    private navbarService: NavbarService,
     private userService: UserService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
@@ -25,6 +26,8 @@ export class CandidateMyProfileComponent implements OnInit {
   userDetails: UserDto;
 
   ngOnInit(): void {
+    this.navbarService.setCurrentTab(NavbarTabs.MyProfile);
+
     this.userService
       .getIdentityUser()
       .subscribe((data) => {

@@ -3,8 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 import { ManagerJobService } from 'src/app/shared/api/manager/managerJob.service';
+import { NavbarTabs } from 'src/app/shared/enums/NavbarTabs';
 import { GetCandidateDto } from 'src/app/shared/models/CandidateModels';
 import { GetJobOpeningDto, UpdateJobOpeningDto } from 'src/app/shared/models/JobOpeningModels';
+import { NavbarService } from 'src/app/shared/services/navbar.service';
 
 @Component({
   selector: 'app-company-manager-positions-position',
@@ -13,7 +15,7 @@ import { GetJobOpeningDto, UpdateJobOpeningDto } from 'src/app/shared/models/Job
 })
 export class CompanyManagerPositionsPositionComponent implements OnInit {
   constructor(
-    private accountService: AccountService,
+    private navbarService: NavbarService,
     private managerJobService: ManagerJobService,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
@@ -26,6 +28,8 @@ export class CompanyManagerPositionsPositionComponent implements OnInit {
   positionCandidates: GetCandidateDto[];
 
   ngOnInit(): void {
+    this.navbarService.setCurrentTab(NavbarTabs.Positions);
+
     this.route.params.subscribe((params) => {
       this.currentPositionId = params['id'];
 
