@@ -42,11 +42,19 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Tests.Commands
                 if (!companyManagementAccess)
                     throw new Exception("You do not have access to perform this action!");
 
-                var test = await db.Tests.SingleOrDefaultAsync(c => c.Id == TestId && c.CompanyId == userInfo.CompanyId);
+                var test = await db.Tests
+                    .Include(t => t.TestScores)
+                    .Include(t => t.CandidateTests)
+                    .SingleOrDefaultAsync(c => c.Id == TestId && c.CompanyId == userInfo.CompanyId);
                 if (test == null)
                     throw new Exception("Test with Id not found!");
 
-                db.CandidateTestScores.RemoveRange(test.CandidateTests.SelectMany(cd => cd.CandidateTestScores));
+                var candidateTestScores = await db.CandidateTestScores
+                    .Where(c => c.CandidateTest.TestId == TestId && c.CandidateTest.Candidate.CompanyId == userInfo.CompanyId)
+                    .ToListAsync();
+
+                if (candidateTestScores.Any())
+                    db.CandidateTestScores.RemoveRange(candidateTestScores);
                 db.CandidateTests.RemoveRange(test.CandidateTests);
                 db.TestScores.RemoveRange(test.TestScores);
                 db.Tests.Remove(test);

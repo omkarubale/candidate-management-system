@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
@@ -30,7 +30,8 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
   ) {}
 
   //icons
-  addIcon = faPlusSquare;
+  addIcon = faPlusSquare;  //icons
+  deleteIcon = faTrash;
 
   currentAssessmentId: string;
   assessmentDetails: GetTestDto = new GetTestDto;
@@ -85,6 +86,25 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
           this.toastr.error(
             error.message,
             'There was an error saving the Assessment!'
+          );
+        }
+      );
+    }
+
+    deleteAssessment() {
+      this.managerTestService.deleteTest(this.currentAssessmentId).subscribe(
+        () => {
+          this.toastr.success(
+            'The assessment was deleted successfully.',
+            'Assessment Deleted!'
+          );
+          this.gotoAssessmentsIndex();
+        },
+        (error) => {
+          console.error(error);
+          this.toastr.error(
+            error.message,
+            'There was an error deleting the Assessment!'
           );
         }
       );

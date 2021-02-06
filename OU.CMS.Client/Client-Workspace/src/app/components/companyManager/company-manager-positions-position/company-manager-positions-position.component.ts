@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/api/account.service';
 import { ManagerJobService } from 'src/app/shared/api/manager/managerJob.service';
@@ -22,6 +23,9 @@ export class CompanyManagerPositionsPositionComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {}
+
+  //icons
+  deleteIcon = faTrash;
 
   currentPositionId: string;
   positionDetails: GetJobOpeningDto = new GetJobOpeningDto;
@@ -68,6 +72,25 @@ export class CompanyManagerPositionsPositionComponent implements OnInit {
         this.toastr.error(
           error.message,
           'There was an error saving the job Opening!'
+        );
+      }
+    );
+  }
+
+  deletePosition() {
+    this.managerJobService.deleteJobOpening(this.currentPositionId).subscribe(
+      () => {
+        this.toastr.success(
+          'The job position was delete successfully.',
+          'Job Opening Deleted!'
+        );
+        this.gotoPositionsIndex();
+      },
+      (error) => {
+        console.error(error);
+        this.toastr.error(
+          error.message,
+          'There was an error deleting the job Opening!'
         );
       }
     );

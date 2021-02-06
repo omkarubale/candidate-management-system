@@ -49,7 +49,7 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Jobs.Commands
                     throw new Exception("JobOpening with this title already exists!");
 
                 var comanyManagementAccess = db.CompanyManagements.Any(cm => cm.UserId == userInfo.UserId && cm.CompanyId == userInfo.CompanyId && cm.IsAdmin);
-                if (comanyManagementAccess)
+                if (!comanyManagementAccess)
                     throw new Exception("You do not have access to perform this action!");
 
                 var jobOpening = new JobOpening

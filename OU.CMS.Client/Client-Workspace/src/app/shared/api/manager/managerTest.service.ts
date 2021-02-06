@@ -30,7 +30,7 @@ export class ManagerTestService {
   }
 
   deleteTest(testId: string) {
-    return this.http.delete(`${this.TEST_API}/UpdateTest?testId=${testId}`);
+    return this.http.delete(`${this.TEST_API}/DeleteTest?testId=${testId}`);
   }
   //#endregion
 

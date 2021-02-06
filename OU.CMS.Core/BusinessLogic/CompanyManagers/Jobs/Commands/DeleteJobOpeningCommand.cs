@@ -49,9 +49,20 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Jobs.Commands
                 if (userInfo.CompanyId != jobOpening.CompanyId)
                     throw new Exception("You do not have access to perform this action!");
 
-                var candidatesForJobOpening = await db.Candidates.Where(c => c.JobOpeningId == JobOpeningId).ToListAsync();
+                var candidatesForJobOpening = await db.Candidates
+                    .Include(c => c.CandidateTests)
+                    .Include(c => c.CandidateTests.Select(ct => ct.CandidateTestScores))
+                    .Where(c => c.JobOpeningId == JobOpeningId)
+                    .ToListAsync();
+
+                var candidateTestScoresForJobOpening = await db.CandidateTestScores
+                    .Where(cts => cts.CandidateTest.Candidate.JobOpeningId == JobOpeningId)
+                    .ToListAsync();
 
                 db.Candidates.RemoveRange(candidatesForJobOpening);
+                db.CandidateTests.RemoveRange(candidatesForJobOpening.SelectMany(c => c.CandidateTests));
+                db.CandidateTestScores.RemoveRange(candidateTestScoresForJobOpening);
+
                 db.JobOpenings.Remove(jobOpening);
 
                 await db.SaveChangesAsync();

@@ -49,7 +49,7 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Jobs.Queries
                                                  CreatedOn = jo.Key.CreatedOn
                                              },
                                              CandidateCount = jo.Count(j => j.UserId != null)
-                                         }).ToListAsync();
+                                         }).OrderBy(jo => jo.Title).ToListAsync();
 
                 return jobOpenings;
             }

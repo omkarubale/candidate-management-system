@@ -48,8 +48,6 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Tests.Queries
                                       CandidateTestId = cdt != null ? (Guid?)cdt.Id : null
                                   });
 
-                var x = await testsQuery.ToListAsync();
-
                 var tests = await testsQuery.GroupBy(t => new { t.Id, t.Title, t.Description, t.CompanyId, t.CompanyName, t.UserId, t.UserFullName, t.UserShortName, t.UserCreatedOn }).Select(t => new GetTestDto
                 {
                     Id = t.Key.Id,
@@ -70,7 +68,7 @@ namespace OU.CMS.Core.BusinessLogic.CompanyManagers.Tests.Queries
                         CreatedOn = t.Key.UserCreatedOn
                     },
                     TakersCount = t.Count(ct => ct.CandidateTestId != null)
-                }).ToListAsync();
+                }).OrderBy(t => t.Title).ToListAsync();
 
                 return tests;
             }

@@ -3,7 +3,10 @@
     <div class="col-4">
       <div class="assessment-details-container content-container col-12">
         <div class="content-header">
-          <h2>Assessment Details</h2>
+          <h2 class="d-inline">Assessment Details</h2>
+          <div class="d-inline pl-2 assessment-delete" title="Delete Assessment">
+            <fa-icon class="d-inline-flex" [icon]="deleteIcon" (click)="deleteAssessment()"></fa-icon>
+          </div>
         </div>
         <div class="content-details">
           <div class="row">
@@ -14,7 +17,12 @@
                 (ngSubmit)="editAssessment(assessmentEditForm.value)"
                 autocomplete="off"
               >
-                <input type="hidden" name="Id" value="assessmentDetails.Id" />
+                <input
+                type="hidden"
+                name="Id"
+                value="assessmentDetails.Id"
+                [(ngModel)]="assessmentDetails.Id"
+                />
                 <!-- Title -->
                 <div class="form-group">
                   <div class="input-field">
