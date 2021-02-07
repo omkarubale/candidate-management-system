@@ -18,6 +18,10 @@ namespace OU.CMS.Models.Models.Candidate
 
         public decimal? Value { get; set; }
 
+        public decimal MaximumScore { get; set; }
+
+        public decimal? CutoffScore { get; set; }
+
         public string Comment { get; set; }
     }
 }

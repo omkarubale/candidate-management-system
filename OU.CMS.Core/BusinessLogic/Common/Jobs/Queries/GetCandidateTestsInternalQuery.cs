@@ -117,6 +117,8 @@ namespace OU.CMS.Core.BusinessLogic.Common.Jobs.Queries
                                                        TestScoreId = tsts.Id,
                                                        TestScoreTitle = tsts.Title,
                                                        TestScoreIsMandatory = tsts.IsMandatory,
+                                                       TestScoreMaximumScore = tsts.MaximumScore,
+                                                       TestScoreCutoffScore = tsts.CutoffScore,
 
                                                        CandidateTestScoreId = cdts.Id,
                                                        CandidateTestScoreValue = cdts.Value,
@@ -136,6 +138,8 @@ namespace OU.CMS.Core.BusinessLogic.Common.Jobs.Queries
                                                     IsMandatory = ts.TestScoreIsMandatory,
 
                                                     Value = ts.CandidateTestScoreValue,
+                                                    MaximumScore = ts.TestScoreMaximumScore,
+                                                    CutoffScore = ts.TestScoreCutoffScore,
                                                     Comment = ts.CandidateTestScoreComment
                                                 }).OrderBy(ts => ts.Title).ToList()
                                             }).ToList();

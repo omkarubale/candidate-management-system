@@ -103,6 +103,27 @@ div.validation-error {
     /* float: left; */
   }
 
+.display-field {
+  width: 100%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 2px 0;
+  margin: 8px 0;
+}
+
+  .display-field .display-label {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  .display-field .display-value {
+    border: none;
+    outline: none;
+    background: none;
+    color: #343a40;
+    font-size: 18px;
+  }
+
 .form-control:focus {
   color: #495057;
   outline: 0;

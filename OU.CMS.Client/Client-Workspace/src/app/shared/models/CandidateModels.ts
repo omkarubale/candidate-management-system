@@ -11,12 +11,19 @@ export class CandidateTestDto {
   Percentile: number;
 }
 
+export class CandidateTestsContainerDto {
+  Candidate: GetCandidateDto;
+  CandidateTests: CandidateTestDto[];
+}
+
 export class CandidateTestScoreDto {
   CandidateTestScoreId: string;
   TestScoreId: string;
   Title: string;
   IsMandatory: boolean;
   Value: number;
+  MaximumScore: number;
+  CutoffScore: number;
   Comment: string;
 }
 

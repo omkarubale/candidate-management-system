@@ -88,6 +88,24 @@ namespace OU.CMS.Web.API.Controllers.CompanyManagers
         }
 
         [HttpGet]
+        public async Task<CandidateTestsContainerDto> GetCandidateTestsAsCompanyManager(Guid candidateId)
+        {
+            return await new GetCandidateTestsForCandidateQuery(candidateId).GetCandidateTestsForCandidate(UserInfo);
+        }
+
+        [HttpGet]
+        public async Task<CandidateTestDto> GetCandidateTestAsCompanyManager(Guid candidateId, Guid testId)
+        {
+            using (var db = new CMSContext())
+            {
+                if (UserInfo.IsCandidateLogin)
+                    throw new Exception("You do not have access to perform this action!");
+
+                return (await new GetCandidateTestsInternalQuery(testId, companyId: UserInfo.CompanyId, candidateId: candidateId).GetCandidateTests()).SingleOrDefault();
+            }
+        }
+
+        [HttpGet]
         public async Task DeleteCandidate(Guid candidateId)
         {
             if (!UserInfo.IsCandidateLogin)
@@ -102,7 +120,7 @@ namespace OU.CMS.Web.API.Controllers.CompanyManagers
 
         #region Candidate Tests
         [HttpGet]
-        public async Task<List<CandidateTestDto>> GetCandidateTestsAsCompanyManager(Guid testId)
+        public async Task<List<CandidateTestDto>> GetTestCandidatesAsCompanyManager(Guid testId)
         {
             using (var db = new CMSContext())
             {
@@ -110,18 +128,6 @@ namespace OU.CMS.Web.API.Controllers.CompanyManagers
                     throw new Exception("You do not have access to perform this action!");
 
                 return (await new GetCandidateTestsInternalQuery(testId, companyId: UserInfo.CompanyId).GetCandidateTests());
-            }
-        }
-
-        [HttpGet]
-        public async Task<CandidateTestDto> GetCandidateTestAsCompanyManager(Guid candidateId, Guid testId)
-        {
-            using (var db = new CMSContext())
-            {
-                if (UserInfo.IsCandidateLogin)
-                    throw new Exception("You do not have access to perform this action!");
-
-                return (await new GetCandidateTestsInternalQuery(testId, companyId: UserInfo.CompanyId, candidateId: candidateId).GetCandidateTests()).SingleOrDefault();
             }
         }
 

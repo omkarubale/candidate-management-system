@@ -65,6 +65,7 @@
     <Compile Include="BusinessLogic\Common\Account\Commands\UpdatePasswordCommand.cs" />
     <Compile Include="BusinessLogic\Common\Account\Queries\GetRegisterByInvitePageQuery.cs" />
     <Compile Include="BusinessLogic\Common\Jobs\Queries\GetCandidatesInternalQuery.cs" />
+    <Compile Include="BusinessLogic\Common\Jobs\Queries\GetCandidateTestsForCandidateQuery.cs" />
     <Compile Include="BusinessLogic\Common\Jobs\Queries\GetCandidateTestsInternalQuery.cs" />
     <Compile Include="BusinessLogic\Common\User\Commands\SaveIdentityUserCommand.cs" />
     <Compile Include="BusinessLogic\Common\User\Queries\GetIdentityUserQuery.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="BusinessLogic\CompanyManagers\Tests\Commands\DeleteTestCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Tests\Commands\UpdateTestCommand.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Tests\Queries\GetTestAsCompanyManagerQuery.cs" />
+    <Compile Include="BusinessLogic\CompanyManagers\Tests\Queries\GetTestsAsCompanyManagerForLookupQuery.cs" />
     <Compile Include="BusinessLogic\CompanyManagers\Tests\Queries\GetTestsAsCompanyManagerQuery.cs" />
     <Compile Include="BusinessLogic\_Base\BaseCommand.cs" />
     <Compile Include="BusinessLogic\_Base\BaseQuery.cs" />

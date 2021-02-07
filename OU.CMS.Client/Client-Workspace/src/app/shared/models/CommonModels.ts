@@ -4,3 +4,9 @@ export class CreatedOnDto {
   ShortName: string;
   CreatedOn: Date;
 }
+
+export class LookupDto {
+  Id: any;
+  Name: string;
+  Description: string;
+}

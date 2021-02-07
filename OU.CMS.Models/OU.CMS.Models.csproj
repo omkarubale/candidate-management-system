@@ -50,12 +50,14 @@
     <Compile Include="Models\Account\UpdatePasswordDto.cs" />
     <Compile Include="Models\Authentication\UserInfo.cs" />
     <Compile Include="Models\Candidate\CandidateTestDto.cs" />
+    <Compile Include="Models\Candidate\CandidateTestsContainerDto.cs" />
     <Compile Include="Models\Candidate\CandidateTestScoreDto.cs" />
     <Compile Include="Models\Candidate\CreateCandidateDto.cs" />
     <Compile Include="Models\Candidate\CreateCandidateTestDto.cs" />
     <Compile Include="Models\Candidate\GetCandidateDto.cs" />
     <Compile Include="Models\Candidate\UpdateCandidateTestScoreDto.cs" />
     <Compile Include="Models\Common\CreatedOnDto.cs" />
+    <Compile Include="Models\Common\Lookup\LookupDto.cs" />
     <Compile Include="Models\Company\AcceptCompanyManagementInviteDto.cs" />
     <Compile Include="Models\Company\CompanyManagerDto.cs" />
     <Compile Include="Models\Company\CompanySimpleDto.cs" />

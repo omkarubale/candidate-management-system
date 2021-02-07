@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { CreateTestDto, CreateTestScoreDto, GetTestDto, TestScoreDto, UpdateTestDto, UpdateTestScoreDto } from '../../models/TestModels';
+import { LookupDto } from '../../models/CommonModels';
 
 @Injectable()
 export class ManagerTestService {
@@ -15,6 +16,10 @@ export class ManagerTestService {
   //#region Test
   getTestsAsCompanyManager(): Observable<GetTestDto[]> {
     return this.http.get<GetTestDto[]>(`${this.TEST_API}/GetTestsAsCompanyManager`);
+  }
+
+  getTestsAsCompanyManagerForLookup(): Observable<LookupDto[]> {
+    return this.http.get<LookupDto[]>(`${this.TEST_API}/GetTestsAsCompanyManagerForLookup`);
   }
 
   getTestAsCompanyManager(testId: string): Observable<GetTestDto> {

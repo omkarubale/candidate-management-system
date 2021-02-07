@@ -3,10 +3,33 @@
     <div class="col-4">
       <div class="content-container col-12">
         <div class="content-header">
-          <h2>Position</h2>
+          <h2>Position Details</h2>
         </div>
         <div class="content-details">
-          <div class="">Coming soon!</div>
+          <div class="row">
+            <!-- Position Details -->
+            <div class="col-sm-12">
+              <!-- Title -->
+              <div class="form-group">
+                <div class="display-field">
+                  <label class="display-label">Title</label>
+                  <div class="display-value">
+                    {{ candidateDetails.Candidate.JobOpening.Title }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group">
+                <div class="display-field">
+                  <label class="display-label">Description</label>
+                  <div class="display-value">
+                    {{ candidateDetails.Candidate.JobOpening.Description }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -17,9 +40,135 @@
           <h2>Candidate Details</h2>
         </div>
         <div class="content-details">
-          <div class="">Coming soon!</div>
+          <div class="row">
+            <!-- Candidate Details -->
+            <div class="col-sm-12">
+              <!-- Name -->
+              <div class="form-group">
+                <div class="display-field">
+                  <label class="display-label">Name</label>
+                  <div class="display-value">
+                    {{ candidateDetails.Candidate.User.FullName }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group">
+                <div class="display-field">
+                  <label class="display-label">Email</label>
+                  <div class="display-value">
+                    {{ candidateDetails.Candidate.User.Email }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Assessment Scores -->
+            <div class="col-sm-8 pt-2">
+              <div class="assessment-scores-label-container">
+                <h5 class="assessment-scores-label d-inline font-weight-bold">
+                  Assessment Scores
+                </h5>
+                <div
+                  class="d-inline pl-2 content-header-add-button"
+                  title="Add New Position"
+                >
+                  <fa-icon
+                    [icon]="addIcon"
+                    (click)="openAddCandidateAssessmentModal(content)"
+                  ></fa-icon>
+                </div>
+              </div>
+              <div *ngFor="let candidateTest of this.candidateDetails.CandidateTests">
+                <div class="candidate-assessment font-weight-bold">{{candidateTest.Title}}</div>
+                <div
+                  class="assessment-score row"
+                  *ngFor="let testScore of candidateTest.CandidateTestScores"
+                >
+                  <div class="col-5">{{ testScore.Title }}</div>
+                  <div class="col-4 text-right">
+                    <div *ngIf="testScore.CutoffScore">
+                      {{ testScore.CutoffScore }} to Qualify
+                    </div>
+                  </div>
+                  <div class="col-3 text-right">
+                    {{ testScore.Value }} /
+                    {{ testScore.MaximumScore }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">
+      Create New Candidate Assessment
+    </h6>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span> × </span>
+    </button>
+  </div>
+  <form
+    #addCandidateTestForm="ngForm"
+    (ngSubmit)="addCandidateAssessment(addCandidateTestForm.value)"
+    autocomplete="off"
+  >
+    <div class="modal-body">
+      <input
+        type="hidden"
+        name="CandidateId"
+        [(ngModel)]="addCandidateAssessmentFormObject.CandidateId"
+        [value]="currentCandidateId"
+      />
+      <!-- Test -->
+      <div class="form-group">
+        <div class="input-field">
+          <select
+            matNativeControl
+            #TestId="ngModel"
+            [(ngModel)]="addCandidateAssessmentFormObject.TestId"
+            id="TestId"
+            name="TestId"
+          >
+            <option value="" selected></option>
+            <option *ngFor="let test of companyTestsList" [value]="test.Id">
+              {{ test.Name }}
+            </option>
+          </select>
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="TestId.invalid && TestId.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="form-submit">
+        <button
+          class="btn btn-primary submit-button"
+          type="submit"
+          [disabled]="!addCandidateTestForm.form.valid"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

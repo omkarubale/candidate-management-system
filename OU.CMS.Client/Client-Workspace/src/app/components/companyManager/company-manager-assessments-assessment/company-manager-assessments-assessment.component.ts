@@ -30,7 +30,7 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
   ) {}
 
   //icons
-  addIcon = faPlusSquare;  //icons
+  addIcon = faPlusSquare;
   deleteIcon = faTrash;
 
   currentAssessmentId: string;
@@ -146,7 +146,7 @@ export class CompanyManagerAssessmentsAssessmentComponent implements OnInit {
     // Assessment Candidates
     fetchAssessmentCandidates() {
       this.managerJobService
-      .getCandidateTestsAsCompanyManager(this.currentAssessmentId)
+      .getTestCandidatesAsCompanyManager(this.currentAssessmentId)
       .subscribe((data) => {
         this.assessmentCandidates = data;
       });

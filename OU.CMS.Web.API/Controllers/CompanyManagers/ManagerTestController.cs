@@ -1,6 +1,7 @@
 ﻿using OU.CMS.Core.BusinessLogic.CompanyManagers.Tests.Commands;
 using OU.CMS.Core.BusinessLogic.CompanyManagers.Tests.Queries;
 using OU.CMS.Core.BusinessLogic.CompanyManagers.TestScores.Commands;
+using OU.CMS.Models.Models.Common.Lookup;
 using OU.CMS.Models.Models.Test;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,11 @@ namespace OU.CMS.Web.API.Controllers.CompanyManagers
         public async Task<List<GetTestDto>> GetTestsAsCompanyManager()
         {
             return await new GetTestsAsCompanyManagerQuery().GetTestsAsCompanyManager(UserInfo);
+        }
+
+        public async Task<List<LookupDto<Guid>>> GetTestsAsCompanyManagerForLookup()
+        {
+            return await new GetTestsAsCompanyManagerForLookupQuery().GetTestsAsCompanyManagerForLookup(UserInfo);
         }
 
         [HttpGet]

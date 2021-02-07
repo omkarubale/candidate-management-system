@@ -10,6 +10,7 @@ import {
 } from '../../models/JobOpeningModels';
 import {
   CandidateTestDto,
+  CandidateTestsContainerDto,
   CreateCandidateTestDto,
   GetCandidateDto,
   UpdateCandidateTestScoreDto,
@@ -77,19 +78,11 @@ export class ManagerJobService {
     );
   }
 
-  deleteCandidate(candidateId: string) {
-    return this.http.delete(
-      `${this.JOB_API}/DeleteCandidate?candidate=${candidateId}`
-    );
-  }
-  //#endregion
-
-  //#region Candidate Tests
   getCandidateTestsAsCompanyManager(
-    testId: string
-  ): Observable<CandidateTestDto[]> {
-    return this.http.get<CandidateTestDto[]>(
-      `${this.JOB_API}/GetCandidateTestsAsCompanyManager?testId=${testId}`
+    candidateId: string
+  ): Observable<CandidateTestsContainerDto> {
+    return this.http.get<CandidateTestsContainerDto>(
+      `${this.JOB_API}/GetCandidateTestsAsCompanyManager?candidateId=${candidateId}`
     );
   }
 
@@ -99,6 +92,22 @@ export class ManagerJobService {
   ): Observable<CandidateTestDto> {
     return this.http.get<CandidateTestDto>(
       `${this.JOB_API}/GetCandidateTestAsCompanyManager?candidateId=${candidateId}&testId=${testId}`
+    );
+  }
+
+  deleteCandidate(candidateId: string) {
+    return this.http.delete(
+      `${this.JOB_API}/DeleteCandidate?candidate=${candidateId}`
+    );
+  }
+  //#endregion
+
+  //#region Candidate Tests
+  getTestCandidatesAsCompanyManager(
+    testId: string
+  ): Observable<CandidateTestDto[]> {
+    return this.http.get<CandidateTestDto[]>(
+      `${this.JOB_API}/GetTestCandidatesAsCompanyManager?testId=${testId}`
     );
   }
 
