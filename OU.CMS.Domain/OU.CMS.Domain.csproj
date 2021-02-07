@@ -141,6 +141,10 @@
     <Compile Include="Migrations\202011291949085_AddDescriptionToTestTable.Designer.cs">
       <DependentUpon>202011291949085_AddDescriptionToTestTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102071603597_ChangedCandidateTestScore_Comment_To_Nullable.cs" />
+    <Compile Include="Migrations\202102071603597_ChangedCandidateTestScore_Comment_To_Nullable.Designer.cs">
+      <DependentUpon>202102071603597_ChangedCandidateTestScore_Comment_To_Nullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -206,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011291949085_AddDescriptionToTestTable.resx">
       <DependentUpon>202011291949085_AddDescriptionToTestTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102071603597_ChangedCandidateTestScore_Comment_To_Nullable.resx">
+      <DependentUpon>202102071603597_ChangedCandidateTestScore_Comment_To_Nullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

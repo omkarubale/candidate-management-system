@@ -13,7 +13,6 @@ namespace OU.CMS.Domain.EntityConfigurations
         public CandidateTestScoreConfiguration()
         {
             Property(v => v.Comment)
-                .IsRequired()
                 .HasMaxLength(250);
 
             HasRequired(e => e.CandidateTest)
