@@ -17,7 +17,7 @@
     </td>
 
     <td class="candidate-applied-date col-2">
-      {{ candidateTest.Candidate.CreatedDetails.CreatedOn }}
+      {{ candidateTest.Candidate.CreatedDetails.CreatedOn | date:'yyyy-MM-dd' }}
     </td>
 
     <td *ngFor="let score of candidateTest.CandidateTestScores" class="candidate-test-score col">
