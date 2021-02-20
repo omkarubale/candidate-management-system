@@ -72,7 +72,7 @@
                 </h5>
                 <div
                   class="d-inline pl-2 content-header-add-button"
-                  title="Add New Position"
+                  title="Add New Assessment"
                 >
                   <fa-icon
                     [icon]="addIcon"
@@ -80,13 +80,19 @@
                   ></fa-icon>
                 </div>
               </div>
-              <div *ngFor="let candidateTest of this.candidateDetails.CandidateTests">
-                <div class="candidate-assessment font-weight-bold">{{candidateTest.Title}}</div>
+              <div
+                *ngFor="
+                  let candidateTest of this.candidateDetails.CandidateTests
+                "
+              >
+                <div class="candidate-assessment font-weight-bold">
+                  {{ candidateTest.Title }}
+                </div>
                 <div
                   class="assessment-score row"
                   *ngFor="let testScore of candidateTest.CandidateTestScores"
                 >
-                  <div class="col-5">{{ testScore.Title }}</div>
+                  <div class="col-4">{{ testScore.Title }}</div>
                   <div class="col-4 text-right">
                     <div *ngIf="testScore.CutoffScore">
                       {{ testScore.CutoffScore }} to Qualify
@@ -95,6 +101,25 @@
                   <div class="col-3 text-right">
                     {{ testScore.Value }} /
                     {{ testScore.MaximumScore }}
+                  </div>
+                  <div class="col-1">
+                    <div
+                      class="d-inline pl-2 content-header-add-button"
+                      title="Edit Position"
+                    >
+                      <fa-icon
+                        [icon]="editIcon"
+                        (click)="
+                          openUpdateCandidateAssessmentScoreModal(
+                            testScore.CandidateTestScoreId,
+                            testScore.Title,
+                            testScore.Value,
+                            testScore.Comment,
+                            scoreUpdateContent
+                          )
+                        "
+                      ></fa-icon>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -106,6 +131,7 @@
   </div>
 </div>
 
+<!-- Create new Candidate Assessment -->
 <ng-template #content let-modal>
   <div class="modal-header">
     <h6 class="modal-title" id="modal-basic-title">
@@ -165,6 +191,96 @@
           class="btn btn-primary submit-button"
           type="submit"
           [disabled]="!addCandidateTestForm.form.valid"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<!-- Update Candidate Assessment Score  -->
+<ng-template #scoreUpdateContent let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">
+      Update Candidate Assessment Score: {{updateCandidateAssessmentScoreFormObject.TestScoreTitle}}
+    </h6>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span> × </span>
+    </button>
+  </div>
+  <form
+    #updateCandidateTestScoreForm="ngForm"
+    (ngSubmit)="
+      updateCandidateAssessmentScore(updateCandidateTestScoreForm.value)
+    "
+    autocomplete="off"
+  >
+    <div class="modal-body">
+      <input
+        type="hidden"
+        name="CandidateTestScoreId"
+        [(ngModel)]="
+          updateCandidateAssessmentScoreFormObject.CandidateTestScoreId
+        "
+      />
+
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="Value"
+            class="form-control"
+            placeholder="Value"
+            type="number"
+            name="Value"
+            #Value="ngModel"
+            [(ngModel)]="updateCandidateAssessmentScoreFormObject.Value"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="Value.invalid && Value.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-field">
+          <input
+            id="Comment"
+            class="form-control"
+            placeholder="Comment"
+            type="text"
+            name="Comment"
+            #Comment="ngModel"
+            [(ngModel)]="updateCandidateAssessmentScoreFormObject.Comment"
+          />
+        </div>
+        <div class="validation-error mt-2">
+          <div
+            class="validation-error-text"
+            *ngIf="Comment.invalid && Comment.touched"
+          >
+            This field is required.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="form-submit">
+        <button
+          class="btn btn-primary submit-button"
+          type="submit"
+          [disabled]="!updateCandidateTestScoreForm.form.valid"
         >
           Submit
         </button>

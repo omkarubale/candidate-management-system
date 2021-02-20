@@ -48,6 +48,7 @@ export class GetCandidateDto {
 
 export class UpdateCandidateTestScoreDto {
   CandidateTestScoreId: string;
+  TestScoreTitle: string;
   Value: number;
   Comment: string;
 }

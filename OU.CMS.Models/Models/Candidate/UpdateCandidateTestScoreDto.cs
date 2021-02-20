@@ -10,6 +10,8 @@ namespace OU.CMS.Models.Models.Candidate
     {
         public Guid CandidateTestScoreId { get; set; }
 
+        public string TestScoreTitle { get; set; }
+
         public decimal Value { get; set; }
 
         public string Comment { get; set; }

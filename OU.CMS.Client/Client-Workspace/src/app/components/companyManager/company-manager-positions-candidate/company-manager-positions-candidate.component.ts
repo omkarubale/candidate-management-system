@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ManagerJobService } from 'src/app/shared/api/manager/managerJob.service';
 import { ManagerTestService } from 'src/app/shared/api/manager/managerTest.service';
 import { NavbarTabs } from 'src/app/shared/enums/NavbarTabs';
-import { CandidateTestDto, CandidateTestsContainerDto, CreateCandidateTestDto, GetCandidateDto } from 'src/app/shared/models/CandidateModels';
+import { CandidateTestDto, CandidateTestsContainerDto, CreateCandidateTestDto, GetCandidateDto, UpdateCandidateTestScoreDto } from 'src/app/shared/models/CandidateModels';
 import { LookupDto } from 'src/app/shared/models/CommonModels';
 import { JobOpeningSimpleDto } from 'src/app/shared/models/JobOpeningModels';
 import { UserSimpleDto } from 'src/app/shared/models/UserModels';
@@ -37,14 +37,18 @@ export class CompanyManagerPositionsCandidateComponent implements OnInit {
 
   //icons
   addIcon = faPlusSquare;
+  editIcon = faEdit;
 
   currentPositionId: string;
   currentCandidateId: string;
+  currentCandidateTestScoreId: string;
 
   candidateDetails: CandidateTestsContainerDto;
 
   addCandidateAssessmentModal: NgbModalRef;
   addCandidateAssessmentFormObject: CreateCandidateTestDto;
+  updateCandidateAssessmentScoreModal: NgbModalRef;
+  updateCandidateAssessmentScoreFormObject: UpdateCandidateTestScoreDto;
 
   companyTestsList: LookupDto[];
 
@@ -120,6 +124,40 @@ export class CompanyManagerPositionsCandidateComponent implements OnInit {
         this.toastr.error(
           error.ExceptionMessage,
           'There was an error creating this candidate assessment!'
+        );
+      }
+    );
+  }
+
+  openUpdateCandidateAssessmentScoreModal(candidateTestScoreId, testScoreTitle, testScoreValue, testScoreComment, content) {
+    this.updateCandidateAssessmentScoreFormObject = new UpdateCandidateTestScoreDto();
+    this.updateCandidateAssessmentScoreFormObject.CandidateTestScoreId = candidateTestScoreId;
+    this.updateCandidateAssessmentScoreFormObject.TestScoreTitle = testScoreTitle;
+    this.updateCandidateAssessmentScoreFormObject.Value = testScoreValue;
+    this.updateCandidateAssessmentScoreFormObject.Comment = testScoreComment;
+
+    this.updateCandidateAssessmentScoreModal = this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  updateCandidateAssessmentScore(form: UpdateCandidateTestScoreDto) {
+    this.managerJobService.updateCandidateTestScore(form).subscribe(
+      (result) => {
+        this.toastr.success(
+          'The Candidate\'s Assessment Score was updated successfully.',
+          'Candidate\' Assessment Score Updated!'
+        );
+
+        this.fetchCandidate();
+
+        this.cd.detectChanges();
+        this.addCandidateAssessmentModal.close();
+      },
+      (error) => {
+        console.error(error);
+        this.toastr.error(
+          error.ExceptionMessage,
+          'There was an error updating this candidate\'s assessment score!'
         );
       }
     );
