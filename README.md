@@ -26,3 +26,6 @@ This project has not been deployed yet, but it's in the works. Meanwhile, you ca
  *~repository/OU.CMS.Client/Client-Workspace*
     - in the terminal, type in `npm install`. This will install all the packages which are needed to run the application. This should take 3 to 5 minutes.
     - Once the installation is done, you can type `ng serve -o` to run the application. A new browser tab will open with the application running.
+
+- Concepts implemented: CQRS Design Pattern, JWT Authentication, Bearer Token Claims and Policies, Code First ORM (Object Relational Mapping), Asynchronous Design, Responsive Web Pages, Single Page Application.
+- Technologies and Frameworks used: .NET Framework 4.8, .NET Entity Framework (ORM), Angular 9, SQL Server, Bootstrap, etc.
